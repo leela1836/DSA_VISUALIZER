@@ -588,11 +588,12 @@ function renderData(spec){
  * @param mode  'data' | 'flow' | 'both'
  * @param flowDef static flowchart definition for this algorithm
  */
-function paintStage(host, frame, mode, flowDef){
+function paintStage(host, frame, mode, flowDef, flowTitle){
   host.innerHTML = '';
   if (!frame){ host.textContent = ''; return; }
   const wantFlow = (mode === 'flow' || mode === 'both') && flowDef && flowDef.nodes && flowDef.nodes.length;
   const wantData = mode === 'data' || mode === 'both' || !wantFlow;
+  const title = flowTitle || 'Control flow';
 
   if (mode === 'both' && wantFlow){
     const split = document.createElement('div');
@@ -602,13 +603,13 @@ function paintStage(host, frame, mode, flowDef){
     a.appendChild(renderData(frame.data));
     const b = document.createElement('div');
     b.style.cssText = 'display:flex;justify-content:center;overflow:auto';
-    b.appendChild(renderFlow(Object.assign({ title:'Control flow' }, flowDef), frame.at));
+    b.appendChild(renderFlow(Object.assign({}, flowDef, { title }), frame.at));
     split.appendChild(a); split.appendChild(b);
     host.appendChild(split);
     return;
   }
   if (wantFlow && mode === 'flow'){
-    host.appendChild(renderFlow(Object.assign({}, flowDef), frame.at));
+    host.appendChild(renderFlow(Object.assign({}, flowDef, { title }), frame.at));
     return;
   }
   if (wantData) host.appendChild(renderData(frame.data));

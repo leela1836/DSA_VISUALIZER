@@ -119,6 +119,7 @@ const MyCode = {
       this.mode = b.dataset.mode;
       this.player.go(this.player.i);
     }));
+    $('#mcFlowFn').addEventListener('change', () => this.player.go(this.player.i));
 
     this.initEditor();
 
@@ -285,6 +286,19 @@ const MyCode = {
     $('#mcOutHead').hidden = !hasOut;
     $('#mcOut').hidden = !hasOut;
 
+    /* Function picker for the flowchart — only useful with more than one chart */
+    const names = doc.flows ? Object.keys(doc.flows) : [];
+    const pickWrap = $('#mcFlowPick'), sel = $('#mcFlowFn');
+    pickWrap.hidden = names.length < 2;
+    if (names.length){
+      sel.innerHTML = '<option value="auto">Follow execution</option>' +
+        names.map(n => '<option value="' + esc(n) + '"' +
+          (n === doc.flowFn ? ' data-primary="1"' : '') + '>' +
+          (n === '<module>' ? 'top level' : esc(n) + '()') +
+          (n === doc.flowFn ? ' — main' : '') + '</option>').join('');
+      sel.value = 'auto';
+    }
+
     this.player.load(doc.frames);
     if (doc.engine !== 'pyrun')
       $('#mycodeStageWrap').scrollIntoView({ behavior:'smooth', block:'start' });
@@ -297,14 +311,18 @@ const MyCode = {
     if (!f) return;
     const doc = this.doc;
 
-    /* show the chart for the function we are actually standing in */
-    let flow = doc.flow, map = doc.lineToNode || {};
-    if (doc.flows && doc.flows[f.func]){
-      flow = doc.flows[f.func].flow;
-      map = doc.flows[f.func].lineToNode;
-    }
+    /* Which function's chart to draw: follow execution, or the pinned one. */
+    const pick = ($('#mcFlowFn') || {}).value || 'auto';
+    let fnName = pick === 'auto' ? f.func : pick;
+    if (!doc.flows || !doc.flows[fnName]) fnName = doc.flowFn || '<module>';
+    const entry = doc.flows && doc.flows[fnName];
+    const flow = entry ? entry.flow : doc.flow;
+    const map  = entry ? entry.lineToNode : (doc.lineToNode || {});
     const at = map[String(f.line)];
-    paintStage($('#mcStage'), { data:mcViews(f.vars), at }, this.mode, flow);
+
+    let title = fnName === '<module>' ? 'Control flow · top level' : 'Control flow · ' + fnName + '()';
+    if (!at) title += pick === 'auto' ? '' : '  (not executing right now)';
+    paintStage($('#mcStage'), { data:mcViews(f.vars), at }, this.mode, flow, title);
 
     const noteBits = [];
     if (f.note) noteBits.push('<b>' + esc(f.note) + '</b>');

@@ -160,6 +160,16 @@ code,pre{font-family:var(--mono)}
 }
 .stage-tab:hover{color:var(--fg-2)}
 .stage-tab.is-active{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}
+.flow-pick{
+  margin-left:auto;display:flex;align-items:center;gap:6px;padding-bottom:6px;
+  font-size:10.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--fg-3);font-weight:700;
+}
+.flow-pick select{
+  padding:3px 8px;border:1px solid var(--line);border-radius:7px;background:var(--bg-2);
+  color:var(--fg);font:inherit;font-size:12px;text-transform:none;letter-spacing:0;
+  font-weight:500;font-family:var(--mono);outline:none;max-width:210px;
+}
+.flow-pick select:focus{border-color:var(--accent)}
 .stage{
   min-height:300px;display:flex;align-items:center;justify-content:center;
   padding:18px;overflow:auto;background:

@@ -218,6 +218,10 @@ public static void main(String[] x) {
           <button class="stage-tab is-active" data-mode="data">Data view</button>
           <button class="stage-tab" data-mode="flow">Flowchart</button>
           <button class="stage-tab" data-mode="both">Side by side</button>
+          <label class="flow-pick" id="mcFlowPick" hidden>
+            <span>Chart</span>
+            <select id="mcFlowFn" aria-label="Which function's flowchart to show"></select>
+          </label>
         </div>
         <div id="mcStage" class="stage"></div>
         <div id="mcNote" class="note"></div>

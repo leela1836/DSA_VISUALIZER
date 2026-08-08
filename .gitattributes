@@ -1,0 +1,11 @@
+# Normalise everything to LF in the repository so diffs stay clean across
+# Windows, macOS and Linux. Working copies still get native endings.
+* text=auto eol=lf
+
+# Generated bundles — collapse them in PR diffs, they are rebuilt from src/
+index.html   linguist-generated=true
+DSAViz.html  linguist-generated=true
+
+# Report the project as JavaScript rather than HTML, since the bundles dominate
+*.html linguist-detectable=false
+src/js/*.js linguist-detectable=true

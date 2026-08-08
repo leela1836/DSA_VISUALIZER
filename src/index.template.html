@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Learn data structures and algorithms by watching them run. 28 animated algorithms with synced flowcharts and side-by-side Python and Java, a dependency-ordered roadmap with 145 LeetCode problems, and a browser Python runner that steps through your own code. Free, offline, no tracking.">
+<meta name="author" content="leela1836">
+<meta name="theme-color" content="#0d7a58">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DSAViz — Data Structures &amp; Algorithms Visualizer">
+<meta property="og:description" content="Watch algorithms run step by step, with flowcharts synced to the code. Write Python in the browser and see your own solution execute. Free and offline.">
+<meta property="og:url" content="https://leela1836.github.io/dsa-visualizer/">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='%230d9668'%3E%3Crect x='2' y='13' width='4' height='8' rx='1'/%3E%3Crect x='8' y='8' width='4' height='13' rx='1'/%3E%3Crect x='14' y='3' width='4' height='18' rx='1'/%3E%3Crect x='20' y='10' width='2' height='11' rx='1'/%3E%3C/g%3E%3C/svg%3E">
+<title>DSAViz — Data Structures &amp; Algorithms Visualizer</title>
+<style>
+<!--INCLUDE:style.css-->
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="2"  y="13" width="4" height="8"  rx="1"/>
+      <rect x="8"  y="8"  width="4" height="13" rx="1"/>
+      <rect x="14" y="3"  width="4" height="18" rx="1"/>
+      <rect x="20" y="10" width="2" height="11" rx="1"/>
+    </svg>
+    <span>DSA<b>Viz</b></span>
+  </div>
+  <nav class="tabs" role="tablist">
+    <button class="tab is-active" data-view="visualize" role="tab">Visualize</button>
+    <button class="tab" data-view="mycode" role="tab">My Code</button>
+    <button class="tab" data-view="reference" role="tab">Reference</button>
+    <button class="tab" data-view="roadmap" role="tab">Roadmap</button>
+  </nav>
+  <div class="topbar-right">
+    <a class="icon-btn" href="https://github.com/leela1836/dsa-visualizer"
+       target="_blank" rel="noopener" title="Source on GitHub" aria-label="Source on GitHub">
+      <svg viewBox="0 0 16 16" width="15" height="15" fill="currentColor" aria-hidden="true">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+        0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01
+        1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+        0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27
+        2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82
+        2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0
+        .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+      </svg>
+    </a>
+    <button id="themeBtn" class="icon-btn" title="Toggle theme" aria-label="Toggle theme">◐</button>
+  </div>
+</header>
+
+<!-- ══════════════════════════ VISUALIZE ══════════════════════════ -->
+<main id="view-visualize" class="view is-active">
+  <aside class="catalog" id="catalog">
+    <input id="catalogSearch" class="search" type="search" placeholder="Search algorithms…" autocomplete="off">
+    <div id="catalogList" class="catalog-list"></div>
+  </aside>
+
+  <section class="workspace">
+    <div class="algo-head">
+      <div class="algo-head-main">
+        <h1 id="algoName">—</h1>
+        <p id="algoBlurb" class="blurb"></p>
+      </div>
+      <div id="algoCx" class="cx-chips"></div>
+    </div>
+
+    <div id="inputBar" class="input-bar"></div>
+
+    <div class="stage-wrap">
+      <div class="stage-tabs" id="stageTabs">
+        <button class="stage-tab is-active" data-mode="data">Data view</button>
+        <button class="stage-tab" data-mode="flow">Flowchart</button>
+        <button class="stage-tab" data-mode="both">Side by side</button>
+      </div>
+      <div id="stage" class="stage"></div>
+      <div id="note" class="note"></div>
+    </div>
+
+    <div class="player">
+      <button id="btnFirst" class="pbtn" title="First frame (Home)">⏮</button>
+      <button id="btnPrev"  class="pbtn" title="Step back (←)">◀</button>
+      <button id="btnPlay"  class="pbtn pbtn-primary" title="Play / Pause (Space)">▶</button>
+      <button id="btnNext"  class="pbtn" title="Step forward (→)">▶|</button>
+      <button id="btnLast"  class="pbtn" title="Last frame (End)">⏭</button>
+      <input id="scrub" class="scrub" type="range" min="0" max="0" value="0" step="1" aria-label="Timeline">
+      <span id="frameCount" class="frame-count">0 / 0</span>
+      <label class="speed">
+        <span>Speed</span>
+        <input id="speed" type="range" min="1" max="12" value="6" aria-label="Speed">
+      </label>
+    </div>
+
+    <div class="panels">
+      <div class="panel panel-code">
+        <div class="panel-head">
+          <span>Code</span>
+          <div class="lang-switch" id="langSwitch">
+            <button class="lang is-active" data-lang="python">Python</button>
+            <button class="lang" data-lang="java">Java</button>
+          </div>
+        </div>
+        <pre id="codeBox" class="code"></pre>
+      </div>
+      <div class="panel panel-side">
+        <div class="panel-head"><span>State</span></div>
+        <div id="varsBox" class="vars"></div>
+        <div class="panel-head"><span>Idea</span></div>
+        <div id="explainBox" class="explain"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ══════════════════════════ MY CODE ══════════════════════════ -->
+<main id="view-mycode" class="view">
+  <section class="mycode">
+    <div class="mycode-intro">
+      <h1>Visualize your own code</h1>
+      <p>Write Python straight into the editor and press Run — it executes here in the browser, one statement at a time, with your variables and data structures drawn live. For real CPython or for Java, use the tracers and drop the trace file instead.</p>
+    </div>
+
+    <div class="src-tabs" id="srcTabs">
+      <button class="src-tab is-active" data-src="write">Write &amp; run Python</button>
+      <button class="src-tab" data-src="load">Load a trace file</button>
+    </div>
+
+    <!-- ── write & run ── -->
+    <div class="src-pane is-active" id="pane-write">
+      <div class="editor-bar">
+        <label class="field">
+          <span>Start from</span>
+          <select id="pyExample"></select>
+        </label>
+        <div class="editor-bar-right">
+          <span class="muted" id="pyHint">Ctrl+Enter to run</span>
+          <button class="go-btn" id="pyRun">Run ▸</button>
+        </div>
+      </div>
+      <div class="editor-wrap">
+        <div class="gutter" id="pyGutter" aria-hidden="true"></div>
+        <textarea id="pyCode" class="editor" spellcheck="false" autocomplete="off"
+          autocapitalize="off" autocorrect="off" wrap="off"
+          aria-label="Python source code"></textarea>
+      </div>
+      <div class="py-error" id="pyError" hidden></div>
+      <details class="howto subset">
+        <summary>What this interpreter supports</summary>
+        <div class="subset-body" id="subsetBody"></div>
+      </details>
+    </div>
+
+    <!-- ── load a trace ── -->
+    <div class="src-pane" id="pane-load">
+    <div class="drop" id="drop">
+      <div class="drop-inner">
+        <div class="drop-icon">↓</div>
+        <p><b>Drop <code>trace.json</code> here</b> or <button id="pickBtn" class="link-btn">choose a file</button></p>
+        <p class="muted">Nothing is uploaded. Everything runs in your browser.</p>
+      </div>
+      <input id="fileInput" type="file" accept=".json,application/json" hidden>
+    </div>
+
+    <details class="howto" open>
+      <summary>How to generate a trace</summary>
+      <div class="howto-body">
+        <div class="howto-col">
+          <h3>Python <span class="tagline">fully automatic</span></h3>
+          <p>Put <code>dsaviz.py</code> next to your script, then:</p>
+<pre class="code code-static">from dsaviz import trace
+
+def bubble(a):
+    for i in range(len(a)):
+        for j in range(len(a) - i - 1):
+            if a[j] &gt; a[j+1]:
+                a[j], a[j+1] = a[j+1], a[j]
+    return a
+
+trace(bubble, [5, 3, 8, 4, 2])          # writes trace.json</pre>
+          <p class="muted">Every line executed is captured automatically via <code>sys.settrace</code> — locals, call stack, and depth. Lists render as bars, 2-D lists as DP tables, node objects as trees or linked lists.</p>
+        </div>
+        <div class="howto-col">
+          <h3>Java <span class="tagline">explicit snapshots</span></h3>
+          <p>Put <code>DsaViz.java</code> in your folder, then:</p>
+<pre class="code code-static">static void bubble(int[] a) {
+  for (int i = 0; i &lt; a.length; i++)
+    for (int j = 0; j &lt; a.length-i-1; j++) {
+      DsaViz.watch("a", a).watch("i", i).watch("j", j);
+      DsaViz.step(4, "compare " + a[j] + " vs " + a[j+1]);
+      if (a[j] &gt; a[j+1]) { int t=a[j]; a[j]=a[j+1]; a[j+1]=t; }
+    }
+}
+
+public static void main(String[] x) {
+  DsaViz.begin("Bubble.java");
+  bubble(new int[]{5,3,8,4,2});
+  DsaViz.save("trace.json");
+}</pre>
+          <p class="muted">Java has no portable line-hook, so you mark the interesting moments yourself. One <code>step()</code> call per frame.</p>
+        </div>
+      </div>
+    </details>
+    </div>
+
+    <div id="mycodeStageWrap" class="mycode-stage" hidden>
+      <div class="algo-head">
+        <div class="algo-head-main">
+          <h1 id="mcName">Trace</h1>
+          <p id="mcBlurb" class="blurb"></p>
+        </div>
+        <button id="mcClear" class="ghost-btn">Load another</button>
+      </div>
+      <div class="stage-wrap">
+        <div class="stage-tabs" id="mcStageTabs">
+          <button class="stage-tab is-active" data-mode="data">Data view</button>
+          <button class="stage-tab" data-mode="flow">Flowchart</button>
+          <button class="stage-tab" data-mode="both">Side by side</button>
+        </div>
+        <div id="mcStage" class="stage"></div>
+        <div id="mcNote" class="note"></div>
+      </div>
+      <div class="player">
+        <button id="mcFirst" class="pbtn">⏮</button>
+        <button id="mcPrev"  class="pbtn">◀</button>
+        <button id="mcPlay"  class="pbtn pbtn-primary">▶</button>
+        <button id="mcNext"  class="pbtn">▶|</button>
+        <button id="mcLast"  class="pbtn">⏭</button>
+        <input id="mcScrub" class="scrub" type="range" min="0" max="0" value="0" step="1">
+        <span id="mcCount" class="frame-count">0 / 0</span>
+        <label class="speed"><span>Speed</span><input id="mcSpeed" type="range" min="1" max="12" value="6"></label>
+      </div>
+      <div class="panels">
+        <div class="panel panel-code">
+          <div class="panel-head"><span id="mcSrcName">Source</span></div>
+          <pre id="mcCode" class="code"></pre>
+        </div>
+        <div class="panel panel-side">
+          <div class="panel-head"><span>Variables</span></div>
+          <div id="mcVars" class="vars"></div>
+          <div class="panel-head"><span>Call stack</span></div>
+          <div id="mcStack" class="callstack"></div>
+          <div class="panel-head" id="mcOutHead" hidden><span>Output</span></div>
+          <pre id="mcOut" class="console" hidden></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ══════════════════════════ REFERENCE ══════════════════════════ -->
+<main id="view-reference" class="view">
+  <section class="reference" id="referenceBody"></section>
+</main>
+
+<!-- ══════════════════════════ ROADMAP ══════════════════════════ -->
+<main id="view-roadmap" class="view">
+  <section class="reference roadmap" id="roadmapBody"></section>
+</main>
+
+<div id="toast" class="toast"></div>
+
+<script>
+<!--INCLUDE:js/core.js-->
+<!--INCLUDE:js/render.js-->
+<!--INCLUDE:js/algos_sorting.js-->
+<!--INCLUDE:js/algos_searching.js-->
+<!--INCLUDE:js/algos_patterns.js-->
+<!--INCLUDE:js/algos_list.js-->
+<!--INCLUDE:js/algos_tree.js-->
+<!--INCLUDE:js/algos_graph.js-->
+<!--INCLUDE:js/algos_dp.js-->
+<!--INCLUDE:js/reference.js-->
+<!--INCLUDE:js/lcproblems.js-->
+<!--INCLUDE:js/roadmap.js-->
+<!--INCLUDE:js/pyrun.js-->
+<!--INCLUDE:js/pyeval.js-->
+<!--INCLUDE:js/pyexamples.js-->
+<!--INCLUDE:js/mycode.js-->
+<!--INCLUDE:js/app.js-->
+</script>
+</body>
+</html>

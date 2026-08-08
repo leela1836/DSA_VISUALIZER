@@ -107,7 +107,7 @@ const PITFALLS = [
   ['Forgetting the empty case',     'n = 0, empty string, single node, target absent. Most rejected submissions die here, not on the algorithm.']
 ];
 
-const REPO_URL = 'https://github.com/leela1836/dsa-visualizer';
+const REPO_URL = 'https://github.com/leela1836/DSA_VISUALIZER';
 const SITE_FOOT = `
   <footer class="site-foot">
     <span>Everything runs in your browser. No account, no server, no tracking — your progress and your code stay on this device.</span>

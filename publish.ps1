@@ -14,7 +14,7 @@
 #>
 
 param(
-    [string]$RepoName = 'dsa-visualizer',
+    [string]$RepoName = 'DSA_VISUALIZER',
     [switch]$SkipBuild
 )
 

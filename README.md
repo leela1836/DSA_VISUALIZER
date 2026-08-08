@@ -1,6 +1,6 @@
 # DSAViz
 
-**[▶ Open the app](https://leela1836.github.io/dsa-visualizer/)** — free, no sign-up, works offline.
+**[▶ Open the app](https://leela1836.github.io/DSA_VISUALIZER/)** — free, no sign-up, works offline.
 
 A tool for learning data structures and algorithms by *watching them run*.
 

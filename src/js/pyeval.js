@@ -819,6 +819,22 @@ const PY_BUILTINS = {
     (k || []).forEach(x => dictSet(d, x.k, x.v));
     return d;
   }),
+  /* Approximation: a bytearray is modelled as a plain list of ints. Indexing,
+     assignment, len and iteration behave identically, which is all DSA code
+     uses it for — and it draws as an array instead of an opaque blob. It does
+     print differently from CPython ([0, 0] rather than bytearray(b'\x00\x00')). */
+  bytearray: nat('bytearray', (a, k, l) => {
+    if (!a.length) return [];
+    if (isNum(a[0])) return new Array(Math.max(0, Math.trunc(a[0]))).fill(0);
+    if (isStr(a[0])) return Array.from(a[0]).map(c => c.charCodeAt(0));
+    return iterate(a[0], l);
+  }),
+  frozenset: nat('frozenset', (a, k, l) => {
+    const s = new Map();
+    if (a.length) iterate(a[0], l).forEach(v => s.set(pyKey(v), v));
+    s.__isSet = true;
+    return s;
+  }),
   set: nat('set', (a, k, l) => {
     const s = new Map();
     if (a.length) iterate(a[0], l).forEach(v => s.set(pyKey(v), v));

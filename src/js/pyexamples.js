@@ -252,6 +252,15 @@ const PY_SUBSET_DOC = `
       <li>real exception classes — <code>try/except</code> catches everything</li>
       <li>arbitrary-precision integers (numbers are IEEE doubles, exact to 2⁵³)</li>
     </ul>
+    <h4>Approximations</h4>
+    <ul>
+      <li><code>bytearray(n)</code> becomes a plain list of zeros — indexing, assignment,
+          <code>len</code> and iteration match, but it prints as <code>[0, 0]</code> rather than
+          <code>bytearray(b'\\x00\\x00')</code>, and it draws as an array, which is what you want here.</li>
+      <li>Sets keep insertion order; CPython's iteration order is hash-based. Sort before
+          printing if order matters.</li>
+      <li><code>try/except</code> catches everything — exception <i>types</i> are not modelled.</li>
+    </ul>
     <p class="muted">Hit one of these? Use <code>dsaviz.py</code> from the tracers folder — it runs real CPython with no subset limits, and the trace drops straight into the other tab.</p>
   </div>
 </div>`;

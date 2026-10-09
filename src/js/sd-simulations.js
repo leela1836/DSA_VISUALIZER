@@ -1,6 +1,7 @@
 /* Pure, deterministic frame builders. Times are illustrative, never benchmarks. */
 const SD_SIM = {
  build(id, o){
+  if(id.startsWith('s3-'))return SDStorageSim.build(id,o);
   if(id.startsWith('s2-'))return SDBackendSim.build(id,o);
   const nodes = [], frames = [];
   let elapsed = 0;

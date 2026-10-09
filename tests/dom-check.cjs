@@ -17,7 +17,7 @@ Object.defineProperty(HTMLInputElement.prototype,'checked',{configurable:true,ge
 Object.defineProperty(document,'hidden',{value:false});
 let now=0,nextId=0,small=false,reduced=false;
 const pending=new Map(),store=new Map();
-const context=vm.createContext({console,document,navigator:{platform:'Win32'},location:{hash:''},window:{addEventListener(){},scrollTo(){}},
+const context=vm.createContext({console,document,Event,navigator:{platform:'Win32'},location:{hash:''},window:{addEventListener(){},scrollTo(){}},
  performance:{now:()=>now},requestAnimationFrame:fn=>{pending.set(++nextId,fn);return nextId;},cancelAnimationFrame:id=>pending.delete(id),
  setTimeout:()=>0,clearTimeout(){},matchMedia:q=>({matches:q.includes('reduced-motion')?reduced:q.includes('max-width')?small:false}),
  ResizeObserver:class{observe(){}disconnect(){}},localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v),removeItem:k=>store.delete(k)}
@@ -51,7 +51,7 @@ click('#tab-understand');assert(!query('#panel-understand').hidden);assert(query
 click('#tab-deeper');assert.equal(document.querySelectorAll('.deep-questions details').length,3);
 click('#tab-reflect');click('#sdComplete');click('#sdBookmark');
 run("assert(SDProgress.data.completed.includes('dns')); assert(SDProgress.data.bookmarks.includes('dns'));");
-route('#/system-design');assert.equal(document.querySelectorAll('.network-lab-card').length,23);assert.equal(document.querySelectorAll('.future-stage').length,10);
+route('#/system-design');assert.equal(document.querySelectorAll('.network-lab-card').length,38);assert.equal(document.querySelectorAll('.future-stage').length,9);
 route('#/system-design/dns');run("assert(SDProgress.data.completed.includes('dns'));");
 click('[data-preset="2"]');finish();assert(query('#sdNote').textContent.includes('nonexistent'));
 run('assert.equal(SDStudy.dns.cached,null);');
@@ -82,7 +82,29 @@ run("assert.equal(Platform.player.frames.at(-1).state.outcome,'timeout, write co
 assert(query('#experimentEvidence').textContent.includes('timeout, write committed'));
 click('#tab-reflect');click('#sdComplete');click('#sdBookmark');
 run("SDProgress.load(); assert(SDProgress.data.completed.includes('s2-request-lifecycle')); assert(SDProgress.data.bookmarks.includes('s2-request-lifecycle'));");
-route('#/system-design');assert.equal(document.querySelectorAll('.published-stage').length,2);
+route('#/system-design');assert.equal(document.querySelectorAll('.published-stage').length,3);
+route('#/system-design/s3-indexing');assert.equal(pending.size,0);
+assert.equal(document.querySelectorAll('.storage-record[data-storage-key]').length,8);
+click('[data-storage-key="2"]');finish();
+run("assert.equal(+Platform.options.key,2); assert.equal(Platform.player.frames.at(-1).state.result[0].id,2);");
+click('[data-actor="index"]');assert(query('#actorInspector').textContent.includes('left leaf'));
+assert(query('#sdDiagram').textContent.includes('STORAGE READS'));
+click('[data-storage-toggle="index"]');finish();run('assert.equal(Platform.options.index,false); assert.equal(Platform.player.frames.at(-1).state.reads,4);');
+route('#/system-design/s3-query-execution');click('[data-preset="2"]');finish();
+run('assert(Platform.player.frames.at(-1).state.spilled);');
+click('[data-storage-key="7"]');finish();run("assert.equal(Platform.options.query,'point'); assert.equal(Platform.player.frames.at(-1).state.result[0].id,7);");
+route('#/system-design/s3-transactions');click('[data-preset="2"]');finish();
+run('assert.equal(Platform.player.frames.at(-1).state.total,120);');
+click('[data-preset="1"]');finish();run('assert.equal(Platform.player.frames.at(-1).state.total,150);');
+route('#/system-design/s3-acid-properties');click('[data-preset="1"]');finish();
+run("assert.equal(Platform.player.frames.at(-1).state.tx,'recent commit lost');");
+route('#/system-design/s3-sharding');click('[data-preset="2"]');finish();
+assert.equal(document.querySelectorAll('[data-actor]').length,6);
+click('[data-storage-key="3"]');finish();run('assert.equal(Platform.player.frames.at(-1).state.result[0].id,3);');
+route('#/system-design/s3-replication');click('#labRun');finish();run('assert.equal(Platform.player.frames.at(-1).state.readValue,8);');
+click('[data-actor="replica"]');assert(query('#actorInspector').textContent.includes('Value already returned'));
+click('#tab-reflect');click('#sdComplete');click('#sdBookmark');
+run("SDProgress.load(); assert(SDProgress.data.completed.includes('s3-replication')); assert(SDProgress.data.bookmarks.includes('s3-replication'));");
 route('#/system-design/tcp-udp');assert.equal(pending.size,0);assert(query('#sdDiagram svg').getAttribute('viewBox').startsWith('0 0 420 '));
 input('[data-option="transport"]','UDP');finish();run("assert.equal(Platform.player.frames.at(-1).state.delivered,'A,C');");
 route('#/dsa');assert(query('#view-visualize').classList.contains('is-active'));assert(query('#platformMain').hidden);
@@ -90,4 +112,4 @@ click('.tab[data-view="mycode"]');assert.equal(context.location.hash,'#/dsa/myco
 run("const sample=runPython('print(2 + 3)'); assert(!sample.error); assert(sample.stdout.join('').includes('5'));");
 route('#/dsa/roadmap');assert(query('#view-roadmap').classList.contains('is-active'));
 route('#/system-design/tcp-handshake');click('#sdPlay');route('#/');assert.equal(pending.size,0);
-console.log('Passed DOM interactions: complete boot, 23 labs and all presets, tabs, actor inspection, pause/restart, DNS staleness/expiry/TTL/failure, progress, narrow scene, reduced motion, DSA tabs, Python execution, animation cleanup.');
+console.log('Passed DOM interactions: complete boot, 38 labs and all presets, tabs, actor inspection, pause/restart, DNS staleness/expiry/TTL/failure, progress, narrow scene, reduced motion, DSA tabs, Python execution, animation cleanup.');

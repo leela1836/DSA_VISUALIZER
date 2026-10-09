@@ -1,4 +1,18 @@
 /* A focused experiment workspace, with the roadmap tucked away until requested. */
+.storage-caption{font-size:10px;fill:var(--fg-2);letter-spacing:.3px}
+.storage-panel-bg{fill:var(--bg-2);stroke:var(--line)}
+.storage-heading{font-size:13px;font-weight:650;fill:var(--fg)}
+.storage-value{font-size:13px;fill:var(--fg);font-weight:650}
+.storage-tile rect,.storage-record rect,.index-node rect,.durability-path rect{fill:var(--bg-3);stroke:var(--line)}
+.storage-tile.tentative rect{stroke:#c28c35;stroke-dasharray:4 3}
+.storage-tile.contacted rect,.storage-record.matched rect,.index-node.visited rect{fill:var(--accent-bg);stroke:var(--accent);stroke-width:2}
+.storage-record.examined rect{stroke:#c28c35;stroke-width:2}
+.storage-record{cursor:pointer}.storage-record:hover rect,.storage-record:focus rect{stroke:var(--accent);stroke-width:3}
+.storage-record:focus{outline:none}.storage-operation>rect{fill:var(--bg-3)}#storageWorkFill{fill:var(--accent)}
+.index-node[role="button"]{cursor:pointer}.index-node[role="button"]:hover rect,.index-node[role="button"]:focus rect{stroke:var(--accent);stroke-width:3}
+.storage-packet-label{fill:var(--on-accent);font-size:10px;font-weight:700}.storage-payload>rect{fill:var(--accent)}
+.storage-panel .scene-small{font-size:11px}.evidence-run b{overflow-wrap:anywhere}
+.storage-inspector{margin:16px 0;display:grid;gap:8px}.storage-inspector>div{display:flex;justify-content:space-between;gap:15px;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px}.storage-inspector dt{color:var(--fg-2)}.storage-inspector dd{margin:0;font-weight:650;text-align:right;overflow-wrap:anywhere}
 .published-stage{margin:36px 0}
 .backend-cell rect,.pool-lease rect{fill:var(--bg);stroke:var(--line)}
 .backend-cell.is-good rect,.pool-lease.occupied rect{fill:var(--accent-bg);stroke:var(--accent)}

@@ -50,6 +50,21 @@ Stage 2 lessons use original explanations and link to these primary references:
 
 Operationally interchangeable workers using a shared session store are distinguished from REST's stricter stateless-interaction constraint. Routing affinity never copies worker memory. Later stages remain unpublished until their own content and simulations are authored.
 
-## Keeping the existing rendering stack
+## Storage lesson sources and boundaries
+
+The 15 Stage 3 lessons link to primary documentation and contain original explanatory text:
+
+- [PostgreSQL constraints](https://www.postgresql.org/docs/current/ddl-constraints.html), [index types](https://www.postgresql.org/docs/current/indexes-types.html), and [EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html): the lab uses eight fixed records, four data pages, and a two-level conceptual B+ tree. It forces an access path for teaching rather than implementing the PostgreSQL optimizer. A warm working set removes modeled storage reads but retains logical visits. Performance experiments explicitly add empty teaching pages.
+- [Transactions](https://www.postgresql.org/docs/current/tutorial-transactions.html), [WAL](https://www.postgresql.org/docs/current/wal-intro.html), and [asynchronous commit](https://www.postgresql.org/docs/current/wal-async-commit.html): tentative balances and committed balances are separate. The durable case assumes intact storage and truthful flush semantics. The asynchronous crash case loses a whole recent transfer, not an invented half-commit.
+- [PostgreSQL isolation](https://www.postgresql.org/docs/current/transaction-iso.html): Read Committed uses statement snapshots; Repeatable Read retains the transaction snapshot. The one-row schedule illustrates nonrepeatable reads and rejects dirty reads. It does not implement every anomaly or serializable conflict detection.
+- [Standby replication](https://www.postgresql.org/docs/current/warm-standby.html): the synchronous option specifically waits for the selected replica to apply. A locally committed write can remain unconfirmed during replica failure. No promotion or automatic failover occurs, and later replay does not alter an already-returned stale value.
+- [Partitioning](https://www.postgresql.org/docs/current/ddl-partitioning.html) and [MongoDB sharding](https://www.mongodb.com/docs/manual/sharding/): local partitions and distributed shard ownership are distinguished. The shard model deliberately uses naive modulo placement. Adding a shard previews remapping rather than claiming to execute live migration.
+- [MongoDB embedding](https://www.mongodb.com/docs/manual/data-modeling/embedding/) and [transactions](https://www.mongodb.com/docs/manual/core/transactions/): embedding versus referencing is a representation choice, not an exclusive SQL/NoSQL classification. Category labels do not supply universal consistency or transaction guarantees.
+- [S3 multipart upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html): staged parts become a published object only after completion. This is not a real upload client. Object storage is not universally eventually consistent; provider guarantees are named in the lesson.
+- [Linux VFS](https://www.kernel.org/doc/html/latest/filesystems/vfs.html) and [fsync](https://man7.org/linux/man-pages/man2/fsync.2.html): the filesystem model checks existing-file byte survival. Open handles and directory names are distinguished; directory-entry crash durability is explicitly outside the experiment.
+
+The diagram supports direct record and leaf selection and an index-root toggle. Inspector values use completed arrival snapshots; an in-flight operation does not expose its future result early. All model time is illustrative, and the diagrams omit concurrency or storage effects unless the specific lesson models them.
+
+## Rendering approach
 
 The original app already supports inline JavaScript and SVG. A dedicated `requestAnimationFrame` timeline allows smooth transfer interpolation, precise pause/resume, and arrival-driven snapshots. SVG keeps actors inspectable with keyboard-accessible controls and lets narrow layouts use their own coordinates instead of shrinking a wide desktop grid or introducing horizontal scrolling. These requirements do not require a framework migration. DSA keeps its existing player; the new System Design scene engine is independent.

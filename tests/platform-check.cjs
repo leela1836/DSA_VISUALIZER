@@ -10,13 +10,13 @@ const context=vm.createContext({console,setTimeout,clearTimeout,
  document:{addEventListener(){}},location:{hash:''}
 });
 const load=file=>vm.runInContext(fs.readFileSync(path.join(root,'src',file),'utf8'),context,{filename:file});
-['js/core.js','js/algos_sorting.js','js/algos_searching.js','js/algos_patterns.js','js/algos_list.js','js/algos_tree.js','js/algos_graph.js','js/algos_dp.js','js/lcproblems.js','js/roadmap.js','js/sd-roadmap.js','js/sd-lessons.js','js/sd-backend-lessons.js','js/sd-simulations.js','js/sd-backend-simulations.js','js/sd-lab-content.js','js/sd-backend-labs.js','js/sd-scenes.js','js/sd-backend-scenes.js','js/sd-study.js','js/platform.js'].forEach(load);
+['js/core.js','js/algos_sorting.js','js/algos_searching.js','js/algos_patterns.js','js/algos_list.js','js/algos_tree.js','js/algos_graph.js','js/algos_dp.js','js/lcproblems.js','js/roadmap.js','js/sd-roadmap.js','js/sd-lessons.js','js/sd-backend-lessons.js','js/sd-simulations.js','js/sd-backend-simulations.js','js/sd-lab-content.js','js/sd-backend-labs.js','js/sd-scenes.js','js/sd-backend-scenes.js','js/sd-storage-content.js','js/sd-storage-simulations.js','js/sd-storage-scenes.js','js/sd-study.js','js/platform.js'].forEach(load);
 context.assert=assert;
 vm.runInContext(`
 const defaults=id=>Object.fromEntries(SD_LESSONS[id].controls.map(c=>[c[0],c[2]==='checkbox'?c[3]:c[2]==='select'?c[4]:c[4]]));
 const final=(id,o)=>SD_SIM.build(id,{...defaults(id),...o}).frames.at(-1);
 assert.equal(SD_STAGES.length,12);
-assert.equal(Object.keys(SD_LESSONS).length,23);
+assert.equal(Object.keys(SD_LESSONS).length,38);
 assert.equal(new Set(SD_TOPICS.map(t=>t.id)).size,SD_TOPICS.length);
 const prior=new Set();
 for(const t of SD_TOPICS){for(const id of t.prerequisites)assert(prior.has(id),'Prerequisite must precede '+t.id);prior.add(t.id);}
@@ -122,11 +122,58 @@ for(const size of [1,2,4])for(const requests of [1,5,8])for(const work of [30,10
 }
 assert(Platform.lessonNavigation(SD_TOPICS.find(t=>t.id==='browser-server')).includes('#/system-design/s2-web-servers'));
 assert(Platform.lesson(SD_TOPICS.find(t=>t.id==='s2-web-servers')).includes('APPLICATION AND BACKEND FUNDAMENTALS / LESSON 01'));
+const storageState=(name,o={})=>{const id='s3-'+name,sim=SD_SIM.build(id,{...defaults(id),...o});return SDScene.state(sim.frames,sim.frames.length-1,1);};
+assert.equal(storageState('relational-databases',{author:'missing',enforce:true}).writes,0);
+assert.equal(storageState('relational-databases',{author:'missing',enforce:false}).writes,1);
+assert.equal(storageState('nosql-databases',{model:'embedded',rename:false}).reads,1);
+assert.equal(storageState('nosql-databases',{model:'referenced',rename:false}).reads,2);
+assert.equal(storageState('data-modeling',{model:'embedded',rename:true,propagate:false}).copies[1],'Leo');
+assert.equal(storageState('data-modeling',{model:'referenced',rename:true}).copies[1],'Lena');
+for(let key=1;key<=9;key++){
+ const indexed=storageState('indexing',{key,index:true,warm:false}),scan=storageState('indexing',{key,index:false,warm:false});
+ assert.equal(JSON.stringify(indexed.result),JSON.stringify(scan.result));assert.equal(indexed.result.length,key<=8?1:0);
+ assert.equal(indexed.reads,key<=8?3:2);assert.equal(scan.reads,4);
+ const warm=storageState('indexing',{key,index:true,warm:true});assert.equal(warm.pageReads,0);assert.equal(warm.cacheHits,warm.reads);
+}
+const inMemory=storageState('query-execution',{query:'all',memory:8}),spilled=storageState('query-execution',{query:'all',memory:2});
+assert(!inMemory.spilled);assert(spilled.spilled);assert.equal(spilled.tempWrites,2);assert.equal(JSON.stringify(inMemory.result),JSON.stringify(spilled.result));
+for(const amount of [10,30,60]){
+ const good=storageState('transactions',{amount,atomic:true,fail:false}),abort=storageState('transactions',{amount,atomic:true,fail:true}),partial=storageState('transactions',{amount,atomic:false,fail:true});
+ assert.equal(good.a+good.b,150);assert.equal(abort.a,100);assert.equal(abort.b,50);assert.equal(partial.a+partial.b,150-amount);
+ const recovery=storageState('acid-properties',{amount,durable:true,crash:true}),lost=storageState('acid-properties',{amount,durable:false,crash:true});
+ assert.equal(recovery.a,100-amount);assert.equal(lost.a,100);assert.equal(lost.b,50);
+ const commit=SD_SIM.build('s3-acid-properties',{amount,durable:true,crash:true}).frames.find(f=>f.packet==='Debit A');assert.equal(commit.state.a,100,'Debit remains tentative before atomic commit');
+}
+assert.equal(storageState('transaction-isolation',{level:'Read Committed'}).second,70);
+assert.equal(storageState('transaction-isolation',{level:'Repeatable Read'}).second,100);
+assert.equal(storageState('transaction-isolation',{level:'Read Committed'}).during,100);
+assert.equal(storageState('replication',{mode:'asynchronous',lag:true,fail:false}).readValue,8);
+assert.equal(storageState('replication',{mode:'synchronous',lag:true,fail:false}).readValue,7);
+assert.equal(storageState('replication',{mode:'synchronous',fail:true}).ack,false);
+assert.equal(storageState('replication',{mode:'asynchronous',lag:false,fail:true}).replica,8);
+for(const shards of [2,3,4])for(const scope of ['point','all'])for(const key of [1,5,8,9]){
+ const st=storageState('sharding',{shards,scope,key,rebalance:true});
+ assert.equal(st.placements.flat().length,8);assert.equal(new Set(st.placements.flat()).size,8);
+ assert.equal(st.touched.length,scope==='all'?shards:key<=8?1:0);
+ assert.equal(st.moves,SDStorageSim.books.filter(r=>r.id%shards!==r.id%(shards+1)).length);
+ if(key<=8&&scope==='point')assert.equal(st.result[0].id,key);
+}
+assert.equal(storageState('partitioning',{scope:'all'}).touched.length,4);
+assert.equal(storageState('partitioning',{scope:'point',key:5}).touched[0],2);
+assert.equal(storageState('object-storage',{fail:true,retry:true,complete:true}).published,true);
+assert.equal(storageState('object-storage',{fail:true,retry:false,complete:true}).published,false);
+assert.equal(storageState('object-storage',{fail:false,complete:false}).published,false);
+assert.equal(storageState('file-storage',{sync:true,crash:true}).content,'new note');
+assert.equal(storageState('file-storage',{sync:false,crash:true}).content,'old note');
+assert.equal(storageState('file-storage',{sync:true,rename:true,crash:false}).name,'study.txt');
+assert.equal(storageState('database-performance',{query:'point',index:false,pages:12,warm:false}).pageReads,12);
+assert.equal(storageState('database-performance',{query:'point',index:true,pages:12,warm:false}).pageReads,3);
+assert.equal(storageState('database-performance',{query:'all',index:false,pages:12,warm:true}).reads,12);
 SDProgress.toggle('completed','dns');SDProgress.toggle('bookmarks','dns');SDProgress.data.current='dns';SDProgress.save();
 SDProgress.data={completed:[],bookmarks:[],current:null};SDProgress.load();
 assert(SDProgress.data.completed.includes('dns'));assert(SDProgress.data.bookmarks.includes('dns'));assert.equal(SDProgress.data.current,'dns');
 assert(Progress.has('t-hash'));assert.equal(SDProgress.counts(1).done,1);
-const planned=SD_TOPICS.find(t=>t.stage===3);SDProgress.toggle('completed',planned.id);assert(!SDProgress.data.completed.includes(planned.id));
+const planned=SD_TOPICS.find(t=>t.stage===4);SDProgress.toggle('completed',planned.id);assert(!SDProgress.data.completed.includes(planned.id));
 assert(!Platform.lesson(planned).includes('sdComplete'));assert(Platform.lesson(planned).includes('not been published'));
 localStorage.setItem(SDProgress.key,'{');SDProgress.load();assert.equal(SDProgress.data.current,null);assert.equal(SDProgress.data.completed.length,0);
 localStorage.setItem(SDProgress.key,JSON.stringify({completed:['not-real','dns'],bookmarks:[planned.id],current:'not-real'}));
@@ -149,7 +196,7 @@ timeline.play();assert.equal(timeline.fraction,paused);for(let n=0;n<100&&callba
 assert.equal(timeline.i,2);assert.equal(timeline.fraction,1);assert.equal(timeline.playing,false);
 timeline.go(0);assert.equal(timeline.fraction,1);timeline.restart();assert.equal(timeline.fraction,0);
 assert(arrivals.some(a=>a.i===1&&a.progress===1));
-console.log('Passed: '+scenarios+' simulation scenarios; 23 lesson contracts; prerequisite ordering; persistence; planned-topic guards; routes; player; '+algorithms+' DSA algorithms.');
+console.log('Passed: '+scenarios+' simulation scenarios; 38 lesson contracts; prerequisite ordering; persistence; planned-topic guards; routes; player; '+algorithms+' DSA algorithms.');
 `,context);
 const built=fs.readFileSync(path.join(root,'index.html'),'utf8');
 assert.equal(built,fs.readFileSync(path.join(root,'DSAViz.html'),'utf8'));

@@ -40,6 +40,7 @@ const SDScene = {
  },
  links(id){return ({dns:[['browser','os'],['os','resolver'],['resolver','root'],['resolver','tld'],['resolver','auth']],internet:[['client','gateway'],['gateway','isp'],['isp','transit'],['transit','edge'],['edge','server'],['isp','alternate'],['alternate','backup'],['backup','edge']],'ip-ports':[['client','host'],['host','https'],['host','closed']],'client-server':[['client','server']],'tcp-udp':[['sender','network'],['network','receiver']],tls:[['browser','server']],'http-lifecycle':[['browser','app'],['app','store']],'http-semantics':[['client','api'],['api','store']],'http-versions':[['client','server'],['server','a'],['server','b'],['server','c']],websockets:[['browser','server']],'browser-server':[['browser','dns'],['browser','server'],['browser','parser'],['parser','paint']]})[id]||[];},
  render(id,simulation,i,progress=1,options={},small=false){
+  if(id.startsWith('s3-'))return SDStorageScene.render(id,simulation,i,progress,options,small);
   if(id.startsWith('s2-'))return SDBackendScene.render(id,simulation,i,progress,options,small);
   const f=simulation.frames[i],s=this.state(simulation.frames,i,progress);
   if(id==='tcp-handshake')return this.handshake(simulation,i,progress,small,s);

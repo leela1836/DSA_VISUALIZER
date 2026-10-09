@@ -73,6 +73,8 @@ const SDStudy = {
   const p=this.platform,draw=SDScene.render(p.active.id,this.simulation,i,fraction,p.options,this.small);this.path=draw.path;
   $('#sdDiagram').innerHTML=draw.html;
   $$('#sdDiagram [data-actor]').forEach(el=>{const inspect=()=>{p.player.pause();this.inspect(el.dataset.actor);};el.addEventListener('click',inspect);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inspect();}});});
+  $$('#sdDiagram [data-storage-key]').forEach(el=>{const choose=()=>{const key=$('[data-option="key"]');if(!key)return;key.value=el.dataset.storageKey;const scope=$('[data-option="scope"]')||$('[data-option="query"]');if(scope)scope.value='point';key.dispatchEvent(new Event('input',{bubbles:true}));};el.addEventListener('click',choose);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose();}});});
+  $$('#sdDiagram [data-storage-toggle]').forEach(el=>{const toggle=()=>{const input=$('[data-option="'+el.dataset.storageToggle+'"]');if(!input)return;input.checked=!input.checked;input.dispatchEvent(new Event('input',{bubbles:true}));};el.addEventListener('click',toggle);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});});
   $('#sdPacket').textContent=f.packet;$('#sdNote').textContent=f.note;
   const before=i?this.simulation.frames[i-1].elapsed:0;
   $('#sdState').innerHTML=`<div><span>MODEL TIME</span><b id="modelClock">${fraction<1?before:f.elapsed} <small>ms</small></b></div><div><span>EVENT</span><b>${i+1} <small>/ ${this.simulation.frames.length}</small></b></div><div><span>TRANSFER</span><b id="transferState">${fraction>=1?'Arrived':'Ready'}</b></div>`;
@@ -85,6 +87,7 @@ const SDStudy = {
   const packet=$('#scenePacket');
   if(packet&&this.path){const motion=matchMedia('(prefers-reduced-motion: reduce)').matches?(fraction>=1?1:0):fraction,{x,y}=SDScene.motionAt(this.path,motion);packet.setAttribute('transform',`translate(${x} ${y})`);packet.style.opacity=(f.packet.includes('lost')||f.packet==='Unit B'&&p.options.loss)&&fraction>.65&&fraction<1?'0':fraction>=1?'0':'1';}
   const pulse=$('#scenePulse');if(pulse)pulse.setAttribute('r',String((this.small?40:64)+8*fraction));
+  const work=$('#storageWorkFill');if(work)work.setAttribute('width',String(Math.max(1,+work.dataset.workWidth*fraction)));
   const before=p.player.i?this.simulation.frames[p.player.i-1].elapsed:0;
   $('#modelClock').innerHTML=`${Math.round(before+(f.elapsed-before)*fraction)} <small>ms</small>`;
   $('#transferFill').style.width=(fraction*100)+'%';$('#transferState').textContent=fraction>=1?'Arrived':p.player.playing?'In transit':'Paused';
@@ -93,7 +96,8 @@ const SDStudy = {
  inspect(id){
   this.selected=id;const lab=SD_LABS[this.platform.active.id],def=lab.nodes[id];if(!def)return;
   const node=this.simulation.nodes.find(n=>n.id===id),f=this.simulation.frames[this.platform.player.i];
-  $('#actorInspector').innerHTML=`<div class="section-label">INSIDE / ${esc(node.label.toUpperCase())}</div><h2>${esc(def[0])}</h2><p>${esc(def[1])}</p><div class="actor-event"><span>Current involvement</span><b>${f.from===id&&f.to===id?'Local work':f.from===id?'Sending':f.to===id?'Receiving':'Waiting or not on this path'}</b></div>`;
+  const detail=this.platform.active.id.startsWith('s3-')?SDStorageScene.inspect(this.platform.active.id,id,SDScene.state(this.simulation.frames,this.platform.player.i,this.platform.player.fraction)):'';
+  $('#actorInspector').innerHTML=`<div class="section-label">INSIDE / ${esc(node.label.toUpperCase())}</div><h2>${esc(def[0])}</h2><p>${esc(def[1])}</p>${detail}<div class="actor-event"><span>Current involvement</span><b>${f.from===id&&f.to===id?'Local work':f.from===id?'Sending':f.to===id?'Receiving':'Waiting or not on this path'}</b></div>`;
   $$('#sdDiagram [data-actor]').forEach(el=>el.classList.toggle('inspected',el.dataset.actor===id));
  },
  recordEvidence(f){

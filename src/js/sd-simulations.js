@@ -2,6 +2,7 @@
 const SD_SIM = {
  build(id, o){
   if(id.startsWith('s4-'))return SDCacheSim.build(id,o);
+  if(id.startsWith('s5-'))return SDScaleSim.build(id,o);
   if(id.startsWith('s3-'))return SDStorageSim.build(id,o);
   if(id.startsWith('s2-'))return SDBackendSim.build(id,o);
   const nodes = [], frames = [];

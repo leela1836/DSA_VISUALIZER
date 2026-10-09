@@ -10,13 +10,13 @@ const context=vm.createContext({console,setTimeout,clearTimeout,
  document:{addEventListener(){}},location:{hash:''}
 });
 const load=file=>vm.runInContext(fs.readFileSync(path.join(root,'src',file),'utf8'),context,{filename:file});
-['js/core.js','js/algos_sorting.js','js/algos_searching.js','js/algos_patterns.js','js/algos_list.js','js/algos_tree.js','js/algos_graph.js','js/algos_dp.js','js/lcproblems.js','js/roadmap.js','js/sd-roadmap.js','js/sd-lessons.js','js/sd-backend-lessons.js','js/sd-simulations.js','js/sd-backend-simulations.js','js/sd-lab-content.js','js/sd-backend-labs.js','js/sd-scenes.js','js/sd-backend-scenes.js','js/sd-storage-content.js','js/sd-storage-simulations.js','js/sd-storage-scenes.js','js/sd-cache-content.js','js/sd-cache-simulations.js','js/sd-cache-scenes.js','js/sd-study.js','js/platform.js'].forEach(load);
+['js/core.js','js/algos_sorting.js','js/algos_searching.js','js/algos_patterns.js','js/algos_list.js','js/algos_tree.js','js/algos_graph.js','js/algos_dp.js','js/lcproblems.js','js/roadmap.js','js/sd-roadmap.js','js/sd-lessons.js','js/sd-backend-lessons.js','js/sd-simulations.js','js/sd-backend-simulations.js','js/sd-lab-content.js','js/sd-backend-labs.js','js/sd-scenes.js','js/sd-backend-scenes.js','js/sd-storage-content.js','js/sd-storage-simulations.js','js/sd-storage-scenes.js','js/sd-cache-content.js','js/sd-cache-simulations.js','js/sd-cache-scenes.js','js/sd-scale-content.js','js/sd-scale-simulations.js','js/sd-scale-scenes.js','js/sd-study.js','js/platform.js'].forEach(load);
 context.assert=assert;
 vm.runInContext(`
 const defaults=id=>Object.fromEntries(SD_LESSONS[id].controls.map(c=>[c[0],c[2]==='checkbox'?c[3]:c[2]==='select'?c[4]:c[4]]));
 const final=(id,o)=>SD_SIM.build(id,{...defaults(id),...o}).frames.at(-1);
 assert.equal(SD_STAGES.length,12);
-assert.equal(Object.keys(SD_LESSONS).length,52);
+assert.equal(Object.keys(SD_LESSONS).length,64);
 assert.equal(new Set(SD_TOPICS.map(t=>t.id)).size,SD_TOPICS.length);
 const prior=new Set();
 for(const t of SD_TOPICS){for(const id of t.prerequisites)assert(prior.has(id),'Prerequisite must precede '+t.id);prior.add(t.id);}
@@ -220,7 +220,44 @@ SDProgress.toggle('completed','dns');SDProgress.toggle('bookmarks','dns');SDProg
 SDProgress.data={completed:[],bookmarks:[],current:null};SDProgress.load();
 assert(SDProgress.data.completed.includes('dns'));assert(SDProgress.data.bookmarks.includes('dns'));assert.equal(SDProgress.data.current,'dns');
 assert(Progress.has('t-hash'));assert.equal(SDProgress.counts(1).done,1);
-const planned=SD_TOPICS.find(t=>t.stage===5);SDProgress.toggle('completed',planned.id);assert(!SDProgress.data.completed.includes(planned.id));
+// Scaling outcomes and conservation laws, including same-time event ordering.
+const scale=(slug,o={})=>final('s5-'+slug,o).state;
+const requestSim=SD_SIM.build('s5-load-balancing',defaults('s5-load-balancing'));
+const requestScene=SDScene.render('s5-load-balancing',requestSim,requestSim.frames.length-1,1,defaults('s5-load-balancing'),true);
+assert(requestScene.html.includes('data-scale-work="cpu"'));assert(requestScene.html.includes('REQUESTS KEEP THEIR OWN TIMELINES'));
+const rr=scale('load-balancing-algorithms',{algorithm:'round-robin',slow:false});
+assert.deepEqual(Array.from(rr.workers,w=>w.assigned),[4,4,4]);
+const weighted=scale('load-balancing-algorithms',{algorithm:'weighted',gap:0});
+assert.deepEqual(Array.from(weighted.workers,w=>w.assigned),[6,3,3]);
+const least=scale('load-balancing-algorithms',{algorithm:'least-outstanding'});
+assert(least.workers[0].assigned<scale('load-balancing-algorithms').workers[0].assigned);
+assert.equal(scale('vertical-scaling',{serial:100,multiplier:1}).maxLatency,scale('vertical-scaling',{serial:100,multiplier:4}).maxLatency);
+assert(scale('vertical-scaling',{serial:0,multiplier:4}).maxLatency<scale('vertical-scaling',{serial:0,multiplier:1}).maxLatency);
+assert(scale('horizontal-scaling',{servers:4,db:0}).maxLatency<scale('horizontal-scaling',{servers:1,db:0}).maxLatency);
+assert(scale('bottlenecks',{servers:4,service:20,db:100}).dbWait>0);
+assert.equal(scale('health-checks',{detect:0,servers:3}).errors,0);
+assert(scale('health-checks',{detect:100,servers:3}).errors>0);
+assert.equal(scale('health-checks',{detect:0,servers:1}).rejected,9);
+assert.equal(scale('session-affinity',{sticky:true,shared:false,failure:false}).completed,4);
+assert.equal(scale('session-affinity',{sticky:false,shared:false,failure:false}).completed,2);
+assert.equal(scale('session-affinity',{sticky:true,shared:false,failure:true}).completed,1);
+assert.equal(scale('session-affinity',{sticky:true,shared:true,failure:true}).completed,4);
+assert(scale('autoscaling',{startup:3}).history.some(t=>t.desired>t.ready&&t.queue>0));
+assert.equal(scale('autoscaling',{startup:0}).history[1].ready,4);
+const burst=scale('traffic-spikes',{bounded:true,limit:8});
+assert(burst.rejected>0);assert.equal(burst.offered,burst.completed+burst.queue+burst.rejected);
+const all=scale('traffic-spikes',{bounded:false});assert.equal(all.rejected,0);assert.equal(all.offered,all.completed+all.queue);
+assert.equal(scale('capacity-planning').recommendation,5);
+assert(scale('capacity-planning',{servers:3,failure:true}).queue>0);
+assert.equal(scale('capacity-planning',{servers:4,failure:true}).queue,0);
+assert.deepEqual(Array.from(scale('content-delivery-networks',{age:10}).outputs),[1,2,1]);
+assert.deepEqual(Array.from(scale('content-delivery-networks',{age:30}).outputs),[1,2,2]);
+assert.equal(scale('content-delivery-networks',{enabled:false}).originReads,3);
+for(let servers=1;servers<=4;servers++)for(const gap of [0,20,100])for(const db of [0,30,100]){
+ const r=scale('horizontal-scaling',{servers,gap,db});assert.equal(r.completed,8);assert.equal(r.offered,r.completed+r.errors);assert(r.workers.every(w=>w.outstanding===0));
+ for(const j of r.jobs){assert.equal(j.latency,j.finish-j.arrival);assert(j.start>=j.arrival);assert(j.finish>=j.cpuEnd);}
+}
+const planned=SD_TOPICS.find(t=>t.stage===6);SDProgress.toggle('completed',planned.id);assert(!SDProgress.data.completed.includes(planned.id));
 assert(!Platform.lesson(planned).includes('sdComplete'));assert(Platform.lesson(planned).includes('not been published'));
 localStorage.setItem(SDProgress.key,'{');SDProgress.load();assert.equal(SDProgress.data.current,null);assert.equal(SDProgress.data.completed.length,0);
 localStorage.setItem(SDProgress.key,JSON.stringify({completed:['not-real','dns'],bookmarks:[planned.id],current:'not-real'}));
@@ -243,7 +280,7 @@ timeline.play();assert.equal(timeline.fraction,paused);for(let n=0;n<100&&callba
 assert.equal(timeline.i,2);assert.equal(timeline.fraction,1);assert.equal(timeline.playing,false);
 timeline.go(0);assert.equal(timeline.fraction,1);timeline.restart();assert.equal(timeline.fraction,0);
 assert(arrivals.some(a=>a.i===1&&a.progress===1));
-console.log('Passed: '+scenarios+' simulation scenarios; 52 lesson contracts; prerequisite ordering; persistence; planned-topic guards; routes; player; '+algorithms+' DSA algorithms.');
+console.log('Passed: '+scenarios+' simulation scenarios; 64 lesson contracts; prerequisite ordering; persistence; planned-topic guards; routes; player; '+algorithms+' DSA algorithms.');
 `,context);
 const built=fs.readFileSync(path.join(root,'index.html'),'utf8');
 assert.equal(built,fs.readFileSync(path.join(root,'DSAViz.html'),'utf8'));

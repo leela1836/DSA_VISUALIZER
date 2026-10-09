@@ -29,7 +29,7 @@ const query=s=>{const el=document.querySelector(s);assert(el,'Missing DOM contro
 const click=s=>query(s).dispatchEvent(new Event('click',{bubbles:true}));
 const route=hash=>{context.location.hash=hash;run('Platform.route()');};
 const input=(s,value)=>{query(s).value=value;query(s).dispatchEvent(new Event('input',{bubbles:true}));};
-const finish=()=>{for(let n=0;n<800&&pending.size;n++){now+=100;const batch=Array.from(pending.values());pending.clear();for(const fn of batch)fn(now);}assert.equal(pending.size,0,'Animation reaches an end without leaked callbacks');};
+const finish=()=>{for(let n=0;n<2400&&pending.size;n++){now+=100;const batch=Array.from(pending.values());pending.clear();for(const fn of batch)fn(now);}assert.equal(pending.size,0,'Animation reaches an end without leaked callbacks');};
 run('App.start();Platform.start();');
 assert.equal(document.body.dataset.course,'home');assert.equal(document.querySelectorAll('.course-card').length,2);
 route('#/system-design/dns');
@@ -51,13 +51,13 @@ click('#tab-understand');assert(!query('#panel-understand').hidden);assert(query
 click('#tab-deeper');assert.equal(document.querySelectorAll('.deep-questions details').length,3);
 click('#tab-reflect');click('#sdComplete');click('#sdBookmark');
 run("assert(SDProgress.data.completed.includes('dns')); assert(SDProgress.data.bookmarks.includes('dns'));");
-route('#/system-design');assert.equal(document.querySelectorAll('.network-lab-card').length,52);assert.equal(document.querySelectorAll('.future-stage').length,8);
+route('#/system-design');assert.equal(document.querySelectorAll('.network-lab-card').length,64);assert.equal(document.querySelectorAll('.future-stage').length,7);
 route('#/system-design/dns');run("assert(SDProgress.data.completed.includes('dns'));");
 click('[data-preset="2"]');finish();assert(query('#sdNote').textContent.includes('nonexistent'));
 run('assert.equal(SDStudy.dns.cached,null);');
 click('[data-dns-action="clear"]');input('#labTTL','5');click('#labRun');finish();
 run('assert.equal(SDStudy.dns.expires-SDStudy.dns.now,5);');
-for(const id of run('Object.keys(SD_LESSONS)')){
+for(const id of run('Object.keys(SD_LESSONS)').filter(id=>!process.argv.includes('--scaling')||id.startsWith('s5-'))){
  route('#/system-design/'+id);
  click('#sdNext');assert.equal(pending.size,0);click('#sdPlay');finish();
  for(const preset of Array.from(document.querySelectorAll('[data-preset]'))){preset.click();finish();assert(!query('#sdDiagram').innerHTML.includes('NaN'));}
@@ -82,7 +82,7 @@ run("assert.equal(Platform.player.frames.at(-1).state.outcome,'timeout, write co
 assert(query('#experimentEvidence').textContent.includes('timeout, write committed'));
 click('#tab-reflect');click('#sdComplete');click('#sdBookmark');
 run("SDProgress.load(); assert(SDProgress.data.completed.includes('s2-request-lifecycle')); assert(SDProgress.data.bookmarks.includes('s2-request-lifecycle'));");
-route('#/system-design');assert.equal(document.querySelectorAll('.published-stage').length,4);
+route('#/system-design');assert.equal(document.querySelectorAll('.published-stage').length,5);
 route('#/system-design/s3-indexing');assert.equal(pending.size,0);
 assert.equal(document.querySelectorAll('.storage-record[data-storage-key]').length,8);
 click('[data-storage-key="2"]');finish();
@@ -120,6 +120,20 @@ route('#/system-design/s4-cache-invalidation');click('[data-preset="0"]');finish
 click('[data-preset="2"]');finish();run('assert.equal(Platform.player.frames.at(-1).state.outputs[0],2);');
 click('#tab-reflect');click('#sdComplete');click('#sdBookmark');
 run("SDProgress.load(); assert(SDProgress.data.completed.includes('s4-cache-invalidation')); assert(SDProgress.data.bookmarks.includes('s4-cache-invalidation'));");
+route('#/system-design/s5-load-balancing');click('#labRun');finish();
+click('[data-scale-action="add"]');finish();run('assert.equal(+Platform.options.servers,4);');
+click('[data-scale-action="remove"]');finish();run('assert.equal(+Platform.options.servers,3);');
+click('[data-scale-action="request"]');finish();run('assert.equal(+Platform.options.requests,10);');
+click('[data-scale-action="failure"]');finish();run('assert(Platform.options.failure); assert.equal(Platform.player.frames.at(-1).state.workers[0].assigned,0);');
+click('[data-actor="w1"]');assert(query('#actorInspector').textContent.includes('Outstanding'));
+assert(query('#sdDiagram').textContent.includes('REQUESTS KEEP THEIR OWN TIMELINES'));
+run("const scaleIndex=Platform.player.frames.findIndex(f=>f.elapsed>0); Platform.player.go(scaleIndex); Platform.player.fraction=0; SDStudy.paint(Platform.player.frames[scaleIndex],scaleIndex,0); SDStudy.animate(0);");
+const cpuBefore=+query('[data-scale-work]').getAttribute('width');run('SDStudy.animate(.5);');assert(+query('[data-scale-work]').getAttribute('width')>cpuBefore);
+route('#/system-design/s5-health-checks');click('[data-preset="1"]');finish();run('assert(Platform.player.frames.at(-1).state.errors>0);');
+route('#/system-design/s5-autoscaling');click('[data-preset="0"]');finish();assert(query('#sdDiagram').textContent.includes('DESIRED'));
+route('#/system-design/s5-content-delivery-networks');click('[data-preset="0"]');finish();run('assert.equal(Platform.player.frames.at(-1).state.outputs.at(-1),1);');
+click('[data-preset="1"]');finish();run('assert.equal(Platform.player.frames.at(-1).state.outputs.at(-1),2);');
+click('#tab-reflect');click('#sdComplete');click('#sdBookmark');run("SDProgress.load(); assert(SDProgress.data.completed.includes('s5-content-delivery-networks')); assert(SDProgress.data.bookmarks.includes('s5-content-delivery-networks'));");
 route('#/system-design/tcp-udp');assert.equal(pending.size,0);assert(query('#sdDiagram svg').getAttribute('viewBox').startsWith('0 0 420 '));
 input('[data-option="transport"]','UDP');finish();run("assert.equal(Platform.player.frames.at(-1).state.delivered,'A,C');");
 route('#/dsa');assert(query('#view-visualize').classList.contains('is-active'));assert(query('#platformMain').hidden);
@@ -127,4 +141,4 @@ click('.tab[data-view="mycode"]');assert.equal(context.location.hash,'#/dsa/myco
 run("const sample=runPython('print(2 + 3)'); assert(!sample.error); assert(sample.stdout.join('').includes('5'));");
 route('#/dsa/roadmap');assert(query('#view-roadmap').classList.contains('is-active'));
 route('#/system-design/tcp-handshake');click('#sdPlay');route('#/');assert.equal(pending.size,0);
-console.log('Passed DOM interactions: complete boot, 52 labs and all presets, tabs, actor inspection, pause/restart, DNS staleness/expiry/TTL/failure, progress, narrow scene, reduced motion, DSA tabs, Python execution, animation cleanup.');
+console.log((process.argv.includes('--scaling')?'Scaling preset sweep and cross-course regression: ':'Full preset sweep: ')+'Passed DOM interactions: complete boot, selected labs and their presets, tabs, actor inspection, pause/restart, DNS staleness/expiry/TTL/failure, progress, narrow scene, reduced motion, DSA tabs, Python execution, animation cleanup.');

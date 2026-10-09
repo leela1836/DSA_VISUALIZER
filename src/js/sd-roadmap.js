@@ -54,7 +54,20 @@ const SD_STAGES = [
     ['s4-redis-fundamentals','Redis fundamentals',['s4-ttl','s4-cache-eviction-strategies']],
     ['s4-cache-failure-scenarios','Cache failure scenarios',['s4-cache-consistency','s4-redis-fundamentals']]
   ]],
-  ['Scalability and Load Balancing', [2,3,4], ['Scalability fundamentals','Vertical scaling','Horizontal scaling','Load balancing','Load balancing algorithms','Health checks','Session affinity','Autoscaling','Traffic spikes','Bottlenecks','Capacity planning','Content delivery networks']],
+  ['Scalability and Load Balancing', [2,3,4], [
+    ['s5-scalability-fundamentals','Scalability fundamentals',['s4-cache-failure-scenarios','s3-database-performance']],
+    ['s5-vertical-scaling','Vertical scaling',['s5-scalability-fundamentals']],
+    ['s5-horizontal-scaling','Horizontal scaling',['s5-vertical-scaling','s2-stateless-and-stateful-architecture']],
+    ['s5-load-balancing','Load balancing',['s5-horizontal-scaling','s2-reverse-proxies']],
+    ['s5-load-balancing-algorithms','Load balancing algorithms',['s5-load-balancing']],
+    ['s5-health-checks','Health checks',['s5-load-balancing-algorithms']],
+    ['s5-session-affinity','Session affinity',['s5-health-checks','s2-cookies-and-sessions']],
+    ['s5-autoscaling','Autoscaling',['s5-health-checks','s5-scalability-fundamentals']],
+    ['s5-traffic-spikes','Traffic spikes',['s5-autoscaling','s4-cache-failure-scenarios']],
+    ['s5-bottlenecks','Bottlenecks',['s5-traffic-spikes','s5-horizontal-scaling']],
+    ['s5-capacity-planning','Capacity planning',['s5-bottlenecks','s5-health-checks']],
+    ['s5-content-delivery-networks','Content delivery networks',['s5-capacity-planning','s4-browser-caching','s4-distributed-caching']]
+  ]],
   ['Distributed Systems', [3,5], ['Distributed architecture','Consistency and availability','Network partitions','CAP theorem','Consistency models','Replication strategies','Quorums','Leader election','Consensus fundamentals','Distributed locks','Clock synchronization','Fault tolerance','Failure recovery']],
   ['Messaging and Asynchronous Systems', [2,6], ['Synchronous versus asynchronous communication','Message queues','Publish-subscribe','Message brokers','Event-driven architecture','Kafka fundamentals','Event ordering','Delivery guarantees','Retries','Dead-letter queues','Idempotency','Backpressure']],
   ['Reliability and Performance', [5,6,7], ['Latency and throughput','Availability','Reliability','Redundancy','Failover','Timeouts and retries','Exponential backoff','Circuit breakers','Rate limiting','Throttling','Monitoring and observability','Logs, metrics, and traces','Disaster recovery']],

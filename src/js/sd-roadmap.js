@@ -38,7 +38,22 @@ const SD_STAGES = [
     ['s3-file-storage','File storage',['s3-object-storage','s3-acid-properties']],
     ['s3-database-performance','Database performance',['s3-query-execution','s3-sharding','s2-connection-pooling']]
   ]],
-  ['Caching', [3], ['Why caching exists','Browser caching','Application caching','Database caching','Distributed caching','Cache-aside','Read-through and write-through','Write-behind','TTL','Cache eviction strategies','Cache invalidation','Cache consistency','Redis fundamentals','Cache failure scenarios']],
+  ['Caching', [3], [
+    ['s4-why-caching-exists','Why caching exists',['s3-database-performance']],
+    ['s4-browser-caching','Browser caching',['s4-why-caching-exists','http-semantics']],
+    ['s4-application-caching','Application caching',['s4-why-caching-exists','s2-stateless-and-stateful-architecture']],
+    ['s4-database-caching','Database caching',['s4-why-caching-exists','s3-query-execution']],
+    ['s4-distributed-caching','Distributed caching',['s4-application-caching','s3-replication']],
+    ['s4-cache-aside','Cache-aside',['s4-distributed-caching']],
+    ['s4-read-through-and-write-through','Read-through and write-through',['s4-cache-aside']],
+    ['s4-write-behind','Write-behind',['s4-read-through-and-write-through','s3-acid-properties']],
+    ['s4-ttl','TTL',['s4-cache-aside','s4-browser-caching']],
+    ['s4-cache-eviction-strategies','Cache eviction strategies',['s4-ttl']],
+    ['s4-cache-invalidation','Cache invalidation',['s4-cache-aside','s4-ttl']],
+    ['s4-cache-consistency','Cache consistency',['s4-cache-invalidation','s3-transaction-isolation']],
+    ['s4-redis-fundamentals','Redis fundamentals',['s4-ttl','s4-cache-eviction-strategies']],
+    ['s4-cache-failure-scenarios','Cache failure scenarios',['s4-cache-consistency','s4-redis-fundamentals']]
+  ]],
   ['Scalability and Load Balancing', [2,3,4], ['Scalability fundamentals','Vertical scaling','Horizontal scaling','Load balancing','Load balancing algorithms','Health checks','Session affinity','Autoscaling','Traffic spikes','Bottlenecks','Capacity planning','Content delivery networks']],
   ['Distributed Systems', [3,5], ['Distributed architecture','Consistency and availability','Network partitions','CAP theorem','Consistency models','Replication strategies','Quorums','Leader election','Consensus fundamentals','Distributed locks','Clock synchronization','Fault tolerance','Failure recovery']],
   ['Messaging and Asynchronous Systems', [2,6], ['Synchronous versus asynchronous communication','Message queues','Publish-subscribe','Message brokers','Event-driven architecture','Kafka fundamentals','Event ordering','Delivery guarantees','Retries','Dead-letter queues','Idempotency','Backpressure']],

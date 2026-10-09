@@ -1,4 +1,6 @@
 /* A focused experiment workspace, with the roadmap tucked away until requested. */
+.cache-command{font-family:var(--mono);font-size:12px;fill:var(--fg)}
+.cache-session-actions{display:grid;gap:8px;padding:13px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}.cache-session-actions h3{margin:0;font-size:13px}.cache-session-actions p{margin:0;font-size:11px;line-height:1.7;color:var(--fg-2)}.cache-session-actions button{padding:9px 12px;background:var(--bg-2);color:var(--fg);border:1px solid var(--line);border-radius:6px;cursor:pointer;text-align:left;font-size:12px}.cache-session-actions button:disabled{opacity:.45;cursor:default}
 .storage-caption{font-size:10px;fill:var(--fg-2);letter-spacing:.3px}
 .storage-panel-bg{fill:var(--bg-2);stroke:var(--line)}
 .storage-heading{font-size:13px;font-weight:650;fill:var(--fg)}

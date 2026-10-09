@@ -68,3 +68,15 @@ The diagram supports direct record and leaf selection and an index-root toggle. 
 ## Rendering approach
 
 The original app already supports inline JavaScript and SVG. A dedicated `requestAnimationFrame` timeline allows smooth transfer interpolation, precise pause/resume, and arrival-driven snapshots. SVG keeps actors inspectable with keyboard-accessible controls and lets narrow layouts use their own coordinates instead of shrinking a wide desktop grid or introducing horizontal scrolling. These requirements do not require a framework migration. DSA keeps its existing player; the new System Design scene engine is independent.
+
+## Caching sources and boundaries
+
+The 14 Stage 4 lessons use original explanations checked against primary references:
+
+- [HTTP caching, RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html) and [MDN HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching): freshness, validation, and storage are separate decisions. The public-image lab distinguishes a local fresh hit, a conditional 304 without a new body, a changed 200, and no-store. It does not model private authenticated responses or every Vary key.
+- [Azure cache-aside](https://learn.microsoft.com/en-us/azure/architecture/patterns/cache-aside): source updates and invalidation are separate operations. A deliberately scheduled late fill illustrates how deletion alone can leave a stale copy. The guarded option assumes coordinated version protection; an unprotected read-then-compare is not claimed to be atomic.
+- [Oracle Coherence caching data sources](https://docs.oracle.com/en/middleware/fusion-middleware/coherence/14.1.2/develop-applications/caching-data-sources.html): loader ownership, write-through acknowledgement, and deferred write-behind persistence differ. The durable-queue option assumes intact durable storage, replay, and an idempotent writer. A volatile acknowledged write can be lost before flushing.
+- [Redis EXPIRE](https://redis.io/docs/latest/commands/expire/), [INCR](https://redis.io/docs/latest/commands/incr/), and [eviction](https://redis.io/docs/latest/develop/reference/eviction/): expiration eligibility changes at the deadline; INCR preserves an existing expiry. Teaching LRU and LFU are exact policies over a tiny entry-count capacity. Production Redis policies use approximate selection and memory limits, and are explicitly distinguished in the lesson.
+- [PostgreSQL EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html): buffer residency removes modeled storage reads without eliminating query execution. This lesson caches a page rather than claiming that a database buffer is a SQL result cache.
+
+The clock advances only through explicit experiment operations. All latency and capacity numbers are illustrative, with no benchmark claim. Cache and source versions become visible at arrival. Failure experiments assume either a shared in-flight fill or independent fallback reads; they omit actual distributed coordination and production retry scheduling. Continued cache state lasts for the lesson visit, while completion and bookmarks persist locally.

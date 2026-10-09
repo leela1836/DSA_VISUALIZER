@@ -10,13 +10,13 @@ const context=vm.createContext({console,setTimeout,clearTimeout,
  document:{addEventListener(){}},location:{hash:''}
 });
 const load=file=>vm.runInContext(fs.readFileSync(path.join(root,'src',file),'utf8'),context,{filename:file});
-['js/core.js','js/algos_sorting.js','js/algos_searching.js','js/algos_patterns.js','js/algos_list.js','js/algos_tree.js','js/algos_graph.js','js/algos_dp.js','js/lcproblems.js','js/roadmap.js','js/sd-roadmap.js','js/sd-lessons.js','js/sd-backend-lessons.js','js/sd-simulations.js','js/sd-backend-simulations.js','js/sd-lab-content.js','js/sd-backend-labs.js','js/sd-scenes.js','js/sd-backend-scenes.js','js/sd-storage-content.js','js/sd-storage-simulations.js','js/sd-storage-scenes.js','js/sd-study.js','js/platform.js'].forEach(load);
+['js/core.js','js/algos_sorting.js','js/algos_searching.js','js/algos_patterns.js','js/algos_list.js','js/algos_tree.js','js/algos_graph.js','js/algos_dp.js','js/lcproblems.js','js/roadmap.js','js/sd-roadmap.js','js/sd-lessons.js','js/sd-backend-lessons.js','js/sd-simulations.js','js/sd-backend-simulations.js','js/sd-lab-content.js','js/sd-backend-labs.js','js/sd-scenes.js','js/sd-backend-scenes.js','js/sd-storage-content.js','js/sd-storage-simulations.js','js/sd-storage-scenes.js','js/sd-cache-content.js','js/sd-cache-simulations.js','js/sd-cache-scenes.js','js/sd-study.js','js/platform.js'].forEach(load);
 context.assert=assert;
 vm.runInContext(`
 const defaults=id=>Object.fromEntries(SD_LESSONS[id].controls.map(c=>[c[0],c[2]==='checkbox'?c[3]:c[2]==='select'?c[4]:c[4]]));
 const final=(id,o)=>SD_SIM.build(id,{...defaults(id),...o}).frames.at(-1);
 assert.equal(SD_STAGES.length,12);
-assert.equal(Object.keys(SD_LESSONS).length,38);
+assert.equal(Object.keys(SD_LESSONS).length,52);
 assert.equal(new Set(SD_TOPICS.map(t=>t.id)).size,SD_TOPICS.length);
 const prior=new Set();
 for(const t of SD_TOPICS){for(const id of t.prerequisites)assert(prior.has(id),'Prerequisite must precede '+t.id);prior.add(t.id);}
@@ -169,11 +169,58 @@ assert.equal(storageState('file-storage',{sync:true,rename:true,crash:false}).na
 assert.equal(storageState('database-performance',{query:'point',index:false,pages:12,warm:false}).pageReads,12);
 assert.equal(storageState('database-performance',{query:'point',index:true,pages:12,warm:false}).pageReads,3);
 assert.equal(storageState('database-performance',{query:'all',index:false,pages:12,warm:true}).reads,12);
+const cacheState=(slug,o={})=>{const id='s4-'+slug;return SD_SIM.build(id,{...defaults(id),...o}).frames.at(-1).state;};
+assert.equal(cacheState('why-caching-exists',{requests:3,enabled:true}).dbReads,1);
+assert.equal(cacheState('why-caching-exists',{requests:3,enabled:true}).hits,2);
+assert.equal(cacheState('why-caching-exists',{requests:3,enabled:false}).dbReads,3);
+const freshBody=cacheState('browser-caching',{policy:'max-age',age:10,changed:true});
+assert.equal(freshBody.networkRequests,1);assert.equal(freshBody.db,2);assert.equal(freshBody.outputs[0],1);
+const unchanged=cacheState('browser-caching',{policy:'no-cache',changed:false});assert.equal(unchanged.networkRequests,2);assert.equal(unchanged.bodyTransfers,1);
+assert.equal(cacheState('browser-caching',{policy:'no-cache',changed:true}).bodyTransfers,2);
+assert.equal(cacheState('browser-caching',{policy:'no-store'}).cache,null);
+assert.equal(cacheState('application-caching',{location:'local',warmB:true,invalidate:true}).observed,1);
+assert.equal(cacheState('application-caching',{location:'local',warmB:false}).observed,2);
+assert.equal(cacheState('distributed-caching',{invalidate:false}).observed,1);
+assert.equal(cacheState('distributed-caching',{invalidate:true}).observed,2);
+assert.equal(cacheState('database-caching',{requests:3,enabled:true}).queries,3);
+assert.equal(cacheState('database-caching',{requests:3,enabled:true}).dbReads,1);
+assert.equal(cacheState('database-caching',{requests:3,enabled:false}).dbReads,3);
+const accepted=cacheState('read-through-and-write-through',{fail:false});assert(accepted.ack);assert.equal(accepted.db,2);assert.equal(accepted.cache,2);
+const rejected=cacheState('read-through-and-write-through',{fail:true});assert(!rejected.ack);assert.equal(rejected.db,1);
+const lostQueue=cacheState('write-behind',{crash:true,durable:false,flush:true});assert(lostQueue.ack);assert.equal(lostQueue.db,1);assert.equal(lostQueue.pending.length,0);
+assert.equal(cacheState('write-behind',{crash:true,durable:true,flush:true}).db,2);
+assert.equal(cacheState('write-behind',{crash:true,durable:true,flush:false}).pending.length,1);
+const boundary=cacheState('ttl',{ttl:30,interval:15,requests:3});assert.equal(boundary.dbReads,2);assert.equal(boundary.hits,1);assert.equal(boundary.time,30);
+assert.equal(cacheState('cache-eviction-strategies',{policy:'LRU',capacity:3,sequence:'hot'}).hits,2);
+assert.equal(cacheState('cache-eviction-strategies',{policy:'FIFO',capacity:3,sequence:'hot'}).hits,1);
+assert.equal(cacheState('cache-eviction-strategies',{policy:'LFU',capacity:2,sequence:'hot'}).hits,2);
+for(const policy of ['LRU','LFU','FIFO'])for(const capacity of [2,3,4])for(const sequence of ['hot','scan']){
+ const sim=SD_SIM.build('s4-cache-eviction-strategies',{policy,capacity,sequence});
+ for(const f of sim.frames){assert(f.state.slots.length<=capacity);assert.equal(new Set(f.state.slots.map(x=>x.key)).size,f.state.slots.length);}
+ assert.equal(sim.frames.at(-1).state.hits+sim.frames.at(-1).state.misses,6);
+}
+assert.equal(cacheState('cache-invalidation',{invalidate:true,guard:false}).outputs[0],1);
+assert.equal(cacheState('cache-invalidation',{invalidate:true,guard:true}).outputs[0],2);
+assert.equal(cacheState('cache-consistency',{guard:false}).db,2);
+assert.equal(cacheState('redis-fundamentals',{ttl:30,age:29}).observed,2);
+assert.equal(cacheState('redis-fundamentals',{ttl:30,age:30}).observed,null);
+assert.equal(cacheState('cache-failure-scenarios',{requests:6,coalesce:true,outage:false}).dbReads,1);
+assert.equal(cacheState('cache-failure-scenarios',{requests:6,coalesce:false,outage:false}).dbReads,6);
+assert.equal(cacheState('cache-failure-scenarios',{requests:6,outage:true,fallback:false}).dbReads,0);
+// Live operations reuse a completed snapshot without mutating the previous trace.
+let seed=cacheState('ttl',{ttl:30,requests:1});const original=JSON.stringify(seed);
+seed=SDCacheSim.build('s4-ttl',{ttl:30,action:'write'},seed).frames.at(-1).state;
+assert.equal(seed.db,2);assert.equal(seed.cache,1);
+seed=SDCacheSim.build('s4-ttl',{ttl:30,action:'read'},seed).frames.at(-1).state;assert.equal(seed.outputs.at(-1),1);
+seed=SDCacheSim.build('s4-ttl',{ttl:30,action:'advance'},seed).frames.at(-1).state;
+seed=SDCacheSim.build('s4-ttl',{ttl:30,action:'advance'},seed).frames.at(-1).state;
+seed=SDCacheSim.build('s4-ttl',{ttl:30,action:'read'},seed).frames.at(-1).state;assert.equal(seed.outputs.at(-1),2);assert.equal(seed.dbReads,2);
+assert.equal(JSON.parse(original).db,1);
 SDProgress.toggle('completed','dns');SDProgress.toggle('bookmarks','dns');SDProgress.data.current='dns';SDProgress.save();
 SDProgress.data={completed:[],bookmarks:[],current:null};SDProgress.load();
 assert(SDProgress.data.completed.includes('dns'));assert(SDProgress.data.bookmarks.includes('dns'));assert.equal(SDProgress.data.current,'dns');
 assert(Progress.has('t-hash'));assert.equal(SDProgress.counts(1).done,1);
-const planned=SD_TOPICS.find(t=>t.stage===4);SDProgress.toggle('completed',planned.id);assert(!SDProgress.data.completed.includes(planned.id));
+const planned=SD_TOPICS.find(t=>t.stage===5);SDProgress.toggle('completed',planned.id);assert(!SDProgress.data.completed.includes(planned.id));
 assert(!Platform.lesson(planned).includes('sdComplete'));assert(Platform.lesson(planned).includes('not been published'));
 localStorage.setItem(SDProgress.key,'{');SDProgress.load();assert.equal(SDProgress.data.current,null);assert.equal(SDProgress.data.completed.length,0);
 localStorage.setItem(SDProgress.key,JSON.stringify({completed:['not-real','dns'],bookmarks:[planned.id],current:'not-real'}));
@@ -196,7 +243,7 @@ timeline.play();assert.equal(timeline.fraction,paused);for(let n=0;n<100&&callba
 assert.equal(timeline.i,2);assert.equal(timeline.fraction,1);assert.equal(timeline.playing,false);
 timeline.go(0);assert.equal(timeline.fraction,1);timeline.restart();assert.equal(timeline.fraction,0);
 assert(arrivals.some(a=>a.i===1&&a.progress===1));
-console.log('Passed: '+scenarios+' simulation scenarios; 38 lesson contracts; prerequisite ordering; persistence; planned-topic guards; routes; player; '+algorithms+' DSA algorithms.');
+console.log('Passed: '+scenarios+' simulation scenarios; 52 lesson contracts; prerequisite ordering; persistence; planned-topic guards; routes; player; '+algorithms+' DSA algorithms.');
 `,context);
 const built=fs.readFileSync(path.join(root,'index.html'),'utf8');
 assert.equal(built,fs.readFileSync(path.join(root,'DSAViz.html'),'utf8'));

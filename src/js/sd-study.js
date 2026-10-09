@@ -1,6 +1,6 @@
 /* Explore first; complete authored explanations are still one click away. */
 const SDStudy = {
- platform:null, simulation:null, path:null, selected:null, arrival:false, history:[],
+ platform:null, simulation:null, path:null, selected:null, arrival:false, history:[], cacheSnapshot:null,
  dns:{now:0,expires:0,cached:null,authority:'192.0.2.10',lookups:0},
  section(letter,title,body){return `<section class="study-reading"><span class="section-label">${letter}</span><h2>${title}</h2>${body}</section>`;},
  lesson(t){
@@ -16,13 +16,14 @@ const SDStudy = {
    <div id="panel-reflect" role="tabpanel" aria-labelledby="tab-reflect" class="study-panel" hidden>${this.section('H','What you can now explain',`<ul class="takeaways">${l.summary.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div class="knowledge-check"><h3>Think it through</h3><p>${esc(l.check[0])}</p><label class="reflection-label">Your explanation<textarea rows="4" placeholder="Use the experiment as evidence…"></textarea></label><details><summary>Compare your reasoning</summary><p>${esc(l.check[1])}</p></details></div><p>Completion records your learning, without a score or a timer. Mark this lesson when you can explain what changes and why.</p><button id="sdComplete" class="learn-action inline" aria-pressed="${done}">${done?'✓ Completed — mark incomplete':'I can explain this concept'}</button>`)}<h2>Your vocabulary</h2><dl class="term-cards">${Object.entries(l.glossary).map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>${Platform.lessonNavigation(t)}</div>`;
  },
  explore(t,l,lab){
+  const live=SDCacheScene.live(t.id)?`<div class="cache-session-actions"><h3>Continue this system</h3><p>Finish the run, then operate on its retained state. Run experiment or changing a setting starts fresh.</p><button data-cache-action="read" disabled>Read again</button><button data-cache-action="advance" disabled>Advance 15 seconds</button><button data-cache-action="write" disabled>Write next source version</button><button data-cache-action="expire" disabled>Remove cached copy</button></div>`:'';
   return `<div class="explore-grid"><section class="visual-lab" aria-label="${esc(t.name)} experiment"><div class="lab-topline"><span class="lab-status"><i></i> INTERACTIVE LAB</span><span id="labPhase">Ready to explore</span></div><div id="sdDiagram" class="lab-viewport"></div><div class="lab-player"><button id="sdFirst" title="Restart" aria-label="Restart simulation">↺</button><button id="sdPrev" aria-label="Previous step">←</button><button id="sdPlay" class="lab-play" aria-label="Play animation">Play</button><button id="sdNext" aria-label="Next step">→</button><button id="sdLast" aria-label="Last step">⇥</button><span id="sdCount"></span><label>Speed<select id="sdSpeed" aria-label="Animation speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label><input id="sdScrub" type="range" min="0" max="0" value="0" aria-label="Simulation timeline"></div><div class="scene-key"><span><i class="key-packet"></i> packet in transit</span><span><i class="key-ready"></i> available state</span><span>Click an actor to look inside</span></div></section>
-   <aside class="experiment-desk"><div class="section-label">E / CHANGE SOMETHING</div><h2>Make it behave differently.</h2><div class="scenario-presets">${lab.presets.map(([name],i)=>`<button data-preset="${i}">${esc(name)}</button>`).join('')}</div><div id="sdControls" class="lab-controls">${l.controls.map(c=>Platform.control(c)).join('')}${t.id==='dns'?'<label class="experiment-field">DNS TTL (model seconds)<output for="labTTL">30</output><input id="labTTL" type="range" min="5" max="120" value="30" step="5"></label>':''}</div>${t.id==='dns'?`<div class="dns-actions"><button data-dns-action="repeat">Look up again ↗</button><button data-dns-action="advance">Advance 30 seconds</button><button data-dns-action="change">Change authority IP</button><button data-dns-action="clear">Clear caches</button></div><div id="dnsCache" class="cache-ledger" aria-live="polite"></div>`:''}<button id="labRun" class="learn-action">Run this experiment <span>↗</span></button><p class="lab-challenge">${esc(lab.challenge)}</p><p class="model-note">Conceptual model, not real traffic. Animation time is slowed for observation; model milliseconds are illustrative.</p></aside></div>
+   <aside class="experiment-desk"><div class="section-label">E / CHANGE SOMETHING</div><h2>Make it behave differently.</h2><div class="scenario-presets">${lab.presets.map(([name],i)=>`<button data-preset="${i}">${esc(name)}</button>`).join('')}</div><div id="sdControls" class="lab-controls">${l.controls.map(c=>Platform.control(c)).join('')}${t.id==='dns'?'<label class="experiment-field">DNS TTL (model seconds)<output for="labTTL">30</output><input id="labTTL" type="range" min="5" max="120" value="30" step="5"></label>':''}</div>${t.id==='dns'?`<div class="dns-actions"><button data-dns-action="repeat">Look up again ↗</button><button data-dns-action="advance">Advance 30 seconds</button><button data-dns-action="change">Change authority IP</button><button data-dns-action="clear">Clear caches</button></div><div id="dnsCache" class="cache-ledger" aria-live="polite"></div>`:''}${live}<button id="labRun" class="learn-action">Run this experiment <span>↗</span></button><p class="lab-challenge">${esc(lab.challenge)}</p><p class="model-note">Conceptual model, not real traffic. Animation time is slowed for observation; model milliseconds are illustrative.</p></aside></div>
    <div class="observation-grid"><section class="live-explanation"><div class="section-label">D / FOLLOW THE ACTION</div><h2 id="sdPacket">Ready</h2><p id="sdNote" aria-live="polite"></p><div class="transfer-progress"><span id="transferFill"></span></div><div id="sdState" class="live-metrics"></div><details class="walkthrough"><summary>Open the event log</summary><ol id="sdTrace"></ol></details></section><section id="actorInspector" class="actor-inspector"><div class="section-label">INSIDE AN ACTOR</div><h2>Follow more than the arrows.</h2><p>Select a browser, server, or protocol participant in the scene to discover its job, its local state, and what it cannot guarantee.</p></section></div><section id="experimentEvidence" class="experiment-evidence" hidden></section>
    <section class="prediction"><div><div class="section-label">PAUSE & PREDICT</div><h2>${esc(lab.prediction[0])}</h2><p>Make a prediction, then use the experiment to explain your reasoning.</p></div><div class="prediction-options">${lab.prediction[1].map((answer,i)=>`<button data-prediction="${i}" aria-pressed="false">${esc(answer)}</button>`).join('')}<p id="predictionReason" hidden></p></div></section><button class="study-next" data-go-tab="understand">Understand why it happened →</button>`;
  },
  init(platform,l){
-  this.platform=platform;this.selected=null;this.history=[];this.arrival=false;this.dns={now:0,expires:0,cached:null,authority:'192.0.2.10',lookups:0};
+  this.platform=platform;this.cacheSnapshot=null;this.selected=null;this.history=[];this.arrival=false;this.dns={now:0,expires:0,cached:null,authority:'192.0.2.10',lookups:0};
   platform.player=new SDTimeline({play:$('#sdPlay'),prev:$('#sdPrev'),next:$('#sdNext'),first:$('#sdFirst'),last:$('#sdLast'),scrub:$('#sdScrub'),count:$('#sdCount'),speed:$('#sdSpeed')},(f,i,p)=>this.paint(f,i,p),p=>this.animate(p));
   this.small=matchMedia('(max-width: 680px)').matches;
   const ro=new ResizeObserver(()=>{const small=$('#sdDiagram').clientWidth<540;if(small!==this.small){this.small=small;this.paint(this.platform.player.frames[this.platform.player.i],this.platform.player.i,this.platform.player.fraction);this.animate(this.platform.player.fraction);}});ro.observe($('#sdDiagram'));
@@ -38,6 +39,7 @@ const SDStudy = {
   $$('#sdControls [data-option]').forEach(el=>el.addEventListener('input',()=>{const out=el.parentElement.querySelector('output');if(out)out.value=el.value;this.rebuild(true);this.clearPreset();}));
   $('#labTTL')?.addEventListener('input',e=>{e.target.parentElement.querySelector('output').value=e.target.value;this.updateCache();});
   $('#labRun').addEventListener('click',()=>this.rebuild(true));
+  $$('[data-cache-action]').forEach(b=>b.addEventListener('click',()=>{if(!b.disabled&&this.cacheSnapshot)this.rebuild(true,b.dataset.cacheAction);}));
   $$('[data-preset]').forEach(b=>b.addEventListener('click',()=>this.preset(+b.dataset.preset)));
   $$('[data-dns-action]').forEach(b=>b.addEventListener('click',()=>this.dnsAction(b.dataset.dnsAction)));
   $$('[data-prediction]').forEach(b=>b.addEventListener('click',()=>{const prediction=SD_LABS[platform.active.id].prediction;$$('[data-prediction]').forEach(x=>x.setAttribute('aria-pressed',x===b));const reason=$('#predictionReason');reason.hidden=false;reason.textContent=(+b.dataset.prediction===prediction[2]?'That matches the model. ':'Try the scenario and inspect the result. ')+prediction[3];}));
@@ -55,14 +57,14 @@ const SDStudy = {
   if(this.platform.active.id==='dns'){this.dns.cached=o.cache!=='none'?this.dns.authority:null;this.dns.expires=this.dns.now+(+$('#labTTL').value||30);}
   this.clearPreset();$('[data-preset="'+i+'"]').classList.add('selected');this.rebuild(true);
  },
- rebuild(play){
+ rebuild(play,action=null){
   this.arrival=false;const p=this.platform; p.options={};$$('#sdControls [data-option]').forEach(el=>p.options[el.dataset.option]=el.type==='checkbox'?el.checked:el.value);
   if(p.active.id==='dns'){
    p.options.address=this.dns.authority;
    if(p.options.cache!=='none'&&!this.dns.cached){this.dns.cached=this.dns.authority;this.dns.expires=this.dns.now+(+$('#labTTL').value||30);}
    p.options.cacheAddress=this.dns.cached||this.dns.authority;
   }
-  this.simulation=SD_SIM.build(p.active.id,p.options);p.nodes=this.simulation.nodes;
+  if(action){p.options.action=action;this.simulation=SDCacheSim.build(p.active.id,p.options,this.cacheSnapshot);}else{this.cacheSnapshot=null;this.simulation=SD_SIM.build(p.active.id,p.options);}p.nodes=this.simulation.nodes;
   p.player.load(this.simulation.frames);
   $('#sdTrace').innerHTML=this.simulation.frames.map((f,i)=>`<li><button data-step="${i}"><span>${String(i+1).padStart(2,'0')}</span> ${esc(f.packet)}</button></li>`).join('');
   $$('#sdTrace [data-step]').forEach(b=>b.addEventListener('click',()=>p.player.go(+b.dataset.step)));
@@ -75,6 +77,9 @@ const SDStudy = {
   $$('#sdDiagram [data-actor]').forEach(el=>{const inspect=()=>{p.player.pause();this.inspect(el.dataset.actor);};el.addEventListener('click',inspect);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inspect();}});});
   $$('#sdDiagram [data-storage-key]').forEach(el=>{const choose=()=>{const key=$('[data-option="key"]');if(!key)return;key.value=el.dataset.storageKey;const scope=$('[data-option="scope"]')||$('[data-option="query"]');if(scope)scope.value='point';key.dispatchEvent(new Event('input',{bubbles:true}));};el.addEventListener('click',choose);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose();}});});
   $$('#sdDiagram [data-storage-toggle]').forEach(el=>{const toggle=()=>{const input=$('[data-option="'+el.dataset.storageToggle+'"]');if(!input)return;input.checked=!input.checked;input.dispatchEvent(new Event('input',{bubbles:true}));};el.addEventListener('click',toggle);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});});
+  const complete=fraction>=1&&i===this.simulation.frames.length-1;
+  $$('[data-cache-action]').forEach(b=>b.disabled=!complete);
+  if(complete&&SDCacheScene.live(p.active.id))this.cacheSnapshot=JSON.parse(JSON.stringify(f.state));
   $('#sdPacket').textContent=f.packet;$('#sdNote').textContent=f.note;
   const before=i?this.simulation.frames[i-1].elapsed:0;
   $('#sdState').innerHTML=`<div><span>MODEL TIME</span><b id="modelClock">${fraction<1?before:f.elapsed} <small>ms</small></b></div><div><span>EVENT</span><b>${i+1} <small>/ ${this.simulation.frames.length}</small></b></div><div><span>TRANSFER</span><b id="transferState">${fraction>=1?'Arrived':'Ready'}</b></div>`;
@@ -96,7 +101,7 @@ const SDStudy = {
  inspect(id){
   this.selected=id;const lab=SD_LABS[this.platform.active.id],def=lab.nodes[id];if(!def)return;
   const node=this.simulation.nodes.find(n=>n.id===id),f=this.simulation.frames[this.platform.player.i];
-  const detail=this.platform.active.id.startsWith('s3-')?SDStorageScene.inspect(this.platform.active.id,id,SDScene.state(this.simulation.frames,this.platform.player.i,this.platform.player.fraction)):'';
+  const detail=this.platform.active.id.startsWith('s4-')?SDCacheScene.inspect(id,SDScene.state(this.simulation.frames,this.platform.player.i,this.platform.player.fraction),this.platform.active.id):this.platform.active.id.startsWith('s3-')?SDStorageScene.inspect(this.platform.active.id,id,SDScene.state(this.simulation.frames,this.platform.player.i,this.platform.player.fraction)):'';
   $('#actorInspector').innerHTML=`<div class="section-label">INSIDE / ${esc(node.label.toUpperCase())}</div><h2>${esc(def[0])}</h2><p>${esc(def[1])}</p>${detail}<div class="actor-event"><span>Current involvement</span><b>${f.from===id&&f.to===id?'Local work':f.from===id?'Sending':f.to===id?'Receiving':'Waiting or not on this path'}</b></div>`;
   $$('#sdDiagram [data-actor]').forEach(el=>el.classList.toggle('inspected',el.dataset.actor===id));
  },
@@ -105,7 +110,7 @@ const SDStudy = {
   const labels={'client-server':`${o.network} ms link / ${o.work} ms work`,internet:o.failed?'Backup path':'Primary path','ip-ports':`Port ${o.port}`,dns:o.cache==='none'?'Cold lookup':`${o.cache} cache`,'tcp-udp':`${o.transport}${o.loss?' / loss':' / healthy'}`,'tcp-handshake':o.loss?'Lost SYN-ACK':'Normal handshake',tls:o.invalid?'Wrong hostname':'Valid identity','http-lifecycle':o.unavailable?'Unavailable':`${o.work} ms work`,'http-semantics':`${o.method} twice`,'http-versions':`HTTP/${o.version}${o.loss?' / loss':' / healthy'}`,websockets:o.disconnect?'Disconnected':'Healthy channel','browser-server':o.warm};
   const state=SDScene.state(this.simulation.frames,this.simulation.frames.length-1,1);
   const outcome=state.answer||state.delivered||state.outcome||state.status||state.available||state.phase||state.server||state.protected||'trace complete';
-  const label=labels[id]||SD_LESSONS[id].controls.map(c=>`${c[1]}: ${o[c[0]]}`).join(' / ');
+  const label=labels[id]||(o.action?'Live '+o.action+' / ':'')+SD_LESSONS[id].controls.map(c=>`${c[1]}: ${o[c[0]]}`).join(' / ');
   const run={label,elapsed:f.elapsed,events:this.simulation.frames.length,outcome:String(outcome)};
   if(JSON.stringify(this.history.at(-1))!==JSON.stringify(run))this.history.push(run);
   this.history=this.history.slice(-4);const max=Math.max(1,...this.history.map(x=>x.elapsed)),el=$('#experimentEvidence');el.hidden=false;

@@ -51,7 +51,7 @@ click('#tab-understand');assert(!query('#panel-understand').hidden);assert(query
 click('#tab-deeper');assert.equal(document.querySelectorAll('.deep-questions details').length,3);
 click('#tab-reflect');click('#sdComplete');click('#sdBookmark');
 run("assert(SDProgress.data.completed.includes('dns')); assert(SDProgress.data.bookmarks.includes('dns'));");
-route('#/system-design');assert.equal(document.querySelectorAll('.network-lab-card').length,38);assert.equal(document.querySelectorAll('.future-stage').length,9);
+route('#/system-design');assert.equal(document.querySelectorAll('.network-lab-card').length,52);assert.equal(document.querySelectorAll('.future-stage').length,8);
 route('#/system-design/dns');run("assert(SDProgress.data.completed.includes('dns'));");
 click('[data-preset="2"]');finish();assert(query('#sdNote').textContent.includes('nonexistent'));
 run('assert.equal(SDStudy.dns.cached,null);');
@@ -82,7 +82,7 @@ run("assert.equal(Platform.player.frames.at(-1).state.outcome,'timeout, write co
 assert(query('#experimentEvidence').textContent.includes('timeout, write committed'));
 click('#tab-reflect');click('#sdComplete');click('#sdBookmark');
 run("SDProgress.load(); assert(SDProgress.data.completed.includes('s2-request-lifecycle')); assert(SDProgress.data.bookmarks.includes('s2-request-lifecycle'));");
-route('#/system-design');assert.equal(document.querySelectorAll('.published-stage').length,3);
+route('#/system-design');assert.equal(document.querySelectorAll('.published-stage').length,4);
 route('#/system-design/s3-indexing');assert.equal(pending.size,0);
 assert.equal(document.querySelectorAll('.storage-record[data-storage-key]').length,8);
 click('[data-storage-key="2"]');finish();
@@ -105,6 +105,21 @@ route('#/system-design/s3-replication');click('#labRun');finish();run('assert.eq
 click('[data-actor="replica"]');assert(query('#actorInspector').textContent.includes('Value already returned'));
 click('#tab-reflect');click('#sdComplete');click('#sdBookmark');
 run("SDProgress.load(); assert(SDProgress.data.completed.includes('s3-replication')); assert(SDProgress.data.bookmarks.includes('s3-replication'));");
+route('#/system-design/s4-ttl');assert(query('[data-cache-action="read"]').disabled);
+click('[data-preset="0"]');finish();assert(!query('[data-cache-action="read"]').disabled);
+click('[data-cache-action="write"]');finish();run('assert.equal(SDStudy.cacheSnapshot.db,2); assert.equal(SDStudy.cacheSnapshot.cache,1);');
+click('[data-cache-action="read"]');finish();run('assert.equal(SDStudy.cacheSnapshot.outputs.at(-1),1);');
+click('[data-cache-action="advance"]');finish();
+click('[data-cache-action="read"]');finish();run('assert.equal(SDStudy.cacheSnapshot.outputs.at(-1),2);');
+click('[data-actor="cache"]');assert(query('#actorInspector').textContent.includes('Expiry deadline'));
+click('[data-cache-action="expire"]');finish();run('assert.equal(SDStudy.cacheSnapshot.cache,null);');
+click('#labRun');finish();run('assert.equal(SDStudy.cacheSnapshot.db,1);');
+route('#/system-design/s4-browser-caching');click('[data-preset="1"]');finish();assert(query('#sdDiagram').textContent.includes('FULL BODIES'));
+route('#/system-design/s4-write-behind');click('[data-preset="1"]');finish();run('assert.equal(Platform.player.frames.at(-1).state.db,1); assert(Platform.player.frames.at(-1).state.ack);');
+route('#/system-design/s4-cache-invalidation');click('[data-preset="0"]');finish();run('assert.equal(Platform.player.frames.at(-1).state.outputs[0],1);');
+click('[data-preset="2"]');finish();run('assert.equal(Platform.player.frames.at(-1).state.outputs[0],2);');
+click('#tab-reflect');click('#sdComplete');click('#sdBookmark');
+run("SDProgress.load(); assert(SDProgress.data.completed.includes('s4-cache-invalidation')); assert(SDProgress.data.bookmarks.includes('s4-cache-invalidation'));");
 route('#/system-design/tcp-udp');assert.equal(pending.size,0);assert(query('#sdDiagram svg').getAttribute('viewBox').startsWith('0 0 420 '));
 input('[data-option="transport"]','UDP');finish();run("assert.equal(Platform.player.frames.at(-1).state.delivered,'A,C');");
 route('#/dsa');assert(query('#view-visualize').classList.contains('is-active'));assert(query('#platformMain').hidden);
@@ -112,4 +127,4 @@ click('.tab[data-view="mycode"]');assert.equal(context.location.hash,'#/dsa/myco
 run("const sample=runPython('print(2 + 3)'); assert(!sample.error); assert(sample.stdout.join('').includes('5'));");
 route('#/dsa/roadmap');assert(query('#view-roadmap').classList.contains('is-active'));
 route('#/system-design/tcp-handshake');click('#sdPlay');route('#/');assert.equal(pending.size,0);
-console.log('Passed DOM interactions: complete boot, 38 labs and all presets, tabs, actor inspection, pause/restart, DNS staleness/expiry/TTL/failure, progress, narrow scene, reduced motion, DSA tabs, Python execution, animation cleanup.');
+console.log('Passed DOM interactions: complete boot, 52 labs and all presets, tabs, actor inspection, pause/restart, DNS staleness/expiry/TTL/failure, progress, narrow scene, reduced motion, DSA tabs, Python execution, animation cleanup.');

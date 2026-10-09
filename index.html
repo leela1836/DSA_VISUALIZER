@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Learn data structures and algorithms by watching them run. 28 animated algorithms with synced flowcharts and side-by-side Python and Java, a dependency-ordered roadmap with 145 LeetCode problems, and a browser Python runner that steps through your own code. Free, offline, no tracking.">
+<meta name="description" content="Learn computer science by reading, observing, and experimenting. Explore 28 DSA visualizations and interactive System Design networking lessons. Free, offline, no account needed.">
 <meta name="author" content="leela1836">
 <meta name="theme-color" content="#0d7a58">
 <meta property="og:type" content="website">
-<meta property="og:title" content="DSAViz — Data Structures &amp; Algorithms Visualizer">
-<meta property="og:description" content="Watch algorithms run step by step, with flowcharts synced to the code. Write Python in the browser and see your own solution execute. Free and offline.">
+<meta property="og:title" content="DSAViz — Visual Learning Platform">
+<meta property="og:description" content="Watch algorithms and network protocols work step by step. Explore DSA and System Design with interactive experiments. Free and offline.">
 <meta property="og:url" content="https://leela1836.github.io/DSA_VISUALIZER/">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='%230d9668'%3E%3Crect x='2' y='13' width='4' height='8' rx='1'/%3E%3Crect x='8' y='8' width='4' height='13' rx='1'/%3E%3Crect x='14' y='3' width='4' height='18' rx='1'/%3E%3Crect x='20' y='10' width='2' height='11' rx='1'/%3E%3C/g%3E%3C/svg%3E">
-<title>DSAViz — Data Structures &amp; Algorithms Visualizer</title>
+<title>DSAViz — Visual Learning Platform</title>
 <style>
 /* ─────────────────────────────  TOKENS  ─────────────────────────────
    Neutrals carry a faint green bias toward the accent, so the greys read
@@ -554,11 +554,112 @@ td.mono,th.mono{font-family:var(--mono);font-size:12px}
   .brand span{display:none}
 }
 
+/* Scoped additions preserve the original DSA layouts and theme tokens. */
+[hidden]{display:none!important}
+:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+.skip-link{position:fixed;left:12px;top:-60px;z-index:100;padding:12px;background:var(--bg-2);color:var(--accent)}
+.skip-link:focus{top:8px}
+.platform-bar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px 5%;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.platform-brand{font-size:20px;font-weight:750;color:var(--fg);text-decoration:none;letter-spacing:-.7px}
+.platform-brand span{color:var(--accent)}
+.platform-brand small{font-size:12px;font-weight:500;color:var(--fg-2);letter-spacing:0;margin-left:10px}
+.platform-bar nav{display:flex;gap:24px;align-items:center}
+.platform-bar nav a{color:var(--fg-2);font-size:13px;text-decoration:none}
+.platform-bar nav a[aria-current]{color:var(--accent);font-weight:700}
+.learning-home{max-width:1160px;margin:auto;padding:64px 30px 26px}
+.home-kicker,.course-label{font-size:11px;letter-spacing:.14em;font-weight:750;color:var(--accent)}
+.learning-home h1{font-size:clamp(38px,5vw,64px);line-height:1.08;letter-spacing:-2.7px;margin:18px 0}
+.learning-home h1 span{color:var(--accent)}
+.home-intro{font-size:17px;color:var(--fg-2);max-width:580px;line-height:1.7}
+.course-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:40px}
+.course-card{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--bg-2);box-shadow:var(--shadow)}
+.course-card-body{padding:28px 32px}
+.course-card h2{font-size:30px;line-height:1.15;letter-spacing:-1px;margin:12px 0}
+.course-card p{color:var(--fg-2);line-height:1.8;max-width:44ch}
+.course-art{height:205px;position:relative;overflow:hidden;background:var(--accent-bg);color:var(--accent)}
+.algorithm-art{display:flex;align-items:flex-end;justify-content:center;gap:15px;padding:32px 50px 55px}
+.algorithm-art i{width:28px;height:var(--bar);background:var(--accent);border-radius:5px 5px 0 0;animation:algo-wave 3s ease-in-out var(--delay) infinite}
+.course-art>span{position:absolute;bottom:17px;font-family:var(--mono);font-size:11px;letter-spacing:.04em}
+@keyframes algo-wave{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px);opacity:.65}}
+.network-art{background:var(--info-bg);color:var(--info);display:flex;flex-direction:column;align-items:center;padding:20px;gap:5px;font:10px var(--mono)}
+.network-art>div:not(.art-pair){padding:8px 25px;border:1px solid currentColor;border-radius:6px}
+.network-art b{animation:packet-pulse 1.8s ease-in-out infinite;font-size:16px}
+.art-pair{display:flex;gap:36px}.art-pair span{border:1px solid currentColor;padding:8px 15px;border-radius:6px}
+@keyframes packet-pulse{50%{opacity:.3;transform:translateY(3px)}}
+.course-tags{display:flex;gap:7px;flex-wrap:wrap;margin:20px 0}
+.course-tags span{font-size:11px;color:var(--fg-2);background:var(--bg-3);padding:4px 8px;border-radius:5px}
+.course-progress{margin:18px 0;font-size:12px;color:var(--fg-2)}
+.course-progress progress{display:block;width:100%;height:5px;border:0;border-radius:6px;overflow:hidden;accent-color:var(--accent);margin-top:9px;background:var(--bg-3)}
+progress::-webkit-progress-bar{background:var(--bg-3)}progress::-webkit-progress-value{background:var(--accent)}
+.learn-action{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border:0;border-radius:8px;background:var(--accent);color:var(--on-accent);font-weight:650;text-decoration:none;cursor:pointer;font-size:14px}
+.learn-action:hover{filter:brightness(1.08)}.learn-action.inline{display:inline-flex;gap:20px}
+.course-card small{display:block;color:var(--fg-2);font-size:11px;margin-top:12px}
+.learning-footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:42px;padding-top:20px;border-top:1px solid var(--line);color:var(--fg-2);font-size:12px}
+body[data-course="dsa"] #view-visualize,body[data-course="dsa"] .view.is-active{height:calc(100vh - 120px)}
+.sd-workspace{display:grid;grid-template-columns:275px minmax(0,1fr);max-width:1600px;margin:auto}
+.sd-sidebar{padding:22px 14px;background:var(--bg-2);border-right:1px solid var(--line);position:sticky;top:0;max-height:100vh;overflow:auto;align-self:start}
+.sd-sidebar summary{cursor:pointer;font-weight:650;font-size:12px;padding:12px 4px;color:var(--fg-2)}
+.sd-sidebar summary small{display:block;padding-left:16px;color:var(--fg-2);font-weight:400}
+.sd-sidebar nav>details{border-bottom:1px solid var(--line)}
+.sd-overview{display:block;color:var(--accent);padding:12px 8px;text-decoration:none;font-size:13px}
+.sd-topic{display:flex;justify-content:space-between;gap:4px;padding:9px 10px;text-decoration:none;color:var(--fg-2);font-size:12px;border-radius:6px;margin-bottom:2px}
+.sd-topic small{font-size:9px;color:var(--fg-2);align-self:center}.sd-topic.current{background:var(--accent-bg);color:var(--accent);font-weight:650}
+.sd-topic:hover{background:var(--bg-3)}
+.sd-content{padding:38px 5%;min-width:0;max-width:1150px}
+.sd-content h1{font-size:clamp(28px,3vw,42px);letter-spacing:-1.1px;line-height:1.2;margin:12px 0 24px}
+.sd-lede{font-size:16px;color:var(--fg-2);line-height:1.8;max-width:70ch}
+.sd-content a:not(.learn-action){color:var(--accent)}
+.stage-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:30px}
+.stage-card{background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:24px}
+.stage-card h2{font-size:20px;line-height:1.3}.stage-card p{color:var(--fg-2);font-size:12px}.stage-card li{padding:3px 0;font-size:13px}
+.lesson-title{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-top:24px}
+.lesson-title .ghost-btn{white-space:nowrap;margin-top:4px}
+.back-link{font-size:12px;text-decoration:none}
+.lesson-objectives{border:1px solid var(--line);border-left:3px solid var(--accent);padding:20px 24px;border-radius:8px;background:var(--bg-2)}
+.lesson-objectives h2{font-size:16px;margin:0 0 12px}.lesson-objectives h3{font-size:12px;color:var(--fg-2)}
+.sd-content li{line-height:1.8}.sd-section{padding:32px 0;border-bottom:1px solid var(--line)}
+.sd-section>h2{font-size:23px;letter-spacing:-.4px;margin:7px 0 18px}.sd-section p{font-size:15px;line-height:1.85;color:var(--fg-2);max-width:80ch}
+.section-label{font:11px var(--mono);color:var(--accent)}
+.related-links{display:flex;flex-wrap:wrap;gap:8px}.related-links a{font-size:12px;padding:5px 9px;background:var(--accent-bg);border-radius:5px;text-decoration:none}
+.working-steps{padding-left:24px}.working-steps li{padding:5px 0 5px 8px}
+.sd-section .model-note{font-size:12px;line-height:1.7;padding:12px 15px;background:var(--warn-bg);color:var(--warn);border-radius:7px}
+.sd-simulator{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg-2)}
+#sdDiagram{background:radial-gradient(var(--line) 1px,transparent 1px);background-size:18px 18px;padding:14px 5px}
+.sd-diagram{width:100%;display:block;max-height:360px;color:var(--accent)}
+.sd-node rect{fill:var(--bg-2);stroke:var(--line-2);stroke-width:2}.sd-node text{fill:var(--fg-2);font-size:15px;font-family:var(--mono)}
+.sd-node .sd-kind{font-size:9px;letter-spacing:.7px}.sd-node .sd-node-label{font:12px var(--sans);fill:var(--fg)}
+.sd-node.active rect{fill:var(--accent-bg);stroke:var(--accent)}.sd-node.failed rect{fill:var(--bad-bg);stroke:var(--bad)}
+.sd-active-link{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:5 5}
+.sd-packet{fill:var(--accent);animation:sd-flow 1.4s linear -.7s infinite;animation-play-state:paused;offset-distance:50%}
+.sd-running .sd-packet{animation-play-state:running}@keyframes sd-flow{from{offset-distance:0%}to{offset-distance:100%}}
+.sd-player{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:14px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.sd-player button{border:1px solid var(--line);background:var(--bg-3);border-radius:6px;min-width:38px;height:36px;cursor:pointer}.sd-player button:disabled{opacity:.4;cursor:default}
+#sdPlay{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.sd-player label{display:flex;align-items:center;gap:8px;margin-left:auto;font-size:12px}.sd-player label input{width:85px}#sdScrub{width:100%;accent-color:var(--accent)}
+#sdCount{font:11px var(--mono)}.sd-frame-info{padding:20px}#sdPacket{font-weight:700;font-size:15px}#sdNote{min-height:3.7em;margin:8px 0 16px}
+#sdState{display:flex;flex-wrap:wrap;gap:8px}#sdState span{font:11px var(--mono);padding:5px 8px;background:var(--bg-3);border-radius:5px}
+.walkthrough{margin-top:16px}.walkthrough summary{cursor:pointer;color:var(--accent)}#sdTrace li{padding:10px}#sdTrace li.current{background:var(--accent-bg);border-radius:8px}#sdTrace p{font-size:13px;margin:4px 0}#sdTrace button{background:none;border:0;font-weight:650;cursor:pointer;color:var(--accent);text-align:left}
+.experiment-controls{display:flex;flex-wrap:wrap;gap:20px;padding:20px;background:var(--bg-2);border:1px solid var(--line);border-radius:10px}
+.experiment-field{display:flex;flex-direction:column;justify-content:center;gap:10px;font-size:12px;min-width:180px;flex:1}
+.experiment-field:has(input[type="checkbox"]){flex-direction:row;align-items:center;justify-content:flex-start}.experiment-field select{padding:9px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);font:inherit}.experiment-field input{accent-color:var(--accent)}.experiment-field output{font:14px var(--mono);color:var(--accent)}
+.knowledge-check{padding:20px 24px;border:1px solid var(--line);background:var(--bg-2);border-radius:10px}.knowledge-check h3{margin-top:0}.knowledge-check summary{cursor:pointer;color:var(--accent)}
+.reflection-label{display:flex;flex-direction:column;gap:8px;margin:14px 0;font-size:12px}.reflection-label textarea{font:inherit;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:10px;resize:vertical}
+.sd-section dt{font-weight:650;margin-top:12px}.sd-section dd{color:var(--fg-2);margin:4px 0}.lesson-navigation{display:flex;justify-content:space-between;gap:25px;padding:28px 0}.lesson-navigation a{font-size:13px;max-width:45%}
+@media(max-width:1000px){.sd-workspace{grid-template-columns:230px minmax(0,1fr)}.stage-grid{grid-template-columns:1fr}.sd-content{padding:30px 24px}.course-card-body{padding:24px}.platform-brand small{display:none}}
+@media(max-width:700px){.platform-bar{flex-wrap:wrap;padding:13px 20px;gap:12px}.platform-bar nav{gap:18px}.platform-bar nav a{font-size:12px}.learning-home{padding:35px 20px}.learning-home h1{letter-spacing:-1.6px}.course-grid{grid-template-columns:1fr;gap:22px}.course-art{height:175px}.network-art{padding-top:10px}.sd-workspace{display:block}.sd-sidebar{position:static;max-height:280px;border-right:0;border-bottom:1px solid var(--line);padding:10px 16px}.sd-content{padding:26px 18px}.lesson-title{flex-wrap:wrap}.lesson-title h1{margin-bottom:5px}.lesson-title .ghost-btn{margin-bottom:20px}.sd-diagram{min-width:500px;max-height:none}#sdDiagram{overflow-x:auto}.sd-player label{margin-left:0}.course-card h2{font-size:27px}.knowledge-check{padding:18px}.platform-brand{font-size:18px}.sd-section p{font-size:14px}}
+@media(prefers-reduced-motion:reduce){.algorithm-art i,.network-art b,.sd-packet{animation:none!important}}
+
 </style>
 </head>
 <body>
+<a class="skip-link" href="#platformMain">Skip to learning content</a>
+<header class="platform-bar">
+  <a class="platform-brand" href="#/">DSA<span>Viz</span><small> / visual learning</small></a>
+  <nav aria-label="Courses"><a href="#/">All courses</a><a href="#/dsa">DSA</a><a href="#/system-design">System Design</a><button id="platformTheme" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">◐</button></nav>
+</header>
+<main id="platformMain" tabindex="-1"></main>
 
-<header class="topbar">
+<header class="topbar" id="dsaTopbar">
   <div class="brand">
     <svg class="logo" viewBox="0 0 24 24" aria-hidden="true">
       <rect x="2"  y="13" width="4" height="8"  rx="1"/>
@@ -7882,6 +7983,7 @@ const App = {
     $$('.tab').forEach(t => t.addEventListener('click', () => this.show(t.dataset.view)));
   },
   show(view){
+    if (typeof Platform !== 'undefined') Platform.dsaRoute(view);
     $$('.tab').forEach(t => t.classList.toggle('is-active', t.dataset.view === view));
     $$('.view').forEach(v => v.classList.toggle('is-active', v.id === 'view-' + view));
     if (this.player) this.player.pause();
@@ -8112,7 +8214,7 @@ const App = {
   /* ─────────────── keyboard ─────────────── */
   initKeys(){
     document.addEventListener('keydown', e => {
-      if (/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
+      if (/^(INPUT|SELECT|TEXTAREA|BUTTON|A)$/.test(e.target.tagName)) return;
       const p = $('#view-visualize').classList.contains('is-active') ? this.player
               : $('#view-mycode').classList.contains('is-active') ? MyCode.player : null;
       if (!p) return;
@@ -8179,6 +8281,520 @@ const App = {
 };
 
 document.addEventListener('DOMContentLoaded', () => App.start());
+
+/* Topic IDs are stable storage keys. Future topics are roadmap entries, not lessons. */
+const SD_STAGES = [
+  ['Internet and Networking Fundamentals', [], [
+    ['client-server','Client and server',[]], ['internet','How the internet works',['client-server']],
+    ['ip-ports','IP addresses and ports',['internet']], ['dns','DNS resolution',['ip-ports']],
+    ['tcp-udp','TCP and UDP',['ip-ports']], ['tcp-handshake','TCP connection establishment',['tcp-udp']],
+    ['tls','TLS and HTTPS',['tcp-handshake','dns']], ['http-lifecycle','HTTP request-response lifecycle',['tls']],
+    ['http-semantics','HTTP methods and status codes',['http-lifecycle']], ['http-versions','HTTP versions',['http-semantics','tcp-udp']],
+    ['websockets','WebSockets',['http-versions']], ['browser-server','Browser-to-server communication',['dns','tls','http-lifecycle','websockets']]
+  ]],
+  ['Application and Backend Fundamentals', [1], ['Web servers','Application servers','APIs','REST and GraphQL','Stateless and stateful architecture','Cookies and sessions','Authentication and authorization','Reverse proxies','API gateways','Request lifecycle','Connection pooling']],
+  ['Databases and Storage', [2], ['Relational databases','NoSQL databases','Data modeling','Indexing','Query execution','Transactions','ACID properties','Transaction isolation','Replication','Partitioning','Sharding','SQL versus NoSQL','Object storage','File storage','Database performance']],
+  ['Caching', [3], ['Why caching exists','Browser caching','Application caching','Database caching','Distributed caching','Cache-aside','Read-through and write-through','Write-behind','TTL','Cache eviction strategies','Cache invalidation','Cache consistency','Redis fundamentals','Cache failure scenarios']],
+  ['Scalability and Load Balancing', [2,3,4], ['Scalability fundamentals','Vertical scaling','Horizontal scaling','Load balancing','Load balancing algorithms','Health checks','Session affinity','Autoscaling','Traffic spikes','Bottlenecks','Capacity planning','Content delivery networks']],
+  ['Distributed Systems', [3,5], ['Distributed architecture','Consistency and availability','Network partitions','CAP theorem','Consistency models','Replication strategies','Quorums','Leader election','Consensus fundamentals','Distributed locks','Clock synchronization','Fault tolerance','Failure recovery']],
+  ['Messaging and Asynchronous Systems', [2,6], ['Synchronous versus asynchronous communication','Message queues','Publish-subscribe','Message brokers','Event-driven architecture','Kafka fundamentals','Event ordering','Delivery guarantees','Retries','Dead-letter queues','Idempotency','Backpressure']],
+  ['Reliability and Performance', [5,6,7], ['Latency and throughput','Availability','Reliability','Redundancy','Failover','Timeouts and retries','Exponential backoff','Circuit breakers','Rate limiting','Throttling','Monitoring and observability','Logs, metrics, and traces','Disaster recovery']],
+  ['Software Architecture', [2,3,6,7,8], ['Monolithic architecture','Layered architecture','Microservices','Service-to-service communication','Service discovery','API gateways','Event-driven systems','CQRS','Event sourcing','Saga pattern','Architecture trade-offs']],
+  ['Security and Deployment Fundamentals', [1,2,8,9], ['HTTPS and encryption','Authentication mechanisms','OAuth 2.0 and OpenID Connect','JWT','CORS','Common web security threats','Containers','Docker fundamentals','Kubernetes fundamentals','Cloud infrastructure fundamentals','CI/CD','Deployment strategies']],
+  ['System Design Methodology', [3,5,8,9,10], ['Understanding system requirements','Identifying functional requirements','Identifying non-functional requirements','Estimating scale','Basic capacity calculations','Identifying system components','Designing APIs','Data modeling','Data flow','Recognizing bottlenecks','Evaluating trade-offs','Evolving architectures gradually']],
+  ['Real-World Architecture Walkthroughs', [11], ['URL shortener','Chat application','Social media feed','Video streaming platform','E-commerce application','Notification system','File upload and storage system','Search autocomplete','Ride-booking platform','Payment processing architecture']]
+].map(([name, prerequisites, topics], i) => ({
+  number:i+1, name, prerequisites,
+  topics:topics.map((t,j) => Array.isArray(t) ? {id:t[0],name:t[1],prerequisites:t[2]} : {
+    id:`s${i+1}-${t.toLowerCase().replace(/[^a-z0-9]+/g,'-')}`, name:t,
+    prerequisites:j ? [`s${i+1}-${String(topics[j-1]).toLowerCase().replace(/[^a-z0-9]+/g,'-')}`] : []
+  })
+}));
+const SD_TOPICS = SD_STAGES.flatMap(s => s.topics.map(t => ({...t, stage:s.number})));
+
+/* Authored lessons only. Each definition carries its own experiment and process. */
+const SD_LESSONS = {
+ 'client-server': {
+  objectives:['Separate client and server roles from physical machines.','Trace a request and explain why a response can arrive late.'],
+  intro:['A weather app cannot keep every forecast on your phone. It asks a remote program for the forecast it needs. The program making that request is the client; the program handling it is the server. This division lets many devices use shared data and logic without copying the entire service onto each device.', 'These are roles in an interaction. A web application is a server to your browser and a client when it calls a database. A server is not necessarily a large computer: a program on your laptop can serve other programs on the same laptop.'],
+  fundamentals:['A request is an application message expressing an operation, such as “read the forecast for Pune.” A response carries the result or an error. A protocol defines how both sides interpret those messages. HTTP is one such application protocol; the network transports its bytes.', 'Latency is elapsed time from starting an operation until observing its result. Network travel and server processing both contribute. A successful connection does not guarantee a successful application operation: a reachable server can still return an error.'],
+  working:['The client identifies the service and creates a request.','Bytes travel across the network; this model groups all intermediate hops into one link.','The server interprets the operation and performs work.','The response travels back; the client updates its interface only after receiving it.'],
+  deep:['For this one-request model, elapsed time is two one-way network delays plus server work: 2 × link delay + processing time. Actual latency can also include DNS, connection setup, queues, retransmissions, and rendering. A slower server and a slower network can produce the same visible symptom while needing different fixes.', 'Requests from multiple clients can overlap. Servers use threads, processes, or asynchronous I/O to make progress while other operations wait. If arrival rate exceeds processing capacity for long enough, a queue grows. A timeout is a client decision to stop waiting; it does not prove the server stopped working. Retrying a write may therefore perform it twice unless the application makes retries safe.'],
+  usage:['An online library browser asks an API for book availability. The API checks stored inventory and returns structured data. Separating the display from the shared inventory lets a phone app and a website reuse the same service.', 'Keep responsibilities explicit: the client presents information; the server validates and applies the operation. Client validation improves usability, but the server still checks incoming data because requests can come from other programs.'],
+  summary:['Client and server describe roles, not hardware.','A response depends on both network travel and server work.','Timeouts leave uncertainty about whether an operation occurred.'],
+  check:['The client times out while saving a book reservation. Is it safe to assume no reservation exists?', 'No. The server might already have committed it. Check the result or use a request identifier that prevents a retry from creating a duplicate.'],
+  glossary:{Protocol:'Rules for interpreting messages.',Latency:'Elapsed time before a result is observed.'},
+  experiment:'Increase server work from 40 ms to 400 ms, then increase the link delay. Compare which steps add time; the response content stays the same.',
+  controls:[['network','One-way link delay (ms)',10,200,40],['work','Server work (ms)',10,500,80]],
+  sources:[['HTTP semantics: client and server','https://www.rfc-editor.org/rfc/rfc9110.html#section-3.3']]
+ },
+ internet:{
+  objectives:['Explain packet switching and router forwarding.','Distinguish a route change from reliable delivery.'],
+  intro:['The internet connects independently operated networks. Your home network, an internet provider, and a website’s network do not share a single central switch. They exchange packets through routers so that applications can communicate across organizational boundaries.', 'Packet switching divides communication into units that share links with other traffic. Like parcels passing through sorting depots, each packet carries destination information. The analogy has limits: routers forward based on network prefixes, not the meaning of the application message.'],
+  fundamentals:['A packet contains headers and payload. An IP header includes source and destination addresses. A router forwards a packet toward its destination using a routing table. A link is one connection between neighboring network devices; a path consists of multiple links.', 'Bandwidth is a link’s data-carrying capacity. Delay includes transmission time, propagation time, processing, and queueing. High bandwidth does not eliminate propagation delay. Routing chooses paths; forwarding applies the current choice to an individual packet.'],
+  working:['The device sends a packet to its gateway when the destination is outside its local network.','The provider router selects a next hop based on its forwarding table.','Transit routers repeat the process until the destination network is reached.','The destination host passes the payload to the appropriate transport protocol.'],
+  deep:['Routers usually use longest-prefix matching: the most specific matching destination prefix wins. Within a network, routing protocols distribute topology information; between networks, BGP distributes reachability and policy. A geographically shorter route is not always preferred because business and operational policy also matter.', 'IP provides best-effort delivery. A packet can be dropped, reordered, or duplicated. When a link fails, routing may eventually select another path, but convergence takes time and some packets may be lost. The experiment assumes an alternate route is already installed; it does not simulate BGP convergence. Return traffic can take a different path. Reliability, if needed, must come from transport or application behavior.'],
+  usage:['A video website may deliver content from a nearby edge network instead of a distant origin. The physical and logical path affects latency even when the application code does not change.', 'When a request stalls, separate “the host is reachable” from “the service is healthy.” A routing failure can block access to an otherwise healthy server, while a healthy route can lead to an overloaded application.'],
+  summary:['The internet is a network of independently managed networks.','Routers forward packets hop by hop.','An alternate path improves reachability without guaranteeing delivery.'],
+  check:['A packet reaches the destination through a longer route after a link failure. Does IP guarantee all earlier packets also arrived?', 'No. Rerouting restores a path for subsequent traffic; IP does not recover packets lost during the failure.'],
+  glossary:{Router:'A device forwarding packets between networks.',Prefix:'Leading address bits identifying a network range.'},
+  experiment:'Fail the primary transit link. The packet takes an already available alternate route with an additional hop. Compare the path and accumulated delay.',
+  controls:[['failed','Primary transit link failed','checkbox',false],['network','Delay per hop (ms)',5,100,20]],
+  sources:[['IPv4 specification','https://www.rfc-editor.org/rfc/rfc791.html'],['IPv6 specification','https://www.rfc-editor.org/rfc/rfc8200.html']]
+ },
+ 'ip-ports':{
+  objectives:['Distinguish host addressing from service addressing.','Explain why an address alone cannot select an application.'],
+  intro:['One host can run a website, a database, and a development server at the same time. An IP address helps traffic reach a network interface. A transport port helps the receiving operating system direct traffic to the intended service. Knowing the building’s address does not tell you which door to use.', 'The analogy is only about selection. A port is a numeric field in TCP or UDP, not a physical socket in the machine. TCP and UDP have separate port spaces.'],
+  fundamentals:['IPv4 addresses are 32 bits; IPv6 addresses are 128 bits. A port number is 16 bits, from 0 through 65535, with port 0 reserved in ordinary service use. HTTPS commonly uses port 443, while HTTP commonly uses 80. These are conventions; a service can listen on another permitted port.', 'A socket is an operating-system communication endpoint. A listening socket accepts connections addressed to its local address and port. A TCP connection is distinguished by local and remote addresses and ports, together with the transport protocol. Clients typically receive temporary ephemeral source ports.'],
+  working:['The client chooses a destination IP, transport, and port.','The IP layer delivers the packet to the addressed host.','The transport layer looks for a matching listener or established connection.','A listening HTTPS endpoint can accept TCP traffic; an unused port can reject it.'],
+  deep:['This model assumes the host is reachable and has a TCP listener on 443. Selecting 5432 or 8080 demonstrates “no listener,” not a general rule about those ports. In reality they could serve a database or another application. A firewall might silently drop traffic rather than sending a reset, producing a timeout instead of immediate refusal.', 'NAT can translate private source addresses and ports to a public mapping. Private addresses are not globally unique. A host may have multiple interfaces and addresses; a listener can bind to one address or to all appropriate local interfaces. TLS still needs to verify the requested hostname, because an IP address can serve many unrelated sites.'],
+  usage:['A reverse proxy often listens publicly on 443 and forwards to an application listening privately on 8080. The two connections have different endpoints. The proxy is a server on one connection and a client on the other.', 'Separating public and private listeners makes network exposure easier to manage, but a nonstandard port alone does not provide security. Access control and authentication still matter.'],
+  summary:['IP gets traffic to a host; transport ports select endpoints.','A connection includes both sides’ addresses and ports.','Refusal and timeout have different possible causes.'],
+  check:['Two clients connect to the same server on port 443. Must the server use a new listening port for each client?', 'No. Accepted TCP connections are distinguished by the full endpoint tuple. The listener can keep accepting connections on 443.'],
+  glossary:{Socket:'An operating-system communication endpoint.',NAT:'Translation of network addresses, often with port translation.'},
+  experiment:'Change the destination port. In this model only 443 is listening; observe that reaching the host is different from reaching a service.',
+  controls:[['port','Destination TCP port','select',['443','8080','5432'],'443']],
+  sources:[['TCP endpoints and connections','https://www.rfc-editor.org/rfc/rfc9293.html#section-3.1'],['Service name and port registry','https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml']]
+ },
+ dns:{
+  objectives:['Trace recursive resolution and authoritative referrals.','Explain how TTL and caches change the lookup path.'],
+  intro:['People remember names such as library.example, while IP routing uses addresses. DNS, the Domain Name System, lets names refer to records without embedding a permanent address in every application. It distributes responsibility so each domain owner can manage its own records.', 'A DNS lookup does not download the website. It discovers information used before the browser connects to a service. A name can have several address records, or aliases leading to another name.'],
+  fundamentals:['An A record contains an IPv4 address and an AAAA record an IPv6 address. A recursive resolver performs lookups for clients. Authoritative name servers publish a zone’s records. Root and top-level-domain (TLD) servers provide referrals toward the relevant authority.', 'TTL, time to live, tells caches how long a record may be reused. It is not the website session lifetime. Browsers, operating systems, and recursive resolvers can cache answers; caches may also hold intermediate referrals and negative answers.'],
+  working:['The browser checks its cache, then the operating system’s applicable cache.','On a miss, a stub resolver asks a recursive resolver for the address.','A cold recursive resolver asks a root server, follows the TLD referral, then asks the authoritative server.','The resolver returns the answer and caches it; the browser can now connect to the address.'],
+  deep:['The resolver normally makes iterative queries to the hierarchy: a root server does not contact the TLD on behalf of this resolver. A referral supplies names of other servers and, when necessary, glue addresses. A completely cold lookup is educationally useful but uncommon because resolvers retain popular referrals.', 'TTL reduces repeated work but delays visibility of record changes. Our cache controls express valid versus expired answers; they do not model elapsed TTL seconds. CNAME chains can require extra lookups. NXDOMAIN indicates that a name does not exist and can be negatively cached; timeouts and SERVFAIL are different failures. DNSSEC authenticates signed DNS data when validated; it does not encrypt queries. DNS-over-HTTPS encrypts transport to a resolver, but that resolver still sees the query.'],
+  usage:['A library moves its API to a new address. DNS allows the name to stay stable while the address record changes. Existing cached answers can direct clients to the old address until expiration, so migration planning must account for overlap.', 'DNS may return different addresses by region or load policy. This is a discovery mechanism, not a guarantee that the selected server is healthy or that cached clients immediately switch after an outage.'],
+  summary:['DNS resolves names to records, not webpage content.','Recursive resolvers follow referrals to an authority.','A valid cache can bypass part or all of the hierarchy.'],
+  check:['If the browser has a valid address answer, must it still ask the root server before opening the page?', 'No. It can reuse the answer. Even on a browser miss, a resolver cache may avoid a full hierarchy traversal.'],
+  glossary:{Zone:'A portion of the namespace served by an authority.',Referral:'A response pointing the resolver toward another authority.',TTL:'Permitted cache lifetime for a record.'},
+  experiment:'Compare a cold lookup with browser, OS, and resolver cache hits. Then simulate a negative authoritative answer; no connection address is returned. The .example hierarchy is illustrative: .example is reserved for documentation, not a publicly delegated TLD.',
+  controls:[['cache','Valid cached answer at','select',['none','browser','OS','resolver'],'none'],['missing','Name does not exist (cold lookup)','checkbox',false]],
+  sources:[['DNS concepts and resolution','https://www.rfc-editor.org/rfc/rfc1034.html'],['DNS negative caching','https://www.rfc-editor.org/rfc/rfc2308.html']]
+ },
+ 'tcp-udp':{
+  objectives:['Compare ordered byte streams with datagrams.','Observe loss recovery and head-of-line waiting.'],
+  intro:['A file must arrive completely and in order. A live voice call may prefer the next fresh sound to an old packet retransmitted too late. Transport protocols provide different building blocks for those needs. TCP provides a reliable ordered byte stream; UDP provides datagrams without built-in reliable delivery.', 'Neither is an application architecture by itself. An application can add reliability on UDP. QUIC does this and supports HTTP/3, so “UDP means unreliable application” is an incorrect shortcut.'],
+  fundamentals:['TCP tracks sequence numbers for bytes, acknowledges received data, retransmits missing data, and controls sending rate. A stream does not preserve the application’s message boundaries. The application must frame messages itself.', 'UDP preserves datagram boundaries. A received datagram corresponds to a sent datagram, but delivery, order, and duplicate suppression are not guaranteed. Checksums detect many transmission errors; they do not make missing packets reappear.'],
+  working:['The sender prepares three units of data.','The middle unit may be lost while a later one arrives.','TCP waits to expose the missing portion of its stream; UDP can expose later datagrams immediately.','TCP retransmits missing bytes; a basic UDP application must decide what to do about the gap.'],
+  deep:['TCP’s retransmission decision can use timeouts or loss indications from acknowledgments. The model shows one retransmission and omits exact timers, congestion windows, and selective acknowledgment details. Ordered delivery causes head-of-line waiting: later received bytes cannot pass a gap in the same stream.', 'TCP flow control protects the receiver; congestion control protects the network. UDP lacks both as an intrinsic transport service, but applications still need responsible congestion behavior. Datagram size matters: fragmentation can increase loss sensitivity. TCP reliability means delivering bytes or reporting connection failure, not proving an application processed a payment. Encryption is also separate: plain TCP and UDP do not encrypt payloads.'],
+  usage:['A download can use HTTP over TCP to recover missing bytes. A game may send position updates with a UDP-based protocol and discard late data, while separately ensuring important events are acknowledged.', 'Select behavior based on application requirements. A new transport does not remove the need to define ordering, retry, security, and congestion behavior at the appropriate layer.'],
+  summary:['TCP delivers ordered bytes without message boundaries.','UDP delivers datagrams without a reliability guarantee.','Applications and protocols can add behavior above either transport.'],
+  check:['A TCP sender receives an acknowledgment for request bytes. Does that prove the server committed the requested database update?', 'No. It confirms transport receipt, not application execution or durable storage. The application response must define that outcome.'],
+  glossary:{Datagram:'A separately addressed unit with a preserved message boundary.','Head-of-line waiting':'Later data waits behind a missing earlier portion.'},
+  experiment:'Drop the middle unit under TCP, then UDP. Compare what the receiver can deliver before and after recovery.',
+  controls:[['transport','Transport','select',['TCP','UDP'],'TCP'],['loss','Drop middle unit','checkbox',true]],
+  sources:[['TCP specification','https://www.rfc-editor.org/rfc/rfc9293.html'],['UDP specification','https://www.rfc-editor.org/rfc/rfc768.html']]
+ },
+ 'tcp-handshake':{
+  objectives:['Trace SYN, SYN-ACK, and ACK.','Explain state and retry behavior during connection setup.'],
+  intro:['Before sending an ordinary TCP stream, two endpoints need to agree on initial sequence numbers and establish connection state. Sending “hello” once is insufficient: the sender needs evidence that its peer received the greeting and that traffic can return.', 'The three-way handshake establishes transport state. It does not authenticate a user, encrypt bytes, or authorize an application action. Those tasks occur at other layers.'],
+  fundamentals:['SYN is a TCP flag used to synchronize sequence numbers; ACK acknowledges sequence space. A client begins in CLOSED and performs an active open. A server listener waits in LISTEN. Each direction has an independent sequence-number space.', 'SYN consumes one sequence number. If the client’s initial number is 100, the server acknowledges 101. If the server’s initial number is 500, the client acknowledges 501. These small numbers are illustrative; real initial sequence numbers are selected to address security and delayed-packet concerns.'],
+  working:['The client sends SYN with its initial sequence number and enters SYN-SENT.','The listener receives SYN, creates provisional state, and sends SYN-ACK.','The client receives SYN-ACK, enters ESTABLISHED, and sends ACK.','The server receives the final ACK and enters ESTABLISHED.'],
+  deep:['The server is still in SYN-RECEIVED while waiting for the final acknowledgment even if the client considers the connection established. A lost SYN-ACK leaves the client waiting; retries after a timeout may recover. The model assumes the first reply is lost and the next succeeds, rather than showing an arbitrary number of retries.', 'The final ACK can be carried with data. TCP Fast Open and simultaneous open introduce cases beyond this ordinary handshake. Half-open state can consume resources; SYN cookies and queue limits help defend listeners against floods. A handshake needs roughly one round trip before the client can send ordinary application data, but actual application readiness may require TLS and more exchanges. Closing is a separate exchange, and the two directions can close independently.'],
+  usage:['Opening a fresh HTTPS connection normally involves TCP setup followed by TLS. Connection reuse avoids repeatedly paying TCP setup cost. This is why keeping connections alive can improve repeated API calls.', 'Connection pooling must still detect stale or broken connections. “Established” is local state; a disconnected peer may not be discovered until data transmission, keepalive, or an application timeout.'],
+  summary:['The handshake synchronizes two sequence spaces.','Both endpoints reach ESTABLISHED at different moments.','Lost setup traffic can require retransmission and extra delay.'],
+  check:['After the client sends the final ACK, can we assume the server has already reached ESTABLISHED?', 'No. The server reaches that state when it receives the ACK. The message can still be delayed or lost in transit.'],
+  glossary:{SYN:'Flag synchronizing initial sequence numbers.',ACK:'Flag indicating an acknowledgment number is meaningful.'},
+  experiment:'Lose the first SYN-ACK. Observe provisional server state, the illustrative timeout, and a retransmitted reply.',
+  controls:[['loss','Lose first SYN-ACK','checkbox',false],['network','One-way link delay (ms)',10,200,40]],
+  sources:[['TCP connection establishment','https://www.rfc-editor.org/rfc/rfc9293.html#section-3.5']]
+ },
+ tls:{
+  objectives:['Separate confidentiality, integrity, and authentication.','Trace a simplified TLS 1.3 handshake and certificate rejection.'],
+  intro:['An unprotected network path can expose or alter traffic. A browser also needs to know whether it reached the intended site rather than an impersonator. TLS protects communication between endpoints and authenticates the server using a certificate and proof of key possession.', 'HTTPS is HTTP carried over a secured connection. It protects traffic in transit; it does not make the site’s business logic trustworthy or prevent an endpoint from reading the data it receives.'],
+  fundamentals:['Encryption hides plaintext from observers. Integrity protection detects unauthorized modification. Authentication verifies an identity. A certificate binds an identity to a public key through a trusted issuer. The browser checks the requested hostname, validity period, trust chain, and applicable policy.', 'TLS 1.3 commonly uses ephemeral key agreement to derive symmetric traffic keys. Public-key operations authenticate and establish secrets; symmetric encryption protects ordinary application data efficiently. The server does not send its private key to the browser.'],
+  working:['ClientHello offers supported parameters and a key share.','ServerHello selects parameters and supplies a key share; both sides derive handshake keys.','The server sends encrypted handshake messages including its certificate, proof of possession, and Finished.','The browser validates identity and the handshake, sends its Finished, then uses application traffic keys for HTTP.'],
+  deep:['CertificateVerify proves possession of the certificate’s private key over the handshake transcript. Finished authenticates the transcript using a derived secret. Handshake encryption starts before the server’s certificate messages in TLS 1.3, but a valid certificate chain and hostname still need checking. An invalid certificate stops this model before application data.', 'This is a full TLS 1.3 handshake without resumption, client certificates, or HelloRetryRequest. Resumption can reduce work; 0-RTT early data has replay risks and requires suitable operations. Traditional TLS does not hide all metadata: IP addresses and traffic timing remain observable, and hostname visibility depends on mechanisms such as encrypted ClientHello. TLS termination at a proxy protects the browser-to-proxy leg; protecting the proxy-to-service leg requires its own secure connection.'],
+  usage:['A library API receives personal reading preferences through HTTPS. The browser checks the API hostname, and TLS protects the request while it crosses public networks. The service still needs authorization to decide which user may read each preference.', 'A trusted reverse proxy may decrypt inbound requests to route them. That trust boundary needs explicit design: encryption in transit cannot compensate for careless access to plaintext inside the system.'],
+  summary:['TLS provides confidentiality, integrity, and endpoint authentication.','Certificate validation is essential even when encryption works.','HTTPS does not replace application authorization.'],
+  check:['A server encrypts traffic but presents a certificate for a different hostname. Should the browser proceed?', 'No. Encryption with an unverified peer does not establish the intended server identity. A hostname mismatch must fail validation.'],
+  glossary:{Certificate:'A signed binding between an identity and a public key.',Transcript:'The ordered handshake messages covered by authentication.'},
+  experiment:'Switch the certificate from valid to a hostname mismatch. The browser stops before sending HTTP application data.',
+  controls:[['invalid','Certificate hostname mismatch','checkbox',false]],
+  sources:[['TLS 1.3 protocol','https://www.rfc-editor.org/rfc/rfc8446.html'],['Service identity verification','https://www.rfc-editor.org/rfc/rfc9525.html']]
+ },
+ 'http-lifecycle':{
+  objectives:['Trace an HTTP exchange after connection setup.','Distinguish server errors from transport failures.'],
+  intro:['After discovering and connecting to a server, a browser still needs a language for asking for resources. HTTP supplies request methods, target identifiers, headers, and response semantics. It lets a browser, API client, proxy, and service agree on the meaning of an exchange.', 'The lifecycle includes more than server execution. A browser may satisfy a request locally, a proxy may answer it, and a received document can trigger many more requests. This lesson follows one request on an already established HTTPS connection.'],
+  fundamentals:['A request identifies a method and target, with headers and an optional body. A response carries a status code, headers, and usually representation data. A representation is a form of the resource, such as JSON describing a book.', 'Headers carry metadata: Content-Type describes media type; Cache-Control communicates caching policy. A request and a response are logical messages; their wire framing differs between HTTP versions. The model displays their meaning rather than exact bytes.'],
+  working:['The client forms GET /books/42 with an Accept header.','The request is carried over the existing secure connection.','The application locates the resource and constructs a response.','The client receives status and headers, then interprets the body according to its media type.'],
+  deep:['HTTP is stateless at the protocol level: each request’s semantics can be understood independently. Applications can still maintain state through sessions or databases. Connection reuse is separate from application state. Redirects can trigger new requests, and intermediate caches can answer without origin execution.', 'A 503 is a valid HTTP response explaining that the service is unavailable. A dropped connection may produce no HTTP response at all. Timeouts impose a waiting budget across work the client might not control. Receiving headers does not guarantee the full body arrives. Streaming lets clients process body chunks before completion. GET responses can be cacheable subject to policy, while personalized data needs careful cache directives.'],
+  usage:['A book details page asks an API for JSON, then renders title and availability. The server sets Content-Type: application/json, and the browser parses the representation. A 404 can produce a useful “book not found” state instead of an indefinite spinner.', 'Observability should separate network failures, HTTP error responses, and client parsing errors. Combining them into a single “failed” counter hides where the problem occurred.'],
+  summary:['HTTP defines logical request and response semantics.','Connection setup precedes this model and can be reused.','HTTP errors and missing responses are different outcomes.'],
+  check:['The server returns 503 with a JSON body. Did HTTP itself fail to carry a response?', 'No. HTTP carried an error response successfully. The requested application operation was unavailable.'],
+  glossary:{Representation:'Data describing the current or intended state of a resource.',Header:'A named metadata field in an HTTP message.'},
+  experiment:'Change server processing delay and choose an unavailable service. Inspect how the timing and response change independently.',
+  controls:[['work','Application work (ms)',10,500,90],['unavailable','Service unavailable (503)','checkbox',false]],
+  sources:[['HTTP semantics','https://www.rfc-editor.org/rfc/rfc9110.html'],['HTTP caching','https://www.rfc-editor.org/rfc/rfc9111.html']]
+ },
+ 'http-semantics':{
+  objectives:['Use method semantics to reason about retries.','Interpret status codes without confusing authentication and authorization.'],
+  intro:['An HTTP method tells the service what kind of operation a client intends. A status code reports how that attempt turned out. Consistent meanings let browsers, caches, proxies, and retry logic cooperate instead of guessing based on a URL’s spelling.', 'An API can violate these conventions, but doing so breaks assumptions. A GET that secretly deletes a book is dangerous because caches, crawlers, and prefetchers may issue GET without expecting a mutation.'],
+  fundamentals:['Safe methods request no intended state change: GET reads a representation and HEAD reads corresponding metadata without a response body. Idempotent methods have the same intended server effect when repeated as when performed once. PUT replaces the state at a known resource and DELETE removes it; both are idempotent by semantics. POST is not inherently idempotent.', 'Status classes are 1xx informational, 2xx successful, 3xx redirection, 4xx client error, and 5xx server error. A 401 signals missing or invalid authentication and carries a challenge. A 403 means the server refuses the operation; providing credentials does not necessarily fix it.'],
+  working:['The client chooses an operation and supplies a target or body.','The service applies the method’s intended semantics to its resource state.','The service returns an appropriate status and representation or metadata.','A repeated request lets us compare intended state changes and response differences.'],
+  deep:['Idempotence does not require identical responses. A first DELETE might return 204 and a repeated DELETE 404, while the resource remains absent in both cases. Safe reads may create incidental logs; safety concerns the requested effect, not every internal write. PUT is not synonymous with “update any fields”; PATCH handles partial modification and is not inherently idempotent.', 'POST may create a subordinate resource or trigger processing; it is not limited to creation. Applications can make selected POST operations retry-safe with a deduplication key and stored result. Codes such as 201 (created), 204 (no content), 404 (not found), 409 (conflict), and 429 (too many requests) provide useful distinctions. This experiment models a tiny collection; it omits authorization and concurrent writes so the retry effect is clear.'],
+  usage:['An API can use GET /books/42 to read, PUT /books/42 to replace, and POST /books to create a new entry. If an unreliable connection loses a creation response, blindly repeating POST can create two entries.', 'Document retry contracts explicitly. A resource-specific PUT can be idempotent while still requiring preconditions such as If-Match to prevent a concurrent update from being overwritten.'],
+  summary:['Safety and idempotence describe requested effects.','Repeated idempotent requests can return different statuses.','POST retries require an application-specific contract.'],
+  check:['A repeated DELETE returns 404 after the first returned 204. Does this contradict idempotence?', 'No. The intended state is still “resource absent.” Idempotence compares effects, not identical response codes.'],
+  glossary:{Safe:'No intended state mutation requested.',Idempotent:'Repeating an operation has the same intended effect as performing it once.'},
+  experiment:'Replay GET, PUT, DELETE, and POST twice. Watch the collection count, resource state, and statuses; POST creates two distinct entries in this example.',
+  controls:[['method','Method','select',['GET','PUT','DELETE','POST'],'GET']],
+  sources:[['Method definitions and properties','https://www.rfc-editor.org/rfc/rfc9110.html#section-9'],['Status codes','https://www.rfc-editor.org/rfc/rfc9110.html#section-15']]
+ },
+ 'http-versions':{
+  objectives:['Separate HTTP semantics from transport framing.','Compare multiplexing and loss-related waiting.'],
+  intro:['A webpage fetches many resources. Sending every request through a strictly serial exchange wastes time. HTTP versions evolve how messages share connections while retaining familiar methods, status codes, and resource semantics.', 'HTTP/2 and HTTP/3 support independent logical streams. The crucial distinction under packet loss is where ordering is enforced: one TCP byte stream in HTTP/2, versus separate QUIC streams in HTTP/3.'],
+  fundamentals:['HTTP/1.1 uses textual message syntax and persistent connections. Browsers commonly use several connections rather than relying on pipelining. HTTP/2 uses binary frames and multiplexed streams over TCP, with HPACK header compression.', 'HTTP/3 maps HTTP onto QUIC, which runs over UDP and includes reliable streams, congestion control, and TLS-based security. QPACK handles HTTP/3 header compression. UDP alone does not supply those QUIC services.'],
+  working:['Three resource requests are ready.','HTTP/1.1 in this one-connection, non-pipelined model serves them sequentially.','HTTP/2 and HTTP/3 interleave stream data.','Loss delays the TCP connection’s later bytes, whereas unrelated QUIC streams can progress if their needed data has arrived.'],
+  deep:['HTTP/2 removes application-level serialization between streams but TCP still exposes bytes in order. A lost segment can hold later bytes for every HTTP/2 stream sharing that connection. QUIC orders within each stream, so missing data in stream A need not block stream B’s already received data.', 'HTTP/3 does not eliminate every dependency. Congestion control is shared, packet loss can affect several streams if a packet carries data for each, and headers can depend on compression state. This model isolates a loss affecting only stream A and assumes headers are available. Real performance depends on path conditions, server scheduling, priorities, and connection reuse. HTTP/1.1 can gain concurrency with extra connections, at the cost of more setup and resource use. Version negotiation depends on endpoint support; HTTP/2 over TLS commonly uses ALPN, and HTTP/3 may be discovered through Alt-Svc or DNS HTTPS records.'],
+  usage:['A page with CSS, images, and API data benefits from concurrency. HTTP/2 avoids opening a separate TCP connection for every concurrent request. HTTP/3 can reduce cross-stream blocking on lossy paths.', 'Choose based on measured behavior and available client/server support. A faster framing protocol cannot fix slow database queries or unnecessarily large images.'],
+  summary:['Versions change transport mapping and framing, not basic HTTP meaning.','HTTP/2 multiplexes above an ordered TCP stream.','QUIC limits transport ordering dependencies to individual streams.'],
+  check:['If one QUIC stream loses bytes, is every other stream guaranteed to remain unaffected?', 'No. Independent stream delivery avoids one ordering dependency, but shared congestion control and packets can still affect multiple streams.'],
+  glossary:{Multiplexing:'Interleaving several logical streams on a connection.',QUIC:'A secure transport with reliable streams over UDP.'},
+  experiment:'Compare the three versions with a loss affecting resource A. Inspect when B and C become available in this simplified schedule.',
+  controls:[['version','HTTP version','select',['1.1','2','3'],'2'],['loss','Lose data for resource A','checkbox',true]],
+  sources:[['HTTP/1.1 framing','https://www.rfc-editor.org/rfc/rfc9112.html'],['HTTP/2','https://www.rfc-editor.org/rfc/rfc9113.html'],['HTTP/3','https://www.rfc-editor.org/rfc/rfc9114.html'],['QUIC transport','https://www.rfc-editor.org/rfc/rfc9000.html']]
+ },
+ websockets:{
+  objectives:['Trace an HTTP/1.1 WebSocket upgrade and bidirectional messages.','Explain what reconnection does not recover automatically.'],
+  intro:['A chat app needs new messages without waiting for the user to refresh. Polling repeatedly asks whether anything changed. WebSocket instead maintains a channel on which either endpoint can send messages once established.', 'A persistent channel removes repeated request initiation, but creates connection lifecycle work: disconnects, slow consumers, idle timeouts, and resuming application state.'],
+  fundamentals:['A WebSocket message is application data carried in one or more protocol frames. Unlike raw TCP, WebSocket exposes message boundaries. The common HTTP/1.1 setup requests an Upgrade to websocket and the server replies 101 Switching Protocols if it accepts.', 'wss uses TLS to protect the channel. The Sec-WebSocket-Accept value verifies the protocol handshake, not user identity. Browser clients mask transmitted frames as a protocol requirement; masking is not encryption.'],
+  working:['The browser requests an HTTP/1.1 WebSocket upgrade.','The server validates the handshake and responds 101.','The browser sends a chat message through the established channel.','The server can push a message independently; if the channel disconnects, delivery pauses until the application reconnects.'],
+  deep:['After the upgrade, ordinary HTTP request-response framing is replaced by WebSocket frames. Ping and pong support liveness checks at the protocol level; the browser API does not expose them directly. A clean close exchange is different from a sudden network failure. HTTP/2 and HTTP/3 can bootstrap WebSockets with extended CONNECT rather than the 101 handshake shown here.', 'WebSocket offers no automatic durable replay or exactly-once application delivery. Reconnection needs a strategy such as message IDs, last-seen cursors, and deduplication. Slow receivers can accumulate buffered data, so applications need flow limits or backpressure policies. Authenticate the handshake and validate browser Origin appropriately; cookies can accompany a connection, creating security risks if an origin is trusted blindly. Multiple chat servers need a way to fan out messages across active connections.'],
+  usage:['A library discussion room uses WebSocket for new comments and typing indicators. Persisted comments can be recovered using a cursor after reconnection; ephemeral typing events may simply be dropped.', 'For one-way server updates, Server-Sent Events can be sufficient. Ordinary HTTP works well for independent reads and writes. A WebSocket is useful when sustained bidirectional interaction justifies managing a live channel.'],
+  summary:['WebSocket allows both sides to initiate messages.','The common upgrade handshake is HTTP/1.1-specific.','Recovery, authorization, and buffering remain application responsibilities.'],
+  check:['The channel disconnects before a pushed message arrives. Will reopening it automatically replay that message?', 'No. Replay requires application storage and a resume protocol. A new WebSocket alone does not recover missed events.'],
+  glossary:{Frame:'A protocol unit carrying data or control information.',Backpressure:'Limiting production when a consumer cannot keep up.'},
+  experiment:'Disconnect before the server push. Observe the missing delivery, then disable the failure to compare the healthy channel.',
+  controls:[['disconnect','Disconnect before server push','checkbox',false]],
+  sources:[['WebSocket protocol','https://www.rfc-editor.org/rfc/rfc6455.html'],['WebSockets over HTTP/2','https://www.rfc-editor.org/rfc/rfc8441.html']]
+ },
+ 'browser-server':{
+  objectives:['Connect DNS, transport, TLS, HTTP, and rendering into one navigation.','Identify work that a warm navigation can avoid.'],
+  intro:['Typing a URL looks like one action, but the browser coordinates several layers. A human-readable hostname must become a destination, a connection must be available, an HTTP response must be received, and a document must become pixels.', 'This lesson joins the earlier processes without pretending that every page follows one fixed waterfall. Browsers reuse connections, cache data, and overlap work where dependencies permit.'],
+  fundamentals:['A URL supplies scheme, authority (including hostname and optional port), path, and other parts. The fragment identifies client-side document state and is not sent as part of the HTTP request target. The scheme affects connection behavior; HTTPS normally uses port 443.', 'The DOM is the parsed document structure; the CSSOM represents parsed styling. Layout computes geometry and painting draws content. JavaScript may change the DOM, request more data, or defer work, so receiving HTML is not the same as finishing a page.'],
+  working:['The browser parses the URL and considers caches and applicable service-worker behavior.','For a new connection it resolves the hostname, establishes TCP, and validates TLS.','The browser sends HTTP and receives the main document.','Parsing discovers resources; style, scripts, layout, and paint build the visible page.'],
+  deep:['This model assumes HTTP/2 over TCP, a single illustrative resource, and no service worker. A warm DNS answer removes DNS network lookup, but not necessarily TCP or TLS. An already open suitable connection can avoid all three setup phases; it is not the same as TLS session resumption, which establishes a new connection.', 'Browser scheduling overlaps resource discovery, downloads, parsing, and execution. Parser-blocking scripts and render-blocking stylesheets have different effects. Caching may require conditional revalidation using validators such as ETag, rather than returning bytes locally without contact. Fetching cross-origin API data is subject to browser policy such as CORS; CORS is not authentication and does not restrict arbitrary non-browser clients. A document’s subresources can use other hosts and their own connection setups.'],
+  usage:['A library page opens quickly when its connection is already available and a stylesheet is cached. An uncached API request can still be slow, so “warm page” is not a single binary state.', 'Developer tools break navigation into DNS, connection, TLS, waiting, and download timing, then show rendering and scripting separately. Those categories help distinguish network overhead from server work and browser execution.'],
+  summary:['Navigation coordinates discovery, transport, security, HTTP, and rendering.','DNS caching and connection reuse avoid different work.','Parsing one response can trigger more network activity.'],
+  check:['The URL ends in #/system-design/dns. Does the server receive that fragment in the HTTP request target?', 'No. Fragments are handled by the client. This platform uses that property for routes that can refresh on static GitHub Pages hosting.'],
+  glossary:{DOM:'The browser’s structured representation of a document.','Connection reuse':'Sending more requests over an already suitable open connection.'},
+  experiment:'Compare cold navigation, DNS cache only, and reuse of an established secure connection. Inspect which setup phases disappear.',
+  controls:[['warm','Starting state','select',['cold','DNS cached','connection open'],'cold']],
+  sources:[['URL standard','https://url.spec.whatwg.org/'],['HTML parsing','https://html.spec.whatwg.org/multipage/parsing.html'],['HTTP semantics','https://www.rfc-editor.org/rfc/rfc9110.html']]
+ }
+};
+
+/* Pure, deterministic frame builders. Times are illustrative, never benchmarks. */
+const SD_SIM = {
+ build(id, o){
+  const nodes = [], frames = [];
+  let elapsed = 0;
+  const node = (id,label,kind='server') => nodes.push({id,label,kind});
+  const step = (from,to,packet,note,dt=0,state={}) => {
+   elapsed += dt;
+   frames.push({from,to,packet,note,elapsed,state:{...state}});
+  };
+  const link = Number(o.network) || 40;
+  if (id === 'client-server') {
+   node('client','Weather client','client'); node('server','Forecast API');
+   step('client','client','Create request','The client prepares a request for the forecast.',0,{phase:'request ready'});
+   step('client','server','Request →','The network delivers the request to the server.',link,{phase:'server received'});
+   step('server','server','Compute forecast','The server performs application work.',+o.work,{phase:'response ready'});
+   step('server','client','← Response','The client receives the result. Total = 2 × link delay + server work.',link,{phase:'client received',formula:`2 × ${link} + ${o.work} ms`});
+  } else if (id === 'internet') {
+   node('client','Your device','client'); node('gateway','Home gateway','router'); node('isp','Provider router','router');
+   node('transit','Transit A','router'); node('alternate','Transit B','router'); node('backup','Backup hop','router'); node('edge','Destination edge','router'); node('server','Website');
+   step('client','gateway','IP packet','The destination is outside the local network, so the device sends to its gateway.',link);
+   step('gateway','isp','Next hop','The gateway forwards toward the internet provider.',link);
+   if(o.failed){
+    step('isp','isp','Primary link down','The primary transit link is unavailable. This model assumes a preinstalled alternate route.',0,{failed:'transit'});
+    step('isp','alternate','Alternate route','Forwarding uses an available next hop; routing convergence is omitted.',link,{failed:'transit'});
+    step('alternate','backup','Extra hop','This alternate path has one additional hop.',link,{failed:'transit'});
+    step('backup','edge','Forward packet','The backup path reaches the destination edge.',link,{failed:'transit'});
+   } else {
+    step('isp','transit','Forward packet','The provider selects the matching route.',link);
+    step('transit','edge','Forward packet','The transit router reaches the destination edge.',link);
+   }
+   step('edge','server','Deliver payload','The destination receives this packet. IP alone does not recover other lost packets.',link,o.failed?{failed:'transit'}:{});
+  } else if(id === 'ip-ports') {
+   node('client','Client :52000','client'); node('host','Host 192.0.2.10','router'); node('https','TCP :443 listener'); node('closed',`TCP :${o.port} ${o.port==='443'?'selected':'no listener'}`);
+   step('client','host',`TCP → ${o.port}`,'The destination address is from a documentation-only IP range.',40,{destination:`192.0.2.10:${o.port}`});
+   step('host',o.port==='443'?'https':'closed','Endpoint lookup','The OS selects a transport endpoint by protocol, address, and port.',0,{destination:`192.0.2.10:${o.port}`});
+   step(o.port==='443'?'https':'closed','client',o.port==='443'?'Accepted':'TCP reset',o.port==='443'?'A listener can accept the connection; TLS and HTTP come next.':'This model has no listener at this port and returns a reset. A firewall could instead cause a timeout.',40,{outcome:o.port==='443'?'listener available':'connection refused',failed:o.port==='443'?'':'closed'});
+  } else if(id === 'dns') {
+   node('browser','Browser cache','client'); node('os','OS / stub resolver','client'); node('resolver','Recursive resolver','dns'); node('root','Root server','dns'); node('tld','.example TLD','dns'); node('auth','Authoritative','dns');
+   const answer = {'answer':'192.0.2.10',record:'A library.example',cache:o.cache};
+   step('browser','browser','Cache check','The browser checks for a valid answer for this name and record type.');
+   if(o.cache==='browser') step('browser','browser','Cache hit','A valid browser answer avoids all DNS network queries.',0,answer);
+   else {
+    step('browser','os','Resolve name','The browser delegates resolution to the OS / configured resolution service.',0);
+    if(o.cache==='OS') step('os','browser','OS cache hit','The OS returns a still-valid address. The recursive resolver is not contacted.',0,answer);
+    else {
+     step('os','resolver','Recursive query','The stub asks the recursive resolver to obtain an answer.',20);
+     if(o.cache==='resolver') step('resolver','os','Resolver cache hit','The resolver returns an unexpired answer without asking the hierarchy.',20,answer);
+     else {
+      step('resolver','root','Where is .example?','A completely cold resolver asks a root server. .example is reserved for documentation.',20);
+      step('root','resolver','TLD referral','The root refers the resolver to TLD name servers; it does not fetch the website.',20);
+      step('resolver','tld','Where is library.example?','The resolver follows the referral itself.',20);
+      step('tld','resolver','Authority referral','The TLD returns the delegated authoritative servers (and needed glue addresses).',20);
+      step('resolver','auth','A library.example?','The resolver asks the authority for the address record.',20);
+      step('auth','resolver',o.missing?'NXDOMAIN':'A 192.0.2.10',o.missing?'The authority reports that the name does not exist. This can be negatively cached.':'The authority returns an address and TTL. The resolver caches the answer.',20,o.missing?{answer:'no address',status:'NXDOMAIN'}:answer);
+      step('resolver','os',o.missing?'Negative answer':'Address answer','The recursive resolver sends the result back to the stub.',20,o.missing?{answer:'no address',status:'NXDOMAIN'}:answer);
+     }
+     step('os','browser',o.missing&&o.cache==='none'?'No address':'Return answer',o.missing&&o.cache==='none'?'The browser cannot connect using a nonexistent name.':'The browser now has an address; connecting to the site is a separate process.',0,o.missing&&o.cache==='none'?{answer:'no address',status:'NXDOMAIN'}:answer);
+    }
+   }
+  } else if(id === 'tcp-udp') {
+   node('sender','Sender','client'); node('network','Network','router'); node('receiver','Receiver');
+   step('sender','receiver','Unit A','The first unit arrives and is delivered.',40,{delivered:'A'});
+   step('sender',o.loss?'network':'receiver','Unit B',o.loss?'The middle unit is lost in the network.':'The middle unit arrives.',40,{delivered:o.loss?'A':'AB',failed:o.loss?'network':''});
+   step('sender','receiver','Unit C',o.loss&&o.transport==='TCP'?'C arrives, but TCP buffers later bytes until the missing B arrives.':'The later unit arrives; UDP can deliver this datagram without waiting for B.',40,{delivered:o.loss?(o.transport==='TCP'?'A':'A,C'):'ABC',buffered:o.loss&&o.transport==='TCP'?'C':'none'});
+   if(o.loss&&o.transport==='TCP'){
+    step('receiver','sender','Loss detected','TCP detects missing bytes. This illustrative wait is not an actual retransmission timer.',200,{delivered:'A',buffered:'C'});
+    step('sender','receiver','Retransmit B','B fills the gap; the receiver can now deliver B and buffered C in order.',40,{delivered:'ABC',buffered:'none'});
+   } else if(o.loss) step('receiver','receiver','Gap remains','UDP does not retransmit B automatically. Application-specific recovery could be added.',0,{delivered:'A,C',missing:'B'});
+  } else if(id === 'tcp-handshake') {
+   node('client','TCP client','client'); node('server','TCP listener');
+   step('client','client','Active open','The client chooses its initial sequence number; the server is listening.',0,{client:'CLOSED',server:'LISTEN'});
+   step('client','server','SYN seq=100','The client enters SYN-SENT. On receiving SYN, the server prepares provisional connection state.',link,{client:'SYN-SENT',server:'SYN-RECEIVED'});
+   if(o.loss) step('server','server','SYN-ACK lost','The first reply is lost; neither endpoint can assume setup is complete. An illustrative retry wait follows.',300,{client:'SYN-SENT',server:'SYN-RECEIVED'});
+   step('server','client','SYN-ACK seq=500 ack=101',o.loss?'A retransmitted reply reaches the client. SYN consumes one sequence number.':'The server acknowledges the client SYN and supplies its own initial sequence.',link,{client:'ESTABLISHED',server:'SYN-RECEIVED'});
+   step('client','server','ACK ack=501','The final ACK reaches the server; both endpoints are now established.',link,{client:'ESTABLISHED',server:'ESTABLISHED'});
+  } else if(id === 'tls') {
+   node('browser','Browser','client'); node('server','TLS server');
+   step('browser','server','ClientHello','The client offers parameters and an ephemeral key share. TCP is already established.',30,{protected:'not yet'});
+   step('server','browser','ServerHello','The server selects parameters and a key share. Both sides derive handshake keys.',30,{protected:'handshake keys ready'});
+   step('server','browser','Certificate + proof + Finished','Encrypted server handshake messages authenticate the server and the transcript. The private key stays on the server.',0,{protected:'handshake encrypted'});
+   if(o.invalid) step('browser','browser','Reject identity','The certificate hostname does not match. The browser stops; it must not send the HTTP request.',0,{status:'validation failed',failed:'server'});
+   else {
+    step('browser','browser','Validate server','The browser validates the certificate chain, hostname, validity, proof, and Finished.',0,{status:'server authenticated'});
+    step('browser','server','Client Finished','The client authenticates the transcript. Application traffic keys protect subsequent data.',30,{protected:'application traffic keys'});
+    step('browser','server','Encrypted HTTP','HTTP is sent over the secured connection. This does not authorize the user’s operation.',30,{protected:'HTTP encrypted'});
+   }
+  } else if(id === 'http-lifecycle') {
+   node('browser','Browser','client'); node('app','Book API'); node('store','Book store','database');
+   step('browser','app','GET /books/42','Accept: application/json. This request uses an existing secure connection.',30,{status:'waiting'});
+   if(o.unavailable) step('app','browser','503 Service Unavailable','The server sends an HTTP error response; this differs from losing the connection.',30,{status:'503',body:'service temporarily unavailable'});
+   else {
+    step('app','store','Read book 42','The application performs a lookup; work time groups application and storage delay.',+o.work,{status:'processing'});
+    step('store','app','Book representation','The application receives the record and constructs a response.',0,{status:'response ready'});
+    step('app','browser','200 OK + JSON','Content-Type: application/json. The browser can parse the response body.',30,{status:'200',body:'{"id":42,"available":true}'});
+   }
+  } else if(id === 'http-semantics') {
+   node('client','API client','client'); node('api','Book API'); node('store','Resource state','database');
+   let count = 1, present=true;
+   step('store','store','Initial state','A single resource already exists. PUT targets it; POST targets the collection.',0,{count,present});
+   for(let n=1;n<=2;n++){
+    step('client','api',`${o.method} attempt ${n}`,o.method==='POST'?'POST /books requests a new entry.':'The request targets /books/42.',20,{count,present});
+    let status='200 OK';
+    if(o.method==='POST'){count++;status='201 Created';}
+    if(o.method==='PUT'){present=true;status='200 OK';}
+    if(o.method==='DELETE'){status=present?'204 No Content':'404 Not Found';present=false;count=0;}
+    step('api','store','Apply semantics',o.method==='GET'?'Read only: no intended mutation.':o.method==='POST'?'A new identifier is allocated for each creation.':o.method==='PUT'?'Replace resource 42 with the same supplied representation.':'Ensure resource 42 is absent.',0,{count,present});
+    step('api','client',status,'Compare the intended effect with the previous attempt. Responses need not match for idempotence.',20,{count,present,status});
+   }
+  } else if(id === 'http-versions') {
+   node('client','Browser','client'); node('server',`HTTP/${o.version} server`); node('a','Resource A','resource'); node('b','Resource B','resource'); node('c','Resource C','resource');
+   step('client','server',o.version==='1.1'?'Request A':'Streams A, B, C',o.version==='1.1'?'One connection, no pipelining: requests are serial in this model.':'Three streams share a connection. Headers are already available.',20,{available:'none'});
+   if(o.version==='1.1'){
+    if(o.loss) step('server','a','A data lost','TCP recovers lost A data before this serial exchange can finish.',120,{available:'none'});
+    step('server','a','A complete','Resource A finishes.',30,{available:'A'});
+    step('client','server','Request B','The next serial request begins.',20,{available:'A'});
+    step('server','b','B complete','Resource B finishes.',30,{available:'A,B'});
+    step('client','server','Request C','The final serial request begins.',20,{available:'A,B'});
+    step('server','c','C complete','Multiple HTTP/1.1 connections could produce a different schedule.',30,{available:'A,B,C'});
+   } else if(o.loss&&o.version==='2') {
+    step('server','a','TCP gap in A data','Later received TCP bytes are held behind the gap, even if they contain B and C frames.',30,{available:'none',buffered:'B,C'});
+    step('server','client','TCP recovery','Retransmission fills the byte-stream gap. This is an illustrative delay.',120,{available:'A,B,C',buffered:'none'});
+   } else {
+    step('server','b','B complete',o.loss?'A gap in one QUIC stream does not impose ordering on B.':'Multiplexing allows B to complete independently.',30,{available:'B'});
+    step('server','c','C complete','C’s needed bytes are available. Shared congestion effects are omitted.',20,{available:'B,C'});
+    step('server','a',o.loss?'Recover A':'A complete',o.loss?'Only A waits for its missing stream data in this schedule. QUIC still provides reliability.':'A completes; this order is illustrative, not prescribed by HTTP.',o.loss?120:20,{available:'A,B,C'});
+   }
+  } else if(id === 'websockets') {
+   node('browser','Chat browser','client'); node('server','Chat server');
+   step('browser','server','Upgrade: websocket','An HTTP/1.1 request asks to upgrade with the required WebSocket handshake fields.',30,{channel:'HTTP'});
+   step('server','browser','101 Switching Protocols','The server accepts. WebSocket framing now replaces ordinary HTTP framing.',30,{channel:'WebSocket open'});
+   step('browser','server','Message: hello','A masked client frame carries application data. Masking is not encryption; wss adds TLS.',30,{channel:'open',delivered:'client message'});
+   if(o.disconnect) step('server','server','Channel lost','The server push cannot reach the browser. A new channel needs application-defined resume behavior.',0,{channel:'disconnected',delivered:'no server push',failed:'browser'});
+   else step('server','browser','Message: new comment','The server initiates a message without waiting for another HTTP request.',30,{channel:'open',delivered:'server push'});
+  } else if(id === 'browser-server') {
+   node('browser','Browser','client'); node('dns','DNS resolver','dns'); node('server','HTTPS server'); node('parser','HTML parser','client'); node('paint','Layout & paint','client');
+   step('browser','browser','Parse URL','Separate scheme, host, and request target. A URL fragment stays in the browser.',0,{phase:'navigation'});
+   if(o.warm==='connection open') step('browser','server','Reuse connection','A suitable secure connection is already established: skip DNS, TCP, and TLS setup.',0,{phase:'connection reuse'});
+   else {
+    if(o.warm==='DNS cached') step('browser','browser','DNS cache hit','An address is available, but a new transport connection is still required.',0,{phase:'DNS cached'});
+    else {step('browser','dns','Resolve hostname','DNS returns address records, not page content.',30,{phase:'DNS'});step('dns','browser','Address answer','The browser has a destination address.',30,{phase:'DNS answer'});}
+    step('browser','server','TCP setup','Complete the ordinary three-way handshake. The model groups its messages.',60,{phase:'TCP'});
+    step('browser','server','TLS 1.3 setup','Verify the server identity and derive traffic keys.',60,{phase:'TLS'});
+   }
+   step('browser','server','GET /books','Request the main document over the secure connection.',30,{phase:'HTTP request'});
+   step('server','browser','200 + HTML','A received document is input to rendering, not finished pixels.',70,{phase:'HTTP response'});
+   step('browser','parser','Parse document','Build the DOM and discover a stylesheet. Real discovery and fetching can overlap.',10,{phase:'DOM'});
+   step('parser','server','Fetch stylesheet','Subresources may need more requests or use caches; this one is not cached.',60,{phase:'subresource'});
+   step('parser','paint','Compute and paint','Styles contribute to the CSSOM; layout determines geometry and painting draws content.',20,{phase:'visible page'});
+  } else throw new Error('No simulation for '+id);
+  return {nodes,frames};
+ },
+ diagram(nodes, f, prefix='sd'){
+  const width=720, columns=Math.min(nodes.length,3), rows=Math.ceil(nodes.length/columns), height=rows*115+45;
+  const pos={};
+  nodes.forEach((n,i)=>pos[n.id]={x:60+(i%columns)*(600/Math.max(1,columns-1)),y:60+Math.floor(i/columns)*115});
+  if(columns===1) pos[nodes[0].id].x=360;
+  const a=pos[f.from],b=pos[f.to];
+  let path='';
+  if(a&&b&&f.from!==f.to){
+   const dx=b.x-a.x,dy=b.y-a.y;
+   const inset=Math.min(dx?55/Math.abs(dx):Infinity,dy?32/Math.abs(dy):Infinity,.4);
+   const x1=a.x+dx*inset,y1=a.y+dy*inset,x2=b.x-dx*inset,y2=b.y-dy*inset;
+   path=`<path class="sd-active-link" d="M ${x1} ${y1} L ${x2} ${y2}" marker-end="url(#${prefix}-arrow)"/><circle class="sd-packet" r="6" style="offset-path:path('M ${x1} ${y1} L ${x2} ${y2}')"/>`;
+  }
+  return `<svg class="sd-diagram" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(f.packet+'. '+f.note)}"><defs><marker id="${prefix}-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="currentColor"/></marker></defs>${path}${nodes.map(n=>{const p=pos[n.id],active=n.id===f.from||n.id===f.to,failed=f.state.failed===n.id;return `<g transform="translate(${p.x},${p.y})" class="sd-node ${active?'active':''} ${failed?'failed':''}"><rect x="-49" y="-27" width="98" height="54" rx="10"/><text class="sd-kind" text-anchor="middle" y="-5">${esc(n.kind.toUpperCase())}</text><text text-anchor="middle" y="14">${failed?'×':'◆'}</text><text class="sd-node-label" text-anchor="middle" y="49">${esc(n.label)}</text></g>`;}).join('')}</svg>`;
+ }
+};
+
+/* Course shell; DSA remains owned by App, MyCode, and Progress. */
+const SDProgress = {
+ key:'dsaviz-system-design-v1', data:{completed:[],bookmarks:[],current:null},
+ load(){
+  this.data={completed:[],bookmarks:[],current:null};
+  try {
+   const d=JSON.parse(localStorage.getItem(this.key));
+   if(d&&typeof d==='object') this.data={
+    completed:Array.isArray(d.completed)?d.completed.filter(id=>Object.hasOwn(SD_LESSONS,id)):[],
+    bookmarks:Array.isArray(d.bookmarks)?d.bookmarks.filter(id=>SD_TOPICS.some(t=>t.id===id)):[],
+    current:Object.hasOwn(SD_LESSONS,d.current)?d.current:null
+   };
+  } catch(e) { /* Corrupt storage starts clean and never touches DSA progress. */ }
+  return this.data;
+ },
+ save(){try{localStorage.setItem(this.key,JSON.stringify(this.data));return true;}catch(e){toast('Progress is kept for this session; browser storage is unavailable.',4500);return false;}},
+ toggle(kind,id){if(kind==='completed'&&!Object.hasOwn(SD_LESSONS,id)) return;
+  const list=this.data[kind];this.data[kind]=list.includes(id)?list.filter(x=>x!==id):[...list,id];this.save();},
+ counts(stage){const topics=stage?SD_STAGES[stage-1].topics:SD_TOPICS;return {done:topics.filter(t=>this.data.completed.includes(t.id)).length,total:topics.length};}
+};
+const Platform = {
+ player:null, active:null, nodes:[], options:{},
+ routeForDsa(view){return '#/dsa'+(view&&view!=='visualize'?'/'+view:'');},
+ dsaRoute(view){const hash=this.routeForDsa(view);if(location.hash!==hash) location.hash=hash;},
+ start(){
+  SDProgress.load();
+  $('#platformTheme').addEventListener('click',()=>$('#themeBtn').click());
+  $('.skip-link').addEventListener('click',e=>{
+   e.preventDefault();
+   const target=document.getElementById(e.currentTarget.getAttribute('href').slice(1));
+   if(target){target.setAttribute('tabindex','-1');target.focus();target.scrollIntoView({block:'start'});}
+  });
+  window.addEventListener('hashchange',()=>this.route());
+  window.addEventListener('storage',e=>{if(e.key===SDProgress.key){SDProgress.load();this.route();}});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)this.pause();});
+  this.route();
+ },
+ pause(){if(this.player)this.player.pause();if(App.player)App.player.pause();if(MyCode.player)MyCode.player.pause();},
+ route(){
+  this.pause();this.player=null;
+  const parts=location.hash.replace(/^#\/?/,'').split('/');
+  const dsa=parts[0]==='dsa';
+  document.body.dataset.course=dsa?'dsa':parts[0]==='system-design'?'system-design':'home';
+  $('#dsaTopbar').hidden=!dsa;
+  $$('.view').forEach(v=>v.classList.remove('is-active'));
+  const host=$('#platformMain');host.hidden=dsa;
+  $$('.platform-bar nav a').forEach(a=>{
+   const selected=a.getAttribute('href')===(dsa?'#/dsa':parts[0]==='system-design'?'#/system-design':'#/');
+   if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');
+  });
+  if(dsa){
+   const view=['visualize','mycode','reference','roadmap'].includes(parts[1])?parts[1]:'visualize';
+   $('.skip-link').href='#view-'+view;
+   App.show(view);document.title='DSA · Visual Learning';return;
+  }
+  $('.skip-link').href='#platformMain';
+  if(parts[0]==='system-design'){
+   this.active=SD_TOPICS.find(t=>t.id===parts[1])||null;
+   host.innerHTML=`<div class="sd-workspace">${this.sidebar()}<article class="sd-content" id="lessonContent" tabindex="-1">${this.active?this.lesson(this.active):this.course()}</article></div>`;
+   this.bindProgress();
+   if(this.active&&Object.hasOwn(SD_LESSONS,this.active.id)){
+    SDProgress.data.current=this.active.id;SDProgress.save();this.initSimulation(SD_LESSONS[this.active.id]);
+   }
+   if(parts[1]&&!this.active) $('#lessonContent').insertAdjacentHTML('afterbegin','<p role="status">That topic was not found. Choose a lesson from the roadmap.</p>');
+   document.title=(this.active?this.active.name:'System Design')+' · Visual Learning';
+  } else {this.active=null;host.innerHTML=this.dashboard();document.title='Visual Learning · DSA & System Design';}
+  if(this.booted){host.focus({preventScroll:true});window.scrollTo(0,0);}this.booted=true;
+ },
+ progressMarkup(c,label){return `<div class="course-progress"><span>${c.done} / ${c.total} ${esc(label)}</span><progress max="${c.total}" value="${c.done}" aria-label="${esc(label)}">${Math.round(100*c.done/c.total)}%</progress></div>`;},
+ dashboard(){
+  const d=Progress.count(),s=SDProgress.counts(),resume=SDProgress.data.current;
+  const last=App.algo?.name||'your last algorithm';
+  return `<div class="learning-home"><div class="home-kicker">COMPUTER SCIENCE, MADE VISIBLE</div><h1>Understand it.<br><span>Watch it work.</span></h1><p class="home-intro">Go beyond definitions. Follow the steps, change the inputs, and see why things work the way they do.</p>
+   <div class="course-grid">
+    <section class="course-card"><div class="course-art algorithm-art" aria-hidden="true">${[35,70,45,90,55,80,25].map((h,i)=>`<i style="--bar:${h}%;--delay:${i*.13}s"></i>`).join('')}<span>compare → swap → understand</span></div><div class="course-card-body"><div class="course-label">01 / ALGORITHMS</div><h2>Data Structures<br>& Algorithms</h2><p>Watch arrays, trees, graphs, and dynamic programming come to life. Trace real Python and Java, one step at a time.</p><div class="course-tags"><span>28 visualizations</span><span>Code tracing</span><span>9-stage roadmap</span></div>${this.progressMarkup(d,'topics completed')}<a class="learn-action" href="#/dsa">${d.done?'Continue learning':'Start learning'} <span>↗</span></a><small>Resume with ${esc(last)}</small></div></section>
+    <section class="course-card system-card"><div class="course-art network-art" aria-hidden="true"><div>CLIENTS</div><b>↓</b><div>APPLICATION</div><b>↓</b><div class="art-pair"><span>CACHE</span><span>DATABASE</span></div><span class="art-caption">follow the request, layer by layer</span></div><div class="course-card-body"><div class="course-label">02 / SYSTEMS</div><h2>System<br>Design</h2><p>Explore how requests travel, data is stored, and distributed services cooperate. Build understanding from the network upward.</p><div class="course-tags"><span>12-stage roadmap</span><span>Interactive experiments</span></div>${this.progressMarkup(s,'course topics completed')}<a class="learn-action" href="${resume?'#/system-design/'+resume:'#/system-design'}">${resume?'Continue learning':'Start learning'} <span>↗</span></a><small>Available now: all 12 networking lessons</small></div></section>
+   </div><footer class="learning-footer"><span>Read. Observe. Experiment. Understand.</span><span>No account needed · Progress stays on this device</span></footer></div>`;
+ },
+ sidebar(){return `<aside class="sd-sidebar"><details open><summary>System Design roadmap</summary><a class="sd-overview" href="#/system-design">Course overview</a><nav aria-label="System Design topics">${SD_STAGES.map(s=>{const c=SDProgress.counts(s.number);return `<details ${!this.active||this.active.stage===s.number?'open':''}><summary><span>${String(s.number).padStart(2,'0')} ${esc(s.name)}</span><small>${c.done}/${c.total}</small></summary>${s.topics.map(t=>`<a class="sd-topic ${this.active?.id===t.id?'current':''}" ${this.active?.id===t.id?'aria-current="page"':''} href="#/system-design/${t.id}"><span>${SDProgress.data.completed.includes(t.id)?'✓':SD_LESSONS[t.id]?'○':'·'} ${esc(t.name)}</span>${SD_LESSONS[t.id]?'':'<small>Planned</small>'}${SDProgress.data.bookmarks.includes(t.id)?'<span aria-label="Bookmarked">★</span>':''}</a>`).join('')}</details>`;}).join('')}</nav></details></aside>`;},
+ course(){
+  const c=SDProgress.counts(),current=SDProgress.data.current;
+  return `<div class="home-kicker">THE SYSTEM DESIGN COURSE</div><h1>From a single request<br>to a complete system.</h1><p class="sd-lede">A progressive path through the networks, storage, and architectural choices that make software work. Explore at your own pace; prerequisites guide you without locking you out.</p>${this.progressMarkup(c,'course topics completed')}<p><b>12 lessons published</b> · ${SD_TOPICS.length} topics on the complete roadmap. Later stages are planned and cannot be marked complete.</p><a class="learn-action inline" href="#/system-design/${current||'client-server'}">${current?'Continue learning':'Begin with client and server'} →</a>
+   ${SDProgress.data.bookmarks.length?`<section class="sd-section"><h2>Your bookmarks</h2><div class="related-links">${SDProgress.data.bookmarks.map(id=>{const t=SD_TOPICS.find(t=>t.id===id);return `<a href="#/system-design/${id}">${esc(t.name)}</a>`;}).join('')}</div></section>`:''}
+   <div class="stage-grid">${SD_STAGES.map(s=>{const c=SDProgress.counts(s.number),published=s.topics.filter(t=>SD_LESSONS[t.id]).length;return `<section class="stage-card"><div class="course-label">STAGE ${String(s.number).padStart(2,'0')} · ${published?'AVAILABLE':'PLANNED'}</div><h2>${esc(s.name)}</h2><p>${s.prerequisites.length?'Builds on stages '+s.prerequisites.join(', '):'Start here — no networking knowledge assumed.'}</p>${this.progressMarkup(c,'stage topics completed')}<ol>${s.topics.map(t=>`<li><a href="#/system-design/${t.id}">${esc(t.name)}</a>${SDProgress.data.completed.includes(t.id)?' ✓':''}</li>`).join('')}</ol></section>`;}).join('')}</div>`;
+ },
+ lesson(t){
+  const l=SD_LESSONS[t.id],done=SDProgress.data.completed.includes(t.id),bookmarked=SDProgress.data.bookmarks.includes(t.id);
+  const prerequisites=[...SD_STAGES[t.stage-1].prerequisites.map(n=>`<a href="#/system-design">Stage ${n}: ${esc(SD_STAGES[n-1].name)}</a>`),...t.prerequisites.map(id=>`<a href="#/system-design/${id}">${esc(SD_TOPICS.find(t=>t.id===id)?.name||id)}</a>`)];
+  const header=`<a class="back-link" href="#/system-design">← Course overview</a><div class="lesson-title"><div><div class="course-label">STAGE ${t.stage} / ${l?'NETWORKING FUNDAMENTALS':'PLANNED TOPIC'}</div><h1>${esc(t.name)}</h1></div><button id="sdBookmark" class="ghost-btn" aria-pressed="${bookmarked}">${bookmarked?'★ Bookmarked':'☆ Bookmark'}</button></div>`;
+  if(!l) return header+`<section class="sd-section"><h2>This lesson has not been published yet.</h2><p>It is part of the course roadmap. Detailed explanations, experiments, and guided walkthroughs will be added stage by stage. There is no lesson to complete here yet.</p>${prerequisites.length?'<h3>Recommended foundations</h3><div class="related-links">'+prerequisites.join('')+'</div>':''}<p><a href="#/system-design/client-server">Explore the available networking lessons →</a></p></section>`;
+  const paras=a=>a.map(p=>`<p>${esc(p)}</p>`).join('');
+  const sec=(letter,title,body)=>`<section class="sd-section"><div class="section-label">${letter}</div><h2>${title}</h2>${body}</section>`;
+  return header+`<div class="lesson-objectives"><h2>What you’ll understand</h2><ul>${l.objectives.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${prerequisites.length?`<h3>Before this lesson</h3><div class="related-links">${prerequisites.join('')}</div>`:'<p>No prerequisites. Start with curiosity.</p>'}</div>`+
+   sec('A','Introduction',paras(l.intro))+sec('B','Fundamentals',paras(l.fundamentals))+
+   sec('C','Inside the process',`<ol class="working-steps">${l.working.map(p=>`<li>${esc(p)}</li>`).join('')}</ol>`)+
+   sec('D','Watch it work',`<p class="model-note">Simplified conceptual model. Timing is illustrative; no real network traffic is generated. Highlighted components and the explanation describe the current step.</p><div class="sd-simulator"><div id="sdDiagram"></div><div class="sd-player"><button id="sdFirst" aria-label="Restart simulation">↺</button><button id="sdPrev" aria-label="Previous step">←</button><button id="sdPlay" aria-label="Play animation">▶</button><button id="sdNext" aria-label="Next step">→</button><button id="sdLast" aria-label="Last step">⇥</button><span id="sdCount"></span><label>Speed <input id="sdSpeed" type="range" min="1" max="5" value="1" aria-label="Animation speed"></label><input id="sdScrub" type="range" min="0" max="0" value="0" aria-label="Simulation timeline"></div><div class="sd-frame-info"><div id="sdPacket"></div><p id="sdNote" aria-live="polite"></p><div id="sdState"></div></div></div><details class="walkthrough"><summary>Inspect the complete step-by-step trace</summary><ol id="sdTrace"></ol></details>`)+
+   sec('E','Try an experiment',`<p>${esc(l.experiment)}</p><div id="sdControls" class="experiment-controls">${l.controls.map(c=>this.control(c)).join('')}</div><p class="muted">Changing a control restarts the trace so every frame reflects the same inputs.</p>`)+
+   sec('F','Technical deep dive',paras(l.deep))+sec('G','In a real application',paras(l.usage))+
+   sec('H','Summary & knowledge check',`<ul>${l.summary.map(p=>`<li>${esc(p)}</li>`).join('')}</ul><div class="knowledge-check"><h3>Think it through</h3><p>${esc(l.check[0])}</p><label class="reflection-label">Your explanation<textarea rows="3" placeholder="Explain it in your own words…"></textarea></label><details><summary>Compare with an explanation</summary><p>${esc(l.check[1])}</p></details></div><p>When you can explain the process and the experiment’s outcome, mark this lesson complete. Completion is your own learning record.</p><button id="sdComplete" class="learn-action inline" aria-pressed="${done}">${done?'✓ Completed — mark incomplete':'Mark lesson complete'}</button>`)+
+   `<section class="sd-section"><h2>Key terms</h2><dl>${Object.entries(l.glossary).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl><h2>Authoritative references</h2><ul>${l.sources.map(([name,url])=>`<li><a href="${esc(url)}" target="_blank" rel="noopener">${esc(name)} ↗</a></li>`).join('')}</ul><h2>Related concepts</h2><div class="related-links">${SD_TOPICS.filter(x=>SD_LESSONS[x.id]&&x.prerequisites.includes(t.id)).map(x=>`<a href="#/system-design/${x.id}">${esc(x.name)}</a>`).join('')||'<a href="#/system-design">Explore the roadmap</a>'}</div></section>`+
+   this.lessonNavigation(t);
+ },
+ lessonNavigation(t){const list=SD_TOPICS.filter(t=>SD_LESSONS[t.id]),i=list.findIndex(x=>x.id===t.id);return `<nav class="lesson-navigation" aria-label="Previous and next lesson">${i>0?`<a href="#/system-design/${list[i-1].id}">← ${esc(list[i-1].name)}</a>`:'<span></span>'}${i<list.length-1?`<a href="#/system-design/${list[i+1].id}">${esc(list[i+1].name)} →</a>`:'<a href="#/system-design">Return to roadmap →</a>'}</nav>`;},
+ control(c){const [key,label,type,a,b,def]=c;const id='sd-input-'+key;
+  if(type==='checkbox')return `<label class="experiment-field"><input id="${id}" data-option="${key}" type="checkbox" ${a?'checked':''}> ${esc(label)}</label>`;
+  if(type==='select')return `<label class="experiment-field">${esc(label)}<select id="${id}" data-option="${key}">${a.map(v=>`<option ${v===b?'selected':''}>${esc(v)}</option>`).join('')}</select></label>`;
+  return `<label class="experiment-field">${esc(label)} <output for="${id}">${b}</output><input id="${id}" data-option="${key}" type="range" min="${type}" max="${a}" step="1" value="${b}"></label>`;
+ },
+ bindProgress(){
+  $('#sdBookmark')?.addEventListener('click',()=>{
+   SDProgress.toggle('bookmarks',this.active.id);const b=$('#sdBookmark'),on=SDProgress.data.bookmarks.includes(this.active.id);b.setAttribute('aria-pressed',on);b.textContent=on?'★ Bookmarked':'☆ Bookmark';this.refreshSidebar();
+  });
+  $('#sdComplete')?.addEventListener('click',()=>{
+   SDProgress.toggle('completed',this.active.id);const b=$('#sdComplete'),on=SDProgress.data.completed.includes(this.active.id);b.setAttribute('aria-pressed',on);b.textContent=on?'✓ Completed — mark incomplete':'Mark lesson complete';this.refreshSidebar();
+  });
+ },
+ refreshSidebar(){const open=$$('.sd-sidebar nav details').map(d=>d.open);$('.sd-sidebar').outerHTML=this.sidebar();$$('.sd-sidebar nav details').forEach((d,i)=>d.open=open[i]);},
+ initSimulation(l){
+  this.player=new Player({play:$('#sdPlay'),prev:$('#sdPrev'),next:$('#sdNext'),first:$('#sdFirst'),last:$('#sdLast'),scrub:$('#sdScrub'),count:$('#sdCount'),speed:$('#sdSpeed')},(f,i)=>this.paint(f,i));
+  const player=this.player,originalPause=player.pause.bind(player),originalPlay=player.play.bind(player);
+  player.pause=()=>{originalPause();$('#sdDiagram')?.classList.remove('sd-running');$('#sdPlay')?.setAttribute('aria-label','Play animation');};
+  player.play=()=>{originalPlay();$('#sdDiagram')?.classList.add('sd-running');$('#sdPlay')?.setAttribute('aria-label','Pause animation');};
+  $$('#sdControls [data-option]').forEach(el=>el.addEventListener('input',()=>{
+   const out=el.parentElement.querySelector('output');if(out)out.value=el.value;this.rebuild();
+  }));this.rebuild();
+ },
+ rebuild(){
+  this.options={};$$('#sdControls [data-option]').forEach(el=>this.options[el.dataset.option]=el.type==='checkbox'?el.checked:el.value);
+  const simulation=SD_SIM.build(this.active.id,this.options);this.nodes=simulation.nodes;
+  this.player.load(simulation.frames);
+  $('#sdTrace').innerHTML=simulation.frames.map((f,i)=>`<li><button data-step="${i}">${esc(f.packet)}</button><p>${esc(f.note)}</p></li>`).join('');
+  this.player.go(0);
+  $$('#sdTrace [data-step]').forEach(b=>b.addEventListener('click',()=>{this.player.pause();this.player.go(+b.dataset.step);}));
+ },
+ paint(f,i){
+  $('#sdDiagram').innerHTML=SD_SIM.diagram(this.nodes,f);
+  $('#sdPacket').textContent=`Step ${i+1} · ${f.packet}`;$('#sdNote').textContent=f.note;
+  $('#sdState').innerHTML=`<span><b>Model elapsed:</b> ${f.elapsed} ms</span>`+Object.entries(f.state).filter(([k])=>k!=='failed').map(([k,v])=>`<span><b>${esc(k)}:</b> ${esc(v)}</span>`).join('');
+  $$('#sdTrace li').forEach((li,n)=>{li.classList.toggle('current',i===n);if(i===n)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current');});
+ }
+};
+document.addEventListener('DOMContentLoaded',()=>Platform.start());
 
 </script>
 </body>

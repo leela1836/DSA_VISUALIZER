@@ -3,23 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Learn data structures and algorithms by watching them run. 28 animated algorithms with synced flowcharts and side-by-side Python and Java, a dependency-ordered roadmap with 145 LeetCode problems, and a browser Python runner that steps through your own code. Free, offline, no tracking.">
+<meta name="description" content="Learn computer science by reading, observing, and experimenting. Explore 28 DSA visualizations and interactive System Design networking lessons. Free, offline, no account needed.">
 <meta name="author" content="leela1836">
 <meta name="theme-color" content="#0d7a58">
 <meta property="og:type" content="website">
-<meta property="og:title" content="DSAViz — Data Structures &amp; Algorithms Visualizer">
-<meta property="og:description" content="Watch algorithms run step by step, with flowcharts synced to the code. Write Python in the browser and see your own solution execute. Free and offline.">
+<meta property="og:title" content="DSAViz — Visual Learning Platform">
+<meta property="og:description" content="Watch algorithms and network protocols work step by step. Explore DSA and System Design with interactive experiments. Free and offline.">
 <meta property="og:url" content="https://leela1836.github.io/DSA_VISUALIZER/">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cg fill='%230d9668'%3E%3Crect x='2' y='13' width='4' height='8' rx='1'/%3E%3Crect x='8' y='8' width='4' height='13' rx='1'/%3E%3Crect x='14' y='3' width='4' height='18' rx='1'/%3E%3Crect x='20' y='10' width='2' height='11' rx='1'/%3E%3C/g%3E%3C/svg%3E">
-<title>DSAViz — Data Structures &amp; Algorithms Visualizer</title>
+<title>DSAViz — Visual Learning Platform</title>
 <style>
 <!--INCLUDE:style.css-->
+<!--INCLUDE:platform.css-->
 </style>
 </head>
 <body>
+<a class="skip-link" href="#platformMain">Skip to learning content</a>
+<header class="platform-bar">
+  <a class="platform-brand" href="#/">DSA<span>Viz</span><small> / visual learning</small></a>
+  <nav aria-label="Courses"><a href="#/">All courses</a><a href="#/dsa">DSA</a><a href="#/system-design">System Design</a><button id="platformTheme" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">◐</button></nav>
+</header>
+<main id="platformMain" tabindex="-1"></main>
 
-<header class="topbar">
+<header class="topbar" id="dsaTopbar">
   <div class="brand">
     <svg class="logo" viewBox="0 0 24 24" aria-hidden="true">
       <rect x="2"  y="13" width="4" height="8"  rx="1"/>
@@ -284,6 +291,10 @@ public static void main(String[] x) {
 <!--INCLUDE:js/pyexamples.js-->
 <!--INCLUDE:js/mycode.js-->
 <!--INCLUDE:js/app.js-->
+<!--INCLUDE:js/sd-roadmap.js-->
+<!--INCLUDE:js/sd-lessons.js-->
+<!--INCLUDE:js/sd-simulations.js-->
+<!--INCLUDE:js/platform.js-->
 </script>
 </body>
 </html>

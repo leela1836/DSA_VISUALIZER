@@ -22,6 +22,7 @@ const App = {
     $$('.tab').forEach(t => t.addEventListener('click', () => this.show(t.dataset.view)));
   },
   show(view){
+    if (typeof Platform !== 'undefined') Platform.dsaRoute(view);
     $$('.tab').forEach(t => t.classList.toggle('is-active', t.dataset.view === view));
     $$('.view').forEach(v => v.classList.toggle('is-active', v.id === 'view-' + view));
     if (this.player) this.player.pause();
@@ -252,7 +253,7 @@ const App = {
   /* ─────────────── keyboard ─────────────── */
   initKeys(){
     document.addEventListener('keydown', e => {
-      if (/^(INPUT|SELECT|TEXTAREA)$/.test(e.target.tagName)) return;
+      if (/^(INPUT|SELECT|TEXTAREA|BUTTON|A)$/.test(e.target.tagName)) return;
       const p = $('#view-visualize').classList.contains('is-active') ? this.player
               : $('#view-mycode').classList.contains('is-active') ? MyCode.player : null;
       if (!p) return;

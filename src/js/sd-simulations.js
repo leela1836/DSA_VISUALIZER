@@ -31,31 +31,32 @@ const SD_SIM = {
    }
    step('edge','server','Deliver payload','The destination receives this packet. IP alone does not recover other lost packets.',link,o.failed?{failed:'transit'}:{});
   } else if(id === 'ip-ports') {
-   node('client','Client :52000','client'); node('host','Host 192.0.2.10','router'); node('https','TCP :443 listener'); node('closed',`TCP :${o.port} ${o.port==='443'?'selected':'no listener'}`);
+   node('client','Client :52000','client'); node('host','Host 192.0.2.10','router'); node('https','TCP :443 listener'); node('closed',o.port==='443'?'Other TCP ports':`TCP :${o.port} closed`);
    step('client','host',`TCP → ${o.port}`,'The destination address is from a documentation-only IP range.',40,{destination:`192.0.2.10:${o.port}`});
    step('host',o.port==='443'?'https':'closed','Endpoint lookup','The OS selects a transport endpoint by protocol, address, and port.',0,{destination:`192.0.2.10:${o.port}`});
    step(o.port==='443'?'https':'closed','client',o.port==='443'?'Accepted':'TCP reset',o.port==='443'?'A listener can accept the connection; TLS and HTTP come next.':'This model has no listener at this port and returns a reset. A firewall could instead cause a timeout.',40,{outcome:o.port==='443'?'listener available':'connection refused',failed:o.port==='443'?'':'closed'});
   } else if(id === 'dns') {
-   node('browser','Browser cache','client'); node('os','OS / stub resolver','client'); node('resolver','Recursive resolver','dns'); node('root','Root server','dns'); node('tld','.example TLD','dns'); node('auth','Authoritative','dns');
-   const answer = {'answer':'192.0.2.10',record:'A library.example',cache:o.cache};
+   node('browser','Browser cache','client'); node('os','OS / stub','client'); node('resolver','Recursive resolver','dns'); node('root','Root server','dns'); node('tld','.com TLD','dns'); node('auth','Authoritative','dns');
+   const cachedAnswer = {'answer':o.cacheAddress||o.address||'192.0.2.10',record:'A library.example.com',cache:o.cache};
+   const answer = {'answer':o.address||'192.0.2.10',record:'A library.example.com',cache:o.cache};
    step('browser','browser','Cache check','The browser checks for a valid answer for this name and record type.');
-   if(o.cache==='browser') step('browser','browser','Cache hit','A valid browser answer avoids all DNS network queries.',0,answer);
+   if(o.cache==='browser') step('browser','browser','Cache hit','A valid browser answer avoids all DNS network queries.',0,cachedAnswer);
    else {
     step('browser','os','Resolve name','The browser delegates resolution to the OS / configured resolution service.',0);
-    if(o.cache==='OS') step('os','browser','OS cache hit','The OS returns a still-valid address. The recursive resolver is not contacted.',0,answer);
+    if(o.cache==='OS') step('os','browser','OS cache hit','The OS returns a still-valid address. The recursive resolver is not contacted.',0,cachedAnswer);
     else {
      step('os','resolver','Recursive query','The stub asks the recursive resolver to obtain an answer.',20);
-     if(o.cache==='resolver') step('resolver','os','Resolver cache hit','The resolver returns an unexpired answer without asking the hierarchy.',20,answer);
+     if(o.cache==='resolver') step('resolver','os','Resolver cache hit','The resolver returns an unexpired answer without asking the hierarchy.',20,cachedAnswer);
      else {
-      step('resolver','root','Where is .example?','A completely cold resolver asks a root server. .example is reserved for documentation.',20);
+      step('resolver','root','Where is .com?','A completely cold resolver asks a root server for the .com delegation.',20);
       step('root','resolver','TLD referral','The root refers the resolver to TLD name servers; it does not fetch the website.',20);
-      step('resolver','tld','Where is library.example?','The resolver follows the referral itself.',20);
+      step('resolver','tld','Where is example.com?','The resolver follows the referral itself and asks for example.com’s authority.',20);
       step('tld','resolver','Authority referral','The TLD returns the delegated authoritative servers (and needed glue addresses).',20);
-      step('resolver','auth','A library.example?','The resolver asks the authority for the address record.',20);
-      step('auth','resolver',o.missing?'NXDOMAIN':'A 192.0.2.10',o.missing?'The authority reports that the name does not exist. This can be negatively cached.':'The authority returns an address and TTL. The resolver caches the answer.',20,o.missing?{answer:'no address',status:'NXDOMAIN'}:answer);
+      step('resolver','auth','A library.example.com?','The resolver asks the authority for the address record in this documentation-domain model.',20);
+      step('auth','resolver',o.missing?'NXDOMAIN':'A '+answer.answer,o.missing?'The authority reports that the name does not exist. This can be negatively cached.':'The authority returns an address and TTL. The resolver caches the answer.',20,o.missing?{answer:'no address',status:'NXDOMAIN'}:answer);
       step('resolver','os',o.missing?'Negative answer':'Address answer','The recursive resolver sends the result back to the stub.',20,o.missing?{answer:'no address',status:'NXDOMAIN'}:answer);
      }
-     step('os','browser',o.missing&&o.cache==='none'?'No address':'Return answer',o.missing&&o.cache==='none'?'The browser cannot connect using a nonexistent name.':'The browser now has an address; connecting to the site is a separate process.',0,o.missing&&o.cache==='none'?{answer:'no address',status:'NXDOMAIN'}:answer);
+     step('os','browser',o.missing&&o.cache==='none'?'No address':'Return answer',o.missing&&o.cache==='none'?'The browser cannot connect using a nonexistent name.':'The browser now has an address; connecting to the site is a separate process.',0,o.missing&&o.cache==='none'?{answer:'no address',status:'NXDOMAIN'}:o.cache==='resolver'?cachedAnswer:answer);
     }
    }
   } else if(id === 'tcp-udp') {
@@ -149,20 +150,5 @@ const SD_SIM = {
    step('parser','paint','Compute and paint','Styles contribute to the CSSOM; layout determines geometry and painting draws content.',20,{phase:'visible page'});
   } else throw new Error('No simulation for '+id);
   return {nodes,frames};
- },
- diagram(nodes, f, prefix='sd'){
-  const width=720, columns=Math.min(nodes.length,3), rows=Math.ceil(nodes.length/columns), height=rows*115+45;
-  const pos={};
-  nodes.forEach((n,i)=>pos[n.id]={x:60+(i%columns)*(600/Math.max(1,columns-1)),y:60+Math.floor(i/columns)*115});
-  if(columns===1) pos[nodes[0].id].x=360;
-  const a=pos[f.from],b=pos[f.to];
-  let path='';
-  if(a&&b&&f.from!==f.to){
-   const dx=b.x-a.x,dy=b.y-a.y;
-   const inset=Math.min(dx?55/Math.abs(dx):Infinity,dy?32/Math.abs(dy):Infinity,.4);
-   const x1=a.x+dx*inset,y1=a.y+dy*inset,x2=b.x-dx*inset,y2=b.y-dy*inset;
-   path=`<path class="sd-active-link" d="M ${x1} ${y1} L ${x2} ${y2}" marker-end="url(#${prefix}-arrow)"/><circle class="sd-packet" r="6" style="offset-path:path('M ${x1} ${y1} L ${x2} ${y2}')"/>`;
-  }
-  return `<svg class="sd-diagram" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(f.packet+'. '+f.note)}"><defs><marker id="${prefix}-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="currentColor"/></marker></defs>${path}${nodes.map(n=>{const p=pos[n.id],active=n.id===f.from||n.id===f.to,failed=f.state.failed===n.id;return `<g transform="translate(${p.x},${p.y})" class="sd-node ${active?'active':''} ${failed?'failed':''}"><rect x="-49" y="-27" width="98" height="54" rx="10"/><text class="sd-kind" text-anchor="middle" y="-5">${esc(n.kind.toUpperCase())}</text><text text-anchor="middle" y="14">${failed?'×':'◆'}</text><text class="sd-node-label" text-anchor="middle" y="49">${esc(n.label)}</text></g>`;}).join('')}</svg>`;
  }
 };

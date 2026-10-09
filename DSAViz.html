@@ -596,58 +596,86 @@ progress::-webkit-progress-bar{background:var(--bg-3)}progress::-webkit-progress
 .course-card small{display:block;color:var(--fg-2);font-size:11px;margin-top:12px}
 .learning-footer{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:42px;padding-top:20px;border-top:1px solid var(--line);color:var(--fg-2);font-size:12px}
 body[data-course="dsa"] #view-visualize,body[data-course="dsa"] .view.is-active{height:calc(100vh - 120px)}
-.sd-workspace{display:grid;grid-template-columns:275px minmax(0,1fr);max-width:1600px;margin:auto}
-.sd-sidebar{padding:22px 14px;background:var(--bg-2);border-right:1px solid var(--line);position:sticky;top:0;max-height:100vh;overflow:auto;align-self:start}
-.sd-sidebar summary{cursor:pointer;font-weight:650;font-size:12px;padding:12px 4px;color:var(--fg-2)}
-.sd-sidebar summary small{display:block;padding-left:16px;color:var(--fg-2);font-weight:400}
-.sd-sidebar nav>details{border-bottom:1px solid var(--line)}
-.sd-overview{display:block;color:var(--accent);padding:12px 8px;text-decoration:none;font-size:13px}
-.sd-topic{display:flex;justify-content:space-between;gap:4px;padding:9px 10px;text-decoration:none;color:var(--fg-2);font-size:12px;border-radius:6px;margin-bottom:2px}
-.sd-topic small{font-size:9px;color:var(--fg-2);align-self:center}.sd-topic.current{background:var(--accent-bg);color:var(--accent);font-weight:650}
-.sd-topic:hover{background:var(--bg-3)}
-.sd-content{padding:38px 5%;min-width:0;max-width:1150px}
-.sd-content h1{font-size:clamp(28px,3vw,42px);letter-spacing:-1.1px;line-height:1.2;margin:12px 0 24px}
-.sd-lede{font-size:16px;color:var(--fg-2);line-height:1.8;max-width:70ch}
-.sd-content a:not(.learn-action){color:var(--accent)}
-.stage-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:30px}
-.stage-card{background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:24px}
-.stage-card h2{font-size:20px;line-height:1.3}.stage-card p{color:var(--fg-2);font-size:12px}.stage-card li{padding:3px 0;font-size:13px}
-.lesson-title{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-top:24px}
-.lesson-title .ghost-btn{white-space:nowrap;margin-top:4px}
-.back-link{font-size:12px;text-decoration:none}
-.lesson-objectives{border:1px solid var(--line);border-left:3px solid var(--accent);padding:20px 24px;border-radius:8px;background:var(--bg-2)}
-.lesson-objectives h2{font-size:16px;margin:0 0 12px}.lesson-objectives h3{font-size:12px;color:var(--fg-2)}
-.sd-content li{line-height:1.8}.sd-section{padding:32px 0;border-bottom:1px solid var(--line)}
-.sd-section>h2{font-size:23px;letter-spacing:-.4px;margin:7px 0 18px}.sd-section p{font-size:15px;line-height:1.85;color:var(--fg-2);max-width:80ch}
-.section-label{font:11px var(--mono);color:var(--accent)}
-.related-links{display:flex;flex-wrap:wrap;gap:8px}.related-links a{font-size:12px;padding:5px 9px;background:var(--accent-bg);border-radius:5px;text-decoration:none}
-.working-steps{padding-left:24px}.working-steps li{padding:5px 0 5px 8px}
-.sd-section .model-note{font-size:12px;line-height:1.7;padding:12px 15px;background:var(--warn-bg);color:var(--warn);border-radius:7px}
-.sd-simulator{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--bg-2)}
-#sdDiagram{background:radial-gradient(var(--line) 1px,transparent 1px);background-size:18px 18px;padding:14px 5px}
-.sd-diagram{width:100%;display:block;max-height:360px;color:var(--accent)}
-.sd-node rect{fill:var(--bg-2);stroke:var(--line-2);stroke-width:2}.sd-node text{fill:var(--fg-2);font-size:15px;font-family:var(--mono)}
-.sd-node .sd-kind{font-size:9px;letter-spacing:.7px}.sd-node .sd-node-label{font:12px var(--sans);fill:var(--fg)}
-.sd-node.active rect{fill:var(--accent-bg);stroke:var(--accent)}.sd-node.failed rect{fill:var(--bad-bg);stroke:var(--bad)}
-.sd-active-link{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:5 5}
-.sd-packet{fill:var(--accent);animation:sd-flow 1.4s linear -.7s infinite;animation-play-state:paused;offset-distance:50%}
-.sd-running .sd-packet{animation-play-state:running}@keyframes sd-flow{from{offset-distance:0%}to{offset-distance:100%}}
-.sd-player{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:14px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.sd-player button{border:1px solid var(--line);background:var(--bg-3);border-radius:6px;min-width:38px;height:36px;cursor:pointer}.sd-player button:disabled{opacity:.4;cursor:default}
-#sdPlay{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
-.sd-player label{display:flex;align-items:center;gap:8px;margin-left:auto;font-size:12px}.sd-player label input{width:85px}#sdScrub{width:100%;accent-color:var(--accent)}
-#sdCount{font:11px var(--mono)}.sd-frame-info{padding:20px}#sdPacket{font-weight:700;font-size:15px}#sdNote{min-height:3.7em;margin:8px 0 16px}
-#sdState{display:flex;flex-wrap:wrap;gap:8px}#sdState span{font:11px var(--mono);padding:5px 8px;background:var(--bg-3);border-radius:5px}
-.walkthrough{margin-top:16px}.walkthrough summary{cursor:pointer;color:var(--accent)}#sdTrace li{padding:10px}#sdTrace li.current{background:var(--accent-bg);border-radius:8px}#sdTrace p{font-size:13px;margin:4px 0}#sdTrace button{background:none;border:0;font-weight:650;cursor:pointer;color:var(--accent);text-align:left}
-.experiment-controls{display:flex;flex-wrap:wrap;gap:20px;padding:20px;background:var(--bg-2);border:1px solid var(--line);border-radius:10px}
-.experiment-field{display:flex;flex-direction:column;justify-content:center;gap:10px;font-size:12px;min-width:180px;flex:1}
-.experiment-field:has(input[type="checkbox"]){flex-direction:row;align-items:center;justify-content:flex-start}.experiment-field select{padding:9px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);font:inherit}.experiment-field input{accent-color:var(--accent)}.experiment-field output{font:14px var(--mono);color:var(--accent)}
-.knowledge-check{padding:20px 24px;border:1px solid var(--line);background:var(--bg-2);border-radius:10px}.knowledge-check h3{margin-top:0}.knowledge-check summary{cursor:pointer;color:var(--accent)}
-.reflection-label{display:flex;flex-direction:column;gap:8px;margin:14px 0;font-size:12px}.reflection-label textarea{font:inherit;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:10px;resize:vertical}
-.sd-section dt{font-weight:650;margin-top:12px}.sd-section dd{color:var(--fg-2);margin:4px 0}.lesson-navigation{display:flex;justify-content:space-between;gap:25px;padding:28px 0}.lesson-navigation a{font-size:13px;max-width:45%}
-@media(max-width:1000px){.sd-workspace{grid-template-columns:230px minmax(0,1fr)}.stage-grid{grid-template-columns:1fr}.sd-content{padding:30px 24px}.course-card-body{padding:24px}.platform-brand small{display:none}}
-@media(max-width:700px){.platform-bar{flex-wrap:wrap;padding:13px 20px;gap:12px}.platform-bar nav{gap:18px}.platform-bar nav a{font-size:12px}.learning-home{padding:35px 20px}.learning-home h1{letter-spacing:-1.6px}.course-grid{grid-template-columns:1fr;gap:22px}.course-art{height:175px}.network-art{padding-top:10px}.sd-workspace{display:block}.sd-sidebar{position:static;max-height:280px;border-right:0;border-bottom:1px solid var(--line);padding:10px 16px}.sd-content{padding:26px 18px}.lesson-title{flex-wrap:wrap}.lesson-title h1{margin-bottom:5px}.lesson-title .ghost-btn{margin-bottom:20px}.sd-diagram{min-width:500px;max-height:none}#sdDiagram{overflow-x:auto}.sd-player label{margin-left:0}.course-card h2{font-size:27px}.knowledge-check{padding:18px}.platform-brand{font-size:18px}.sd-section p{font-size:14px}}
-@media(prefers-reduced-motion:reduce){.algorithm-art i,.network-art b,.sd-packet{animation:none!important}}
+@media(max-width:700px){.platform-bar{flex-wrap:wrap;padding:13px 20px;gap:12px}.platform-bar nav{gap:18px}.platform-bar nav a{font-size:12px}.learning-home{padding:35px 20px}.learning-home h1{letter-spacing:-1.6px}.course-grid{grid-template-columns:1fr;gap:22px}.course-art{height:175px}.network-art{padding-top:10px}.course-card h2{font-size:27px}.platform-brand{font-size:18px}.platform-brand small{display:none}}
+@media(prefers-reduced-motion:reduce){.algorithm-art i,.network-art b{animation:none!important}}
+
+/* A focused experiment workspace, with the roadmap tucked away until requested. */
+.sd-workspace{display:block;max-width:1220px;margin:auto;padding:0 28px}
+.sd-content{max-width:none;padding:22px 0 54px;min-width:0}
+.sd-sidebar{padding:18px 0 0;position:static;background:none;border:0;max-height:none;overflow:visible}
+.roadmap-toggle{border:1px solid var(--line);border-radius:10px;background:var(--bg-2)}
+.roadmap-toggle>summary{padding:13px 18px;cursor:pointer;font-size:12px;font-weight:650;list-style:none;display:flex;justify-content:space-between;gap:16px}
+.roadmap-toggle>summary:after{content:'+';font-size:17px;color:var(--accent)}.roadmap-toggle[open]>summary:after{content:'−'}
+.roadmap-toggle>summary small{font-weight:400;color:var(--fg-2);margin-left:auto}
+.sd-overview{display:block;color:var(--accent);padding:12px 18px;text-decoration:none;font-size:12px}
+.sd-sidebar nav{max-height:450px;overflow-y:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px 18px 20px;align-items:start}
+.sd-sidebar nav>details{border:1px solid var(--line);border-radius:7px}.sd-sidebar nav summary{padding:10px;cursor:pointer;font-size:12px;line-height:1.5}.sd-sidebar nav summary small{color:var(--fg-2);margin-left:6px}
+.sd-topic{display:flex;justify-content:space-between;gap:8px;text-decoration:none;color:var(--fg-2);padding:8px 12px;font-size:12px}
+.sd-topic small{font-size:10px;align-self:center}.sd-topic.current{color:var(--accent);background:var(--accent-bg)}.sd-topic:hover{background:var(--bg-3)}
+.back-link{color:var(--fg-2);font-size:12px;text-decoration:none}.back-link:hover{color:var(--accent)}
+.study-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:25px}.study-header .ghost-btn{font-size:12px}
+.study-eyebrow{font:10px var(--mono);letter-spacing:.11em;color:var(--accent)}
+.sd-content .study-title{font-size:clamp(28px,3.2vw,43px);font-weight:720;line-height:1.15;letter-spacing:-1.3px;margin:12px 0}
+.study-subtitle{color:var(--fg-2);font-size:14px;line-height:1.8;max-width:82ch}.study-subtitle b{font-weight:650;color:var(--fg)}
+.study-objectives{margin:16px 0 24px;font-size:12px;color:var(--fg-2)}.study-objectives summary{cursor:pointer;color:var(--accent)}.study-objectives ul{line-height:1.9}
+.related-links{display:flex;flex-wrap:wrap;gap:8px}.related-links a{padding:5px 9px;border-radius:6px;background:var(--accent-bg);color:var(--accent);text-decoration:none;font-size:12px}
+.study-tabs{display:flex;gap:3px;border-bottom:1px solid var(--line);margin-bottom:24px;scroll-margin-top:20px}
+.study-tabs button{display:flex;gap:9px;align-items:center;border:0;background:none;padding:15px 22px;border-bottom:2px solid transparent;font:10px var(--mono);color:var(--fg-2);cursor:pointer}
+.study-tabs button span{font:600 13px var(--sans)}.study-tabs button[aria-selected="true"]{border-color:var(--accent);color:var(--accent);background:linear-gradient(transparent,var(--accent-bg))}
+.study-tabs button:hover{color:var(--accent)}
+.explore-grid{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px;align-items:start}
+.visual-lab{border:1px solid var(--line);border-radius:14px;background:var(--bg-2);overflow:hidden;min-width:0;box-shadow:var(--shadow)}
+.lab-topline{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line);color:var(--fg-2);font-size:10px}
+.lab-status{font:10px var(--mono);letter-spacing:.06em;color:var(--accent);display:flex;align-items:center;gap:7px}.lab-status i{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+#sdDiagram.lab-viewport{padding:4px 6px 0;overflow:hidden;background:radial-gradient(var(--line) .7px,transparent .7px);background-size:22px 22px;min-width:0}
+.lab-scene{display:block;width:100%;height:auto;max-height:none;color:var(--accent);overflow:visible}
+.scene-link{fill:none;stroke:var(--line-2);stroke-width:2;stroke-dasharray:5 6}.scene-link.broken{stroke:var(--bad);stroke-dasharray:3 9}.scene-route{fill:none;stroke:var(--accent);stroke-width:3}
+.actor-card{fill:var(--bg-2);stroke:var(--line-2);stroke-width:1.5}.scene-actor{cursor:pointer}.scene-actor.active .actor-card{fill:var(--accent-bg);stroke:var(--accent);stroke-width:2}.scene-actor.inspected .actor-card{stroke:var(--info);stroke-width:3}.scene-actor.failed .actor-card{fill:var(--bad-bg);stroke:var(--bad)}
+.actor-icon{fill:none;stroke:var(--fg-2);stroke-width:1.7}.active .actor-icon{stroke:var(--accent)}
+.scene-label{font:600 14px var(--sans);fill:var(--fg)}.scene-small{font:12px var(--sans);fill:var(--fg-2)}.scene-badge{font:10px var(--mono);fill:var(--accent)}
+.scene-packet{fill:var(--accent);stroke:var(--on-accent);stroke-width:1.2;pointer-events:none}.scene-packet .packet-halo{fill:var(--accent-bg);stroke:none;opacity:.7}
+.scene-pulse{fill:none;stroke:var(--accent);stroke-width:2;opacity:.3;pointer-events:none}.failure-dot{fill:var(--bad)}.failure-cross{fill:white;font:700 18px var(--sans)}
+.scene-internal>rect{fill:var(--bg-3);stroke:var(--line)}.data-cell>rect{fill:var(--bg-2);stroke:var(--line-2)}.data-cell.ready>rect{fill:var(--accent-bg);stroke:var(--accent)}.data-cell.held>rect{fill:var(--warn-bg);stroke:var(--warn)}.data-letter{font:700 18px var(--mono);fill:var(--fg)}
+.resource-tile>rect{fill:var(--accent-bg);stroke:var(--accent)}.resource-tile.removed>rect{fill:var(--bad-bg);stroke:var(--bad);stroke-dasharray:4 4}.certificate>rect{fill:var(--bg-2);stroke:var(--line-2)}.certificate.validated>rect{fill:var(--accent-bg);stroke:var(--accent)}.certificate.rejected>rect{fill:var(--bad-bg);stroke:var(--bad)}
+.latency-outbound,.latency-inbound{fill:var(--info)}.latency-processing{fill:var(--accent)}
+.sequence-lifeline{fill:none;stroke:var(--line-2);stroke-width:2;stroke-dasharray:4 6}.sequence-message path{fill:none;stroke:var(--line-2);stroke-width:2}.sequence-message.current path{stroke:var(--accent);stroke-width:3}.sequence-message.complete path{stroke:var(--info)}.sequence-message.future{opacity:.2}.sequence-label{font:12px var(--mono);fill:var(--fg)}
+.lab-player{display:flex;align-items:center;gap:7px;flex-wrap:wrap;padding:15px 16px;border-top:1px solid var(--line)}
+.lab-player button{min-width:32px;height:34px;padding:0 10px;border:1px solid var(--line);border-radius:6px;background:var(--bg);cursor:pointer}.lab-player button:disabled{opacity:.35;cursor:default}.lab-player .lab-play{background:var(--accent);border-color:var(--accent);color:var(--on-accent);min-width:68px;font-size:12px;font-weight:650}
+.lab-player label{margin-left:auto;display:flex;gap:7px;align-items:center;font-size:10px;color:var(--fg-2)}.lab-player select{background:var(--bg);color:var(--fg);font-size:11px;border:1px solid var(--line);border-radius:5px;padding:5px}.lab-player #sdCount{font:10px var(--mono);color:var(--fg-2)}#sdScrub{width:100%;accent-color:var(--accent);height:5px;margin-top:8px}
+.scene-key{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;padding:0 12px 16px;color:var(--fg-2);font-size:10px}.scene-key span{display:flex;align-items:center;gap:5px}.scene-key i{width:7px;height:7px;border-radius:2px}.key-packet{background:var(--accent)}.key-ready{background:var(--info)}
+.experiment-desk{border:1px solid var(--line);border-radius:14px;background:var(--bg-2);padding:20px;min-width:0}.section-label{font:10px var(--mono);letter-spacing:.06em;color:var(--accent)}
+.experiment-desk h2{font-size:18px;line-height:1.3;letter-spacing:-.5px;margin:9px 0 17px}
+.scenario-presets{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:21px}.scenario-presets button{border:1px solid var(--line);background:var(--bg);color:var(--fg-2);border-radius:6px;padding:7px 9px;font-size:10px;cursor:pointer}.scenario-presets button:hover,.scenario-presets button.selected{background:var(--accent-bg);border-color:var(--accent);color:var(--accent)}
+.lab-controls{display:flex;flex-direction:column;gap:18px}.experiment-field{display:flex;flex-direction:column;gap:8px;font-size:11px;color:var(--fg-2);min-width:0}.experiment-field output{font:600 18px var(--mono);color:var(--fg)}.experiment-field input[type="range"]{width:100%;accent-color:var(--accent)}.experiment-field select{width:100%;background:var(--bg);color:var(--fg);font:12px var(--sans);padding:9px;border:1px solid var(--line);border-radius:6px}.experiment-field:has(input[type="checkbox"]){flex-direction:row;align-items:flex-start;gap:8px;color:var(--fg)}.experiment-field input[type="checkbox"]{accent-color:var(--accent);margin:2px 0}
+#labRun{width:100%;margin-top:22px;font-size:12px;padding:11px}.lab-challenge{color:var(--fg-2);font-size:12px;line-height:1.7;margin:16px 0}.experiment-desk .model-note{font-size:10px;line-height:1.6;color:var(--fg-2);padding-top:13px;border-top:1px solid var(--line);margin:0}
+.dns-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:20px}.dns-actions button{padding:8px 5px;font-size:10px;background:var(--bg);border:1px solid var(--line);border-radius:5px;cursor:pointer}.dns-actions button:hover{color:var(--accent);border-color:var(--accent)}
+.cache-ledger{margin-top:13px;background:var(--bg-3);padding:10px;border-radius:7px;font-size:10px}.cache-ledger>div{display:flex;justify-content:space-between;gap:10px;padding:4px 0}.cache-ledger span{color:var(--fg-2)}.cache-ledger b{font:10px var(--mono)}.cache-ledger p{color:var(--warn);font-size:10px;line-height:1.6;margin:8px 0 0}
+.observation-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px;margin:20px 0 26px;align-items:start}.live-explanation,.actor-inspector{border:1px solid var(--line);border-radius:12px;background:var(--bg-2);padding:22px}
+.live-explanation h2,.actor-inspector h2{font-size:19px;line-height:1.4;letter-spacing:-.3px;margin:9px 0 10px}.live-explanation p,.actor-inspector p{font-size:13px;line-height:1.85;color:var(--fg-2);margin:0 0 15px;max-width:78ch}
+.transfer-progress{height:3px;background:var(--bg-3);border-radius:5px;overflow:hidden;margin:14px 0}.transfer-progress span{display:block;height:100%;background:var(--accent);width:0}
+.live-metrics{display:flex;gap:26px;flex-wrap:wrap}.live-metrics>div{display:flex;flex-direction:column;gap:5px}.live-metrics span{font:8px var(--mono);letter-spacing:.09em;color:var(--fg-2)}.live-metrics b{font:600 19px var(--mono);color:var(--fg)}.live-metrics small{font-size:10px;color:var(--fg-2)}#transferState{font:600 13px var(--sans);padding-top:4px}
+.actor-event{display:flex;gap:12px;align-items:center;background:var(--accent-bg);color:var(--accent);padding:10px 12px;border-radius:7px;font-size:10px}.actor-event b{margin-left:auto;font-size:11px}
+.walkthrough{margin-top:18px;padding-top:12px;border-top:1px solid var(--line);font-size:11px}.walkthrough summary{cursor:pointer;color:var(--accent)}#sdTrace{list-style:none;padding:0;margin-bottom:0;max-height:240px;overflow:auto}#sdTrace li{margin-top:5px;border-radius:5px}#sdTrace li.current{background:var(--accent-bg)}#sdTrace button{background:none;border:0;padding:8px;color:var(--fg-2);font-size:11px;cursor:pointer;text-align:left;width:100%}#sdTrace button span{color:var(--accent);font:10px var(--mono);margin-right:8px}
+.prediction{display:grid;grid-template-columns:1fr 1fr;gap:28px;border:1px solid var(--line);border-radius:12px;padding:26px;background:var(--bg-2)}.prediction h2{font-size:18px;line-height:1.5;margin:9px 0}.prediction p{font-size:12px;line-height:1.8;color:var(--fg-2)}.prediction-options{display:flex;flex-direction:column;justify-content:center;gap:8px}.prediction-options button{background:var(--bg);border:1px solid var(--line);padding:12px 15px;border-radius:7px;text-align:left;font-size:12px;cursor:pointer}.prediction-options button[aria-pressed="true"]{background:var(--accent-bg);border-color:var(--accent);color:var(--accent)}#predictionReason{margin:6px 0 0}
+.study-next{display:block;background:none;border:0;color:var(--accent);font-weight:600;font-size:13px;margin:25px 0 0 auto;padding:10px 0;cursor:pointer}
+.study-reading{max-width:790px;margin:0 auto;padding:28px 0;border-bottom:1px solid var(--line)}.study-reading h2{font-size:26px;letter-spacing:-.6px;line-height:1.3;margin:10px 0 20px}.study-reading p,.study-panel>p{font-size:15px;line-height:1.95;color:var(--fg-2);max-width:75ch}.study-panel a:not(.learn-action){color:var(--accent)}.study-panel>h2{max-width:790px;margin:32px auto 15px;font-size:23px}
+.mechanism-cards{list-style:none;padding:0;display:flex;flex-direction:column;gap:9px}.mechanism-cards li{display:flex;align-items:flex-start;gap:15px;background:var(--bg-2);border:1px solid var(--line);border-radius:9px;padding:15px 18px}.mechanism-cards span{background:var(--accent-bg);color:var(--accent);width:27px;height:27px;display:grid;place-items:center;border-radius:50%;font:12px var(--mono);flex-shrink:0}.mechanism-cards p{margin:0;font-size:13px}
+.deep-questions{max-width:790px;margin:30px auto;display:flex;flex-direction:column;gap:10px}.deep-questions details{border:1px solid var(--line);border-radius:10px;background:var(--bg-2);padding:18px 22px}.deep-questions summary{font-weight:600;font-size:15px;cursor:pointer;line-height:1.5}.deep-questions p{color:var(--fg-2);font-size:14px;line-height:1.9;margin-bottom:0}
+.reference-shelf{max-width:790px;margin:30px auto;padding:24px;border:1px solid var(--line);border-radius:12px;background:var(--bg-2)}.reference-shelf h2{font-size:19px}.reference-shelf p{font-size:12px;color:var(--fg-2);line-height:1.7}.reference-shelf a{display:flex;justify-content:space-between;padding:11px 0;border-top:1px solid var(--line);font-size:12px;text-decoration:none}
+.experiment-evidence{padding:23px;border:1px solid var(--line);border-radius:12px;background:var(--bg-2);margin:0 0 25px}.experiment-evidence h2{font-size:19px;margin:9px 0}.experiment-evidence>p{font-size:11px;color:var(--fg-2);line-height:1.8}.evidence-runs{display:flex;flex-direction:column;gap:14px;margin-top:18px}.evidence-run{display:grid;grid-template-columns:minmax(130px,1fr) minmax(60px,2fr) 60px;gap:18px;align-items:center}.evidence-run>div:first-child{display:flex;flex-direction:column;gap:4px;font-size:11px}.evidence-run span{font-size:10px;color:var(--fg-2)}.evidence-bar{height:7px;background:var(--bg-3);border-radius:5px;overflow:hidden}.evidence-bar i{display:block;height:100%;background:var(--accent);border-radius:5px}.evidence-run strong{font:14px var(--mono);text-align:right}.evidence-run small{font-size:9px;color:var(--fg-2)}
+.page-preview>rect{fill:var(--bg-2);stroke:var(--line-2)}.page-preview>path{fill:none;stroke:var(--line);stroke-width:4}.page-preview.painted>path{stroke:var(--accent)}.page-preview.painted>rect{fill:var(--accent-bg);stroke:var(--accent)}
+.takeaways{list-style:none;padding:0}.takeaways li{padding:10px 14px;margin-bottom:7px;background:var(--accent-bg);color:var(--accent);border-radius:7px;font-size:13px;line-height:1.7}
+.knowledge-check{padding:22px;border:1px solid var(--line);border-radius:12px;background:var(--bg-2)}.knowledge-check h3{font-size:17px;margin-top:0}.knowledge-check summary{font-size:13px;cursor:pointer;color:var(--accent)}.reflection-label{display:flex;flex-direction:column;gap:9px;margin:20px 0;font-size:12px;color:var(--fg-2)}.reflection-label textarea{background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:7px;font:14px var(--sans);line-height:1.8;padding:12px;resize:vertical;width:100%}
+.term-cards{max-width:790px;margin:20px auto;display:grid;grid-template-columns:1fr 1fr;gap:12px}.term-cards>div{padding:16px 20px;border:1px solid var(--line);border-radius:9px;background:var(--bg-2)}.term-cards dt{font-size:13px;font-weight:650}.term-cards dd{font-size:12px;color:var(--fg-2);line-height:1.7;margin:7px 0 0}.lesson-navigation{display:flex;justify-content:space-between;gap:20px;padding:30px 0;max-width:790px;margin:auto;font-size:12px}.lesson-navigation a{max-width:45%;text-decoration:none}
+.lesson-title{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin:25px 0}.lesson-title h1{font-size:32px}.lesson-title .ghost-btn{white-space:nowrap}
+.sd-lede{font-size:15px;color:var(--fg-2);line-height:1.8;max-width:75ch}.sd-content>h1{font-size:38px;letter-spacing:-1px;line-height:1.2}
+.system-course-hero{display:flex;justify-content:space-between;gap:25px;align-items:center;padding:26px 0}.system-course-hero h1{font-size:clamp(29px,4vw,45px);line-height:1.12;letter-spacing:-1.6px;margin:12px 0}.system-course-hero p{max-width:60ch;color:var(--fg-2);line-height:1.8;font-size:14px}.course-orbit{width:220px;flex-shrink:0;overflow:visible}.course-orbit path{fill:none;stroke:var(--line-2);stroke-width:2}.course-orbit circle{fill:var(--accent-bg);stroke:var(--accent)}.course-orbit text{fill:var(--fg-2);font:10px var(--mono)}
+.network-lab-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:26px 0 36px}.network-lab-card{display:flex;flex-direction:column;padding:22px;border:1px solid var(--line);border-radius:12px;background:var(--bg-2);text-decoration:none;color:var(--fg);transition:transform .18s,border-color .18s}.network-lab-card:hover{transform:translateY(-3px);border-color:var(--accent)}.network-lab-card .lab-card-kicker{display:flex;justify-content:space-between;align-items:center;color:var(--accent);font:10px var(--mono)}.network-lab-card svg{width:35px;height:35px;fill:none;stroke:var(--accent);stroke-width:1.7;overflow:visible;margin:20px 0 0}.network-lab-card h3{font-size:17px;line-height:1.4;margin:12px 0 7px;letter-spacing:-.3px}.network-lab-card p{font-size:12px;color:var(--fg-2);line-height:1.8;margin:0 0 17px}.network-lab-card .open-lab{margin-top:auto;font-size:11px;color:var(--accent)}
+.future-path{margin:32px 0}.future-path>h2{font-size:23px}.future-stage{border:1px solid var(--line);border-radius:9px;background:var(--bg-2);margin-top:8px}.future-stage summary{display:flex;align-items:center;gap:16px;padding:15px 18px;cursor:pointer;font-size:13px;list-style:none}.future-stage summary>span:first-child{font:10px var(--mono);color:var(--accent)}.future-stage summary small{margin-left:auto;font-size:9px;color:var(--fg-2)}.future-stage ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0 18px 18px;margin:0}.future-stage li a{display:block;padding:6px 9px;border:1px solid var(--line);border-radius:5px;font-size:11px;color:var(--fg-2);text-decoration:none}.future-stage p{font-size:11px;color:var(--fg-2);padding:0 18px}
+@media(max-width:1050px){.explore-grid{grid-template-columns:minmax(0,1fr) 245px;gap:14px}.experiment-desk{padding:17px}.study-tabs button{padding:15px 17px}.network-lab-cards{grid-template-columns:repeat(2,minmax(0,1fr))}.sd-sidebar nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:800px){.explore-grid{grid-template-columns:1fr}.experiment-desk{display:grid;grid-template-columns:1fr 1fr;gap:15px}.experiment-desk>.section-label,.experiment-desk>h2,.experiment-desk>.scenario-presets,.experiment-desk>#labRun{grid-column:1/-1}.experiment-desk>h2{margin:0}.scenario-presets{margin-bottom:0}.experiment-desk>.model-note{grid-column:1/-1}.lab-controls{gap:15px}.lab-viewport{max-width:none}.observation-grid{grid-template-columns:1fr 1fr}.actor-event{flex-wrap:wrap}.actor-event b{margin-left:0}}
+@media(max-width:600px){.sd-workspace{padding:0 15px}.sd-content{padding-top:18px}.roadmap-toggle>summary{font-size:11px;padding:12px}.roadmap-toggle>summary small{display:none}.sd-sidebar nav{grid-template-columns:1fr;padding:8px 10px 15px}.study-header{margin-bottom:18px}.study-title{letter-spacing:-.8px!important}.study-subtitle{font-size:12px}.study-tabs{gap:0;justify-content:space-between;margin-bottom:17px}.study-tabs button{padding:12px 10px;gap:4px;font-size:9px}.study-tabs button span{font-size:11px}.lab-topline{padding:13px 12px;font-size:9px}.lab-player{padding:12px;gap:5px}.lab-player button{padding:0 7px;min-width:29px;height:32px}.lab-player label{font-size:9px}.lab-player #sdCount{font-size:9px}.scene-key{gap:9px;font-size:9px}.experiment-desk{grid-template-columns:1fr;padding:18px;gap:0}.experiment-desk>h2{margin:9px 0 16px}.scenario-presets{margin-bottom:18px}.lab-controls{gap:16px}.experiment-desk>#labRun{margin-top:18px}.observation-grid{grid-template-columns:1fr;gap:13px;margin-top:14px}.live-explanation,.actor-inspector{padding:20px}.live-explanation p,.actor-inspector p{font-size:12px}.prediction{grid-template-columns:1fr;padding:20px;gap:10px}.prediction h2{font-size:17px}.study-reading{padding:24px 0}.study-reading p{font-size:14px;line-height:1.9}.study-reading h2{font-size:24px}.deep-questions details{padding:17px}.term-cards{grid-template-columns:1fr}.system-course-hero{padding:18px 0}.course-orbit{display:none}.network-lab-cards{grid-template-columns:1fr;gap:12px}.network-lab-card{padding:20px}.network-lab-card svg{margin-top:14px}.future-stage summary{padding:13px 12px;gap:10px}.future-stage summary small{font-size:8px}.lesson-navigation{font-size:11px}.platform-bar nav{gap:14px}}
+@media(prefers-reduced-motion:reduce){.network-lab-card{transition:none}}
 
 </style>
 </head>
@@ -8358,15 +8386,15 @@ const SD_LESSONS = {
  },
  dns:{
   objectives:['Trace recursive resolution and authoritative referrals.','Explain how TTL and caches change the lookup path.'],
-  intro:['People remember names such as library.example, while IP routing uses addresses. DNS, the Domain Name System, lets names refer to records without embedding a permanent address in every application. It distributes responsibility so each domain owner can manage its own records.', 'A DNS lookup does not download the website. It discovers information used before the browser connects to a service. A name can have several address records, or aliases leading to another name.'],
+  intro:['People remember names such as library.example.com, while IP routing uses addresses. DNS, the Domain Name System, lets names refer to records without embedding a permanent address in every application. It distributes responsibility so each domain owner can manage its own records.', 'A DNS lookup does not download the website. It discovers information used before the browser connects to a service. A name can have several address records, or aliases leading to another name.'],
   fundamentals:['An A record contains an IPv4 address and an AAAA record an IPv6 address. A recursive resolver performs lookups for clients. Authoritative name servers publish a zone’s records. Root and top-level-domain (TLD) servers provide referrals toward the relevant authority.', 'TTL, time to live, tells caches how long a record may be reused. It is not the website session lifetime. Browsers, operating systems, and recursive resolvers can cache answers; caches may also hold intermediate referrals and negative answers.'],
   working:['The browser checks its cache, then the operating system’s applicable cache.','On a miss, a stub resolver asks a recursive resolver for the address.','A cold recursive resolver asks a root server, follows the TLD referral, then asks the authoritative server.','The resolver returns the answer and caches it; the browser can now connect to the address.'],
-  deep:['The resolver normally makes iterative queries to the hierarchy: a root server does not contact the TLD on behalf of this resolver. A referral supplies names of other servers and, when necessary, glue addresses. A completely cold lookup is educationally useful but uncommon because resolvers retain popular referrals.', 'TTL reduces repeated work but delays visibility of record changes. Our cache controls express valid versus expired answers; they do not model elapsed TTL seconds. CNAME chains can require extra lookups. NXDOMAIN indicates that a name does not exist and can be negatively cached; timeouts and SERVFAIL are different failures. DNSSEC authenticates signed DNS data when validated; it does not encrypt queries. DNS-over-HTTPS encrypts transport to a resolver, but that resolver still sees the query.'],
+  deep:['The resolver normally makes iterative queries to the hierarchy: a root server does not contact the TLD on behalf of this resolver. A referral supplies names of other servers and, when necessary, glue addresses. A completely cold lookup is educationally useful but uncommon because resolvers retain popular referrals.', 'TTL reduces repeated work but delays visibility of record changes. The experiment uses an explicit model clock: after a positive lookup, repeat it before expiry to reuse the cached answer. Change the authoritative IP while that answer is valid to observe staleness; advance time beyond expiry to discover the new value. CNAME chains can require extra lookups. NXDOMAIN indicates that a name does not exist and can be negatively cached; timeouts and SERVFAIL are different failures. DNSSEC authenticates signed DNS data when validated; it does not encrypt queries. DNS-over-HTTPS encrypts transport to a resolver, but that resolver still sees the query.'],
   usage:['A library moves its API to a new address. DNS allows the name to stay stable while the address record changes. Existing cached answers can direct clients to the old address until expiration, so migration planning must account for overlap.', 'DNS may return different addresses by region or load policy. This is a discovery mechanism, not a guarantee that the selected server is healthy or that cached clients immediately switch after an outage.'],
   summary:['DNS resolves names to records, not webpage content.','Recursive resolvers follow referrals to an authority.','A valid cache can bypass part or all of the hierarchy.'],
   check:['If the browser has a valid address answer, must it still ask the root server before opening the page?', 'No. It can reuse the answer. Even on a browser miss, a resolver cache may avoid a full hierarchy traversal.'],
   glossary:{Zone:'A portion of the namespace served by an authority.',Referral:'A response pointing the resolver toward another authority.',TTL:'Permitted cache lifetime for a record.'},
-  experiment:'Compare a cold lookup with browser, OS, and resolver cache hits. Then simulate a negative authoritative answer; no connection address is returned. The .example hierarchy is illustrative: .example is reserved for documentation, not a publicly delegated TLD.',
+  experiment:'Resolve library.example.com, repeat the lookup, then change the authority IP and advance model time past the TTL. Observe the cached answer until expiry and the fresh answer after it. example.com and the 192.0.2.0/24 addresses are reserved for documentation; these responses are locally simulated.',
   controls:[['cache','Valid cached answer at','select',['none','browser','OS','resolver'],'none'],['missing','Name does not exist (cold lookup)','checkbox',false]],
   sources:[['DNS concepts and resolution','https://www.rfc-editor.org/rfc/rfc1034.html'],['DNS negative caching','https://www.rfc-editor.org/rfc/rfc2308.html']]
  },
@@ -8517,31 +8545,32 @@ const SD_SIM = {
    }
    step('edge','server','Deliver payload','The destination receives this packet. IP alone does not recover other lost packets.',link,o.failed?{failed:'transit'}:{});
   } else if(id === 'ip-ports') {
-   node('client','Client :52000','client'); node('host','Host 192.0.2.10','router'); node('https','TCP :443 listener'); node('closed',`TCP :${o.port} ${o.port==='443'?'selected':'no listener'}`);
+   node('client','Client :52000','client'); node('host','Host 192.0.2.10','router'); node('https','TCP :443 listener'); node('closed',o.port==='443'?'Other TCP ports':`TCP :${o.port} closed`);
    step('client','host',`TCP → ${o.port}`,'The destination address is from a documentation-only IP range.',40,{destination:`192.0.2.10:${o.port}`});
    step('host',o.port==='443'?'https':'closed','Endpoint lookup','The OS selects a transport endpoint by protocol, address, and port.',0,{destination:`192.0.2.10:${o.port}`});
    step(o.port==='443'?'https':'closed','client',o.port==='443'?'Accepted':'TCP reset',o.port==='443'?'A listener can accept the connection; TLS and HTTP come next.':'This model has no listener at this port and returns a reset. A firewall could instead cause a timeout.',40,{outcome:o.port==='443'?'listener available':'connection refused',failed:o.port==='443'?'':'closed'});
   } else if(id === 'dns') {
-   node('browser','Browser cache','client'); node('os','OS / stub resolver','client'); node('resolver','Recursive resolver','dns'); node('root','Root server','dns'); node('tld','.example TLD','dns'); node('auth','Authoritative','dns');
-   const answer = {'answer':'192.0.2.10',record:'A library.example',cache:o.cache};
+   node('browser','Browser cache','client'); node('os','OS / stub','client'); node('resolver','Recursive resolver','dns'); node('root','Root server','dns'); node('tld','.com TLD','dns'); node('auth','Authoritative','dns');
+   const cachedAnswer = {'answer':o.cacheAddress||o.address||'192.0.2.10',record:'A library.example.com',cache:o.cache};
+   const answer = {'answer':o.address||'192.0.2.10',record:'A library.example.com',cache:o.cache};
    step('browser','browser','Cache check','The browser checks for a valid answer for this name and record type.');
-   if(o.cache==='browser') step('browser','browser','Cache hit','A valid browser answer avoids all DNS network queries.',0,answer);
+   if(o.cache==='browser') step('browser','browser','Cache hit','A valid browser answer avoids all DNS network queries.',0,cachedAnswer);
    else {
     step('browser','os','Resolve name','The browser delegates resolution to the OS / configured resolution service.',0);
-    if(o.cache==='OS') step('os','browser','OS cache hit','The OS returns a still-valid address. The recursive resolver is not contacted.',0,answer);
+    if(o.cache==='OS') step('os','browser','OS cache hit','The OS returns a still-valid address. The recursive resolver is not contacted.',0,cachedAnswer);
     else {
      step('os','resolver','Recursive query','The stub asks the recursive resolver to obtain an answer.',20);
-     if(o.cache==='resolver') step('resolver','os','Resolver cache hit','The resolver returns an unexpired answer without asking the hierarchy.',20,answer);
+     if(o.cache==='resolver') step('resolver','os','Resolver cache hit','The resolver returns an unexpired answer without asking the hierarchy.',20,cachedAnswer);
      else {
-      step('resolver','root','Where is .example?','A completely cold resolver asks a root server. .example is reserved for documentation.',20);
+      step('resolver','root','Where is .com?','A completely cold resolver asks a root server for the .com delegation.',20);
       step('root','resolver','TLD referral','The root refers the resolver to TLD name servers; it does not fetch the website.',20);
-      step('resolver','tld','Where is library.example?','The resolver follows the referral itself.',20);
+      step('resolver','tld','Where is example.com?','The resolver follows the referral itself and asks for example.com’s authority.',20);
       step('tld','resolver','Authority referral','The TLD returns the delegated authoritative servers (and needed glue addresses).',20);
-      step('resolver','auth','A library.example?','The resolver asks the authority for the address record.',20);
-      step('auth','resolver',o.missing?'NXDOMAIN':'A 192.0.2.10',o.missing?'The authority reports that the name does not exist. This can be negatively cached.':'The authority returns an address and TTL. The resolver caches the answer.',20,o.missing?{answer:'no address',status:'NXDOMAIN'}:answer);
+      step('resolver','auth','A library.example.com?','The resolver asks the authority for the address record in this documentation-domain model.',20);
+      step('auth','resolver',o.missing?'NXDOMAIN':'A '+answer.answer,o.missing?'The authority reports that the name does not exist. This can be negatively cached.':'The authority returns an address and TTL. The resolver caches the answer.',20,o.missing?{answer:'no address',status:'NXDOMAIN'}:answer);
       step('resolver','os',o.missing?'Negative answer':'Address answer','The recursive resolver sends the result back to the stub.',20,o.missing?{answer:'no address',status:'NXDOMAIN'}:answer);
      }
-     step('os','browser',o.missing&&o.cache==='none'?'No address':'Return answer',o.missing&&o.cache==='none'?'The browser cannot connect using a nonexistent name.':'The browser now has an address; connecting to the site is a separate process.',0,o.missing&&o.cache==='none'?{answer:'no address',status:'NXDOMAIN'}:answer);
+     step('os','browser',o.missing&&o.cache==='none'?'No address':'Return answer',o.missing&&o.cache==='none'?'The browser cannot connect using a nonexistent name.':'The browser now has an address; connecting to the site is a separate process.',0,o.missing&&o.cache==='none'?{answer:'no address',status:'NXDOMAIN'}:o.cache==='resolver'?cachedAnswer:answer);
     }
    }
   } else if(id === 'tcp-udp') {
@@ -8635,21 +8664,385 @@ const SD_SIM = {
    step('parser','paint','Compute and paint','Styles contribute to the CSSOM; layout determines geometry and painting draws content.',20,{phase:'visible page'});
   } else throw new Error('No simulation for '+id);
   return {nodes,frames};
+ }
+};
+
+/* Original teaching prompts informed by the references listed in each lesson. */
+const SD_LABS = {
+ 'client-server':{
+  hook:'What is your app waiting for?',caption:'Follow a forecast request out of the phone, through server work, and back into the interface.',
+  challenge:'Make the response slower. Can you tell whether the network or the application caused the delay?',
+  presets:[['Quick response',{network:20,work:40}],['Slow network',{network:180,work:40}],['Slow application',{network:20,work:450}]],
+  nodes:{client:['The client initiates the operation','The screen shows a loading state until a result arrives. Sending a request does not mean the response is already available. A timeout limits waiting, but cannot undo work that may already have happened.'],server:['A server performs shared work','The server receives the operation, executes application logic, and constructs a response. Its processing time is independent of network travel. It can be a client on a different connection, for example when requesting a database record.']},
+  discoveries:[['Why one-way delay is counted twice','A request crosses the link once and its response crosses it again. Raising one-way delay by 10 ms adds 20 ms to this model’s response time. Compare the colored timing segments instead of treating all delay as server work.'],['A slow answer is not necessarily a large answer','This simulation uses one small message. Its delay can rise without any payload growth. Bandwidth becomes a separate constraint when transferring large data; queueing becomes another constraint when many operations compete for capacity.'],['Where to place a timeout','Budget the entire operation, including queues and downstream dependencies. If a server continues after the client stops waiting, a retry can overlap the first attempt. Request identifiers and idempotent operations help make that uncertainty manageable.']],
+  prediction:['If you add 50 ms to one-way network delay, how much does the total grow?',['50 ms','100 ms'],1,'The same delay applies to the outbound request and inbound response: 2 × 50 ms. Server work is unchanged.']
  },
- diagram(nodes, f, prefix='sd'){
-  const width=720, columns=Math.min(nodes.length,3), rows=Math.ceil(nodes.length/columns), height=rows*115+45;
-  const pos={};
-  nodes.forEach((n,i)=>pos[n.id]={x:60+(i%columns)*(600/Math.max(1,columns-1)),y:60+Math.floor(i/columns)*115});
-  if(columns===1) pos[nodes[0].id].x=360;
-  const a=pos[f.from],b=pos[f.to];
-  let path='';
-  if(a&&b&&f.from!==f.to){
-   const dx=b.x-a.x,dy=b.y-a.y;
-   const inset=Math.min(dx?55/Math.abs(dx):Infinity,dy?32/Math.abs(dy):Infinity,.4);
-   const x1=a.x+dx*inset,y1=a.y+dy*inset,x2=b.x-dx*inset,y2=b.y-dy*inset;
-   path=`<path class="sd-active-link" d="M ${x1} ${y1} L ${x2} ${y2}" marker-end="url(#${prefix}-arrow)"/><circle class="sd-packet" r="6" style="offset-path:path('M ${x1} ${y1} L ${x2} ${y2}')"/>`;
+ internet:{
+  hook:'A packet has no map of the whole journey.',caption:'Watch routers make local forwarding decisions. Break a link and follow the alternate path.',
+  challenge:'Break the transit link. Does a different route restore every packet that was lost?',
+  presets:[['Healthy path',{failed:false,network:20}],['Broken link',{failed:true,network:20}],['Longer delays',{failed:true,network:75}]],
+  nodes:{client:['Start on the local network','For an off-network destination, the device sends to a default gateway. On a real local network, link-layer addressing determines how the frame reaches that next hop.'],gateway:['The gateway crosses a network boundary','A forwarding table identifies the appropriate next hop. The gateway does not need to understand an HTTP path or DNS name to forward an IP packet.'],isp:['Policy helps choose the route','The provider’s installed forwarding state guides the next hop. Interdomain routing exchanges reachability and policy; shortest geographic distance is not its only objective.'],transit:['This is the primary transit path','Disable the primary link to make it unavailable. The model already has an alternate route installed; it does not simulate routing-protocol convergence.'],alternate:['An alternate route restores reachability','Using a backup path adds a hop in this example. Actual alternate paths can be shorter or longer and return traffic need not follow the same route.'],backup:['Each hop adds work and possible waiting','A router can queue packets behind other traffic. This experiment uses a fixed per-hop delay and omits queue lengths and link bandwidth.'],edge:['The destination network is near','The edge forwards toward the target host. A reachable network is different from a healthy application running inside it.'],server:['The destination receives a packet','IP delivers a payload to the host’s transport layer. It has not proved that all related packets arrived or that an application processed them.']},
+  discoveries:[['Routing versus forwarding','Routing builds information about reachability; forwarding uses the resulting table for each packet. The alternate path animation assumes forwarding state is ready. Real failures can cause transient black holes or loops while routing state converges.'],['What survives a link change','The IP destination remains the same as the next hops change. Intermediate routers replace link-layer framing for each link while transporting the IP packet toward the destination. Routers also decrement the IPv4 TTL or IPv6 Hop Limit.'],['Best effort is a deliberate boundary','Routers do not retain every packet until the destination acknowledges it. Doing so would impose enormous distributed state. TCP or a higher-layer protocol can provide recovery appropriate to the endpoints.']],
+  prediction:['When the backup path works, what can IP promise about a packet lost earlier?',['It is replayed automatically','No automatic recovery'],1,'A new path can carry later traffic. IP itself does not retransmit the earlier lost packet.']
+ },
+ 'ip-ports':{
+  hook:'Right building. Wrong door.',caption:'One host can offer many services. Addressing the host is only the first part of reaching one.',
+  challenge:'Select a port with no listener. Watch the host stay reachable while the connection is refused.',
+  presets:[['HTTPS listener',{port:'443'}],['Unused app port',{port:'8080'}],['Unused database port',{port:'5432'}]],
+  nodes:{client:['The client has a source endpoint too','An ephemeral source port distinguishes this connection from other client connections. It is not necessary for every client to find a new server listening port.'],host:['IP selects the host; transport selects the endpoint','The OS examines the transport protocol and destination port after IP delivery. TCP and UDP have separate endpoint spaces. This example’s host address is reserved for documentation.'],https:['This TCP listener accepts on 443','443 is a convention for HTTPS. Accepting a TCP connection does not yet complete TLS validation or HTTP processing. A service can be configured on another permitted port.'],closed:['This example has no other listeners','A TCP reset can indicate that no suitable listener exists. A firewall might drop the same traffic, producing a timeout. Neither outcome proves that the entire host is offline.']},
+  discoveries:[['Why thousands of clients can use 443','The server distinguishes established TCP connections by local and remote addresses and ports. The listener remains on 443 while accepted connections carry distinct endpoint tuples. A port is therefore not “occupied by one customer” in the door analogy.'],['Binding changes exposure','Listening only on loopback limits an endpoint to the same host. Listening on an appropriate external interface can expose it to other devices, subject to firewall policy. A wildcard bind is broader than a specific-address bind.'],['NAT modifies the return address','A translator may replace private source addresses and ports with a public mapping. Replies use the mapping to reach the original client. This is address translation, not a substitute for application authentication.']],
+  prediction:['A connection to 8080 is refused in this model. What do you know?',['The host has no working services','No TCP listener accepted this endpoint'],1,'The same host still has a listener on 443. Port conventions do not guarantee a listener exists.']
+ },
+ dns:{
+  hook:'Who actually knows the address?',caption:'Meet the resolver, follow referrals, then repeat the lookup and let the cache do the work.',
+  challenge:'Resolve a name, look it up again, change the authoritative address, then advance past the TTL. Which answer survives?',
+  presets:[['Cold lookup',{cache:'none',missing:false}],['Resolver cache',{cache:'resolver',missing:false}],['Unknown name',{cache:'none',missing:true}]],
+  nodes:{browser:['The nearest reusable answer','A valid browser answer avoids a DNS network query in this model. The cache is not a copy of the website; it stores address information with a limited lifetime.'],os:['A stub asks for help','The OS may reuse a local cached answer. Otherwise its stub resolver asks a recursive resolver to perform the lookup. Browser implementations can use their own resolution path, including encrypted DNS.'],resolver:['The resolver does the searching','The client asks for an answer; this resolver follows referrals to obtain one. It can cache final answers and intermediate delegation information. Watch how a resolver-cache hit skips the hierarchy.'],root:['The root knows where to ask next','It returns a referral to the .com servers. It does not send the webpage and does not perform the entire recursive search on behalf of this resolver.'],tld:['The .com zone points toward the authority','The TLD delegates example.com to authoritative servers. Referrals can include necessary glue addresses so the resolver can reach those servers without a circular dependency.'],auth:['The zone’s authoritative records','This server supplies the address record for library.example.com. Changing the authoritative record does not instantly erase valid copies already held in caches.']},
+  discoveries:[['A cache has a lifetime, not a notification subscription','The authoritative zone publishes a TTL. A cached answer can remain usable until its remaining lifetime runs out, even after an address change. In this lab, “advance time” moves a model clock; it does not wait in real time. The browser, OS, and resolver are shown as one selected reusable cache level.'],['The root is not contacted on every lookup','A cached final answer is one shortcut. Cached delegation records are another: knowing the authority can skip root and TLD queries even when the final address is missing. The cold-path scenario deliberately starts without either shortcut.'],['A missing name is data too','NXDOMAIN means the name does not exist. It is different from a timeout or SERVFAIL. Negative answers can be cached under separate rules. This lab does not persist a negative cache, so repeated missing-name lookups demonstrate the full failure path.']],
+  prediction:['You change the authority’s IP while a cached answer is still valid. What can the next lookup return?',['The old cached IP','Only the new IP'],0,'TTL permits reuse. The cache is not automatically invalidated by an authority update; expire or clear it to observe a fresh answer.']
+ },
+ 'tcp-udp':{
+  hook:'The middle packet vanished. Now what?',caption:'Compare what arrived with what the application is allowed to read. Those are different states.',
+  challenge:'Lose B while C arrives. Compare the TCP receive buffer with UDP delivery.',
+  presets:[['TCP with loss',{transport:'TCP',loss:true}],['UDP with loss',{transport:'UDP',loss:true}],['No loss',{transport:'TCP',loss:false}]],
+  nodes:{sender:['The sender creates transport data','A, B, and C represent consecutive ranges of TCP bytes or three UDP datagrams. A real TCP segment boundary is not an application message boundary.'],network:['Packets can disappear','Loss can result from congestion, link problems, or policy. The model drops only B once; actual loss can be bursty and affect acknowledgments too.'],receiver:['Arrival and delivery are separate','TCP may receive C yet retain it behind the missing B byte range. UDP can expose C immediately as an independent datagram. Select the protocol and compare the buffer and delivered lanes.']},
+  discoveries:[['Acknowledgments name sequence space','TCP sequence numbers refer to bytes. A cumulative acknowledgment identifies the next expected byte; it can acknowledge several segments at once. Selective acknowledgment can describe additional received ranges without allowing them to bypass stream ordering.'],['A retransmission has a cost','Loss recovery spends time and capacity sending bytes again. Real implementations use retransmission timers and evidence from acknowledgments rather than this lab’s fixed wait. Congestion control can reduce sending rate after loss, adding effects beyond the one missing range.'],['UDP is a foundation, not a verdict','A game can choose to discard outdated position updates. QUIC instead builds reliable streams, security, and congestion control above UDP. You must distinguish the transport service from the behavior of the full application protocol.']],
+  prediction:['C reached a TCP receiver while B is missing. Can the application read C from the stream immediately?',['Yes, because it arrived','No, the earlier gap must be filled'],1,'TCP exposes bytes in sequence order. The buffer can contain C even while the application has only received A.']
+ },
+ 'tcp-handshake':{
+  hook:'When do both sides agree they are connected?',caption:'Read the two endpoint states as SYN, SYN-ACK, and ACK cross the wire.',
+  challenge:'Pause after SYN-ACK arrives. The client and server are in different states. Explain why.',
+  presets:[['Normal handshake',{loss:false,network:40}],['Lost SYN-ACK',{loss:true,network:40}],['Long round trip',{loss:false,network:160}]],
+  nodes:{client:['Active open: the client starts','Sending SYN moves the client to SYN-SENT. Receiving a valid SYN-ACK lets it enter ESTABLISHED and send the final ACK, but the server has not necessarily received that ACK yet.'],server:['Passive open: the listener waits','LISTEN receives a SYN and creates provisional state. SYN-RECEIVED becomes ESTABLISHED after the final ACK arrives. Watch the two state badges; they do not advance simultaneously.']},
+  discoveries:[['Why three messages instead of two','The server needs confirmation that its own initial sequence number was received. SYN-ACK acknowledges the client’s number and advertises the server’s number. The final ACK completes that evidence in the ordinary handshake.'],['Sequence numbers are not packet counters','A SYN consumes one position in sequence space. Client SYN 100 is acknowledged as 101; server SYN 500 as 501. Those small values are teaching examples, not recommended initial sequence number choices. Ordinary data advances numbers by bytes transmitted.'],['Half-open connections are real resource state','A lost reply leaves setup incomplete. Listeners may keep provisional state until retransmission or expiration. Under large SYN floods this can exhaust queues; mechanisms such as SYN cookies change how state is retained. This animation shows one recoverable loss, not denial-of-service behavior.']],
+  prediction:['The client has received SYN-ACK. Before the final ACK reaches the server, is the server already ESTABLISHED?',['Yes','No, it remains SYN-RECEIVED'],1,'Local state changes on local events. The server waits to receive acknowledgment of its own SYN.']
+ },
+ tls:{
+  hook:'Encrypted does not automatically mean trusted.',caption:'Build traffic keys, examine the certificate, and see identity validation open—or close—the gate.',
+  challenge:'Introduce a hostname mismatch. Which work can happen before authentication fails, and which work must stop?',
+  presets:[['Valid identity',{invalid:false}],['Wrong hostname',{invalid:true}]],
+  nodes:{browser:['The browser checks the intended identity','It verifies that the certificate is suitable for the hostname it requested, checks the trust chain and validity, and verifies proof over the handshake. Encryption with the wrong peer is not enough.'],server:['The private key stays on the server','The server proves possession using CertificateVerify. Key agreement derives shared secrets; the server does not transmit its private key or a plaintext application traffic key across the network.']},
+  discoveries:[['Two kinds of keys do different work','Ephemeral key agreement produces a shared secret. A key schedule derives handshake and application traffic keys from it and the transcript. The certificate’s signing key authenticates the server; it is not simply used to encrypt every HTTP byte.'],['Why the transcript matters','An attacker must not silently change negotiated parameters. CertificateVerify binds server identity to the handshake; Finished authenticates the transcript with a derived secret. Validating only the certificate file without validating the handshake proof would omit essential protection.'],['Security has boundaries','TLS protects the connection between its endpoints. A terminating reverse proxy can read plaintext and needs a separate protected connection to the backend. TLS does not decide which account may access a record. Resumed 0-RTT data can be replayed and requires application-level care.']],
+  prediction:['Traffic can be encrypted but the certificate hostname is wrong. Should the browser send the HTTP request?',['Continue because it is encrypted','Stop before application data'],1,'The intended server has not been authenticated. Confidentiality without correct identity is insufficient.']
+ },
+ 'http-lifecycle':{
+  hook:'A response is more than a status number.',caption:'Watch a request turn into application work, response headers, and a JSON representation.',
+  challenge:'Return 503. Did the network fail to deliver a response, or did the service report an unavailable operation?',
+  presets:[['Read succeeds',{work:90,unavailable:false}],['Slow storage',{work:450,unavailable:false}],['Service unavailable',{work:90,unavailable:true}]],
+  nodes:{browser:['Form a meaningful request','GET /books/42 asks for a representation. Accept describes acceptable response media types. The browser must interpret status, headers, and body rather than treating any bytes as success.'],app:['Turn protocol meaning into application work','The service validates the request, finds the resource, and forms a response. This lab starts after connection setup. Middleware, authorization, and proxies can add steps in a real application.'],store:['Storage adds another dependency','The application waits for the read to finish. The work slider groups application and storage time; it is not a benchmark of a particular database.']},
+  discoveries:[['Headers and body answer different questions','The status reports the outcome; Content-Type says how to interpret the body; caching headers describe reuse rules. A 200 response with malformed JSON can still fail at the client’s parsing layer. HTTP success is not proof that every later UI operation succeeds.'],['Stateless does not mean memoryless software','HTTP request semantics do not require a prior request to explain their meaning. A service can still use cookies, sessions, and durable data. Reusing a transport connection is yet another kind of state with a different lifecycle.'],['One document can trigger a fan-out','Receiving HTML often discovers images, scripts, styles, and API calls. A page’s visible completion time is therefore not the latency of a single HTTP response. Caches or intermediaries may answer some requests without involving the origin.']],
+  prediction:['The browser receives a 503 response. Which statement is accurate?',['No HTTP response was delivered','HTTP delivered an application error response'],1,'A valid error response arrived. A missing response caused by a connection failure is a different event.']
+ },
+ 'http-semantics':{
+  hook:'Try the same operation twice.',caption:'Watch resource state change—not just status labels—to understand idempotence.',
+  challenge:'Repeat POST, then DELETE. Compare the number of records and the status on the second attempt.',
+  presets:[['Read twice',{method:'GET'}],['Create twice',{method:'POST'}],['Delete twice',{method:'DELETE'}],['Replace twice',{method:'PUT'}]],
+  nodes:{client:['Retries repeat intent','A retry can follow a lost response even though the first operation succeeded. The client needs a contract for repeating the intended effect, especially for writes.'],api:['Methods communicate semantics','GET reads; PUT replaces the target’s representation; DELETE makes it absent; POST asks the target to process the representation. This model uses POST specifically for collection creation.'],store:['Compare the resulting state','An idempotent operation has the same intended state effect after repeated identical attempts. Status codes can differ. Watch the resource cards to avoid confusing response equality with effect equality.']},
+  discoveries:[['DELETE can be idempotent and return two codes','The first attempt removes an existing resource and returns 204 in this example. The second finds it absent and returns 404. Both leave the requested state as absent. An API could use other suitable responses without changing the idempotence principle.'],['A safe read can still produce logs','Safety refers to the intended client-requested effect. A GET may increment telemetry or write an access log. That does not authorize an endpoint to use GET for an intended destructive operation.'],['Making a creation retry-safe needs state','For an appropriate POST contract, a client supplies a stable idempotency key and the service stores the outcome associated with it. A repeated attempt reuses that outcome. This needs atomic handling and a documented scope and retention window; a header alone cannot guarantee deduplication.']],
+  prediction:['The second DELETE returns 404. Did DELETE stop being idempotent?',['Yes, the response changed','No, the resource is still absent'],1,'Idempotence compares intended effects. The first and second attempts leave the same absence state.']
+ },
+ 'http-versions':{
+  hook:'Three downloads. One missing byte range.',caption:'See which resources can finish while resource A waits for loss recovery.',
+  challenge:'Compare HTTP/2 and HTTP/3 with the same loss. Watch available data separately from buffered data.',
+  presets:[['HTTP/1.1 serial',{version:'1.1',loss:true}],['HTTP/2 + loss',{version:'2',loss:true}],['HTTP/3 + loss',{version:'3',loss:true}],['HTTP/2 healthy',{version:'2',loss:false}]],
+  nodes:{client:['The browser needs several resources','A, B, and C represent independent downloads. Multiple HTTP/1.1 connections can add concurrency; this comparison deliberately uses one connection per version.'],server:['Framing and transport differ','HTTP/2 multiplexes frames on TCP. HTTP/3 uses QUIC streams over UDP. Methods and statuses keep their meaning even though message framing and loss dependencies differ.'],a:['Resource A has the missing data','This isolated loss affects A’s data only. Real packets can contain parts of multiple QUIC streams, so one lost packet may affect more than one stream.'],b:['Resource B may already be received','HTTP/2 frames can be received by TCP yet unavailable above a missing earlier byte range. QUIC stream B can expose its received data independently of A’s ordering gap.'],c:['Resource C tests the same dependency','Stream independence does not mean all resources are immune to shared effects. Congestion control, packet layout, header dependencies, and server work can still connect their performance.']},
+  discoveries:[['Two kinds of head-of-line waiting','Serial HTTP exchanges wait at the application scheduling level. HTTP/2 interleaving removes that serialization, but the underlying TCP stream still waits for missing bytes. HTTP/3 limits stream ordering to each QUIC stream rather than one connection-wide byte sequence.'],['UDP is not doing the recovery','QUIC provides acknowledgment, retransmission of information, flow control, and congestion control above UDP. It also integrates TLS 1.3. Calling HTTP/3 unreliable because its packets use UDP confuses the substrate with the complete transport.'],['Why this is not a performance leaderboard','The illustration assumes available headers and one isolated loss. Shared congestion or QPACK dependencies can change outcomes. HTTP/1.1 browsers also use parallel connections. Real latency depends on resource size, path conditions, priorities, and endpoint implementations.']],
+  prediction:['Can independent QUIC streams still share congestion effects?',['No, they are completely isolated','Yes, stream ordering is only one dependency'],1,'Avoiding cross-stream byte-order blocking does not remove shared path capacity and congestion control.']
+ },
+ websockets:{
+  hook:'The server has something to say.',caption:'Open a channel, send a comment, and watch an unsolicited server update arrive.',
+  challenge:'Disconnect before the update. Does opening another connection recover the missing comment automatically?',
+  presets:[['Open conversation',{disconnect:false}],['Connection lost',{disconnect:true}]],
+  nodes:{browser:['A persistent conversation endpoint','Once open, either side can initiate messages. Client-to-server masking is a protocol requirement, not encryption; wss uses TLS. The browser must also manage application state after disconnects.'],server:['Push without waiting for a new request','The server can send an event while the connection is open. A live channel alone is not durable storage and cannot prove the browser processed an event.']},
+  discoveries:[['The upgrade is not a login','The common HTTP/1.1 handshake switches framing from HTTP to WebSocket. Sec-WebSocket-Accept helps validate the protocol handshake, not the user’s identity. Authenticate and authorize the connection using an application-specific mechanism.'],['Reconnection needs an event history','Assign stable IDs to persisted messages and let a reconnecting client request events after its last observed cursor. Deduplicate when replay overlaps already received events. Typing indicators can be ephemeral; payments or saved comments need a stronger contract.'],['A slow consumer creates a queue','Open connections consume state. Sending faster than a browser can process can grow buffers. Applications need bounded queues, backpressure or drop policies, and liveness/timeout rules. Scaling across servers also requires routing or fan-out for each active conversation.']],
+  prediction:['A new WebSocket opens after a disconnect. What replays missed messages?',['The WebSocket protocol automatically','An application-defined recovery protocol'],1,'WebSocket supplies a channel, not a durable replay log. Recovery needs message history and a resume contract.']
+ },
+ 'browser-server':{
+  hook:'From a URL to pixels.',caption:'Travel down the networking stack, then follow the document into parsing, layout, and paint.',
+  challenge:'Use a DNS cache, then an existing connection. Find the setup phases each shortcut avoids.',
+  presets:[['Cold navigation',{warm:'cold'}],['DNS remembered',{warm:'DNS cached'}],['Connection ready',{warm:'connection open'}]],
+  nodes:{browser:['Coordinate dependencies','The browser parses the URL, considers reusable answers and connections, and schedules network work. A fragment stays on the client, which is why the platform’s hash routes work on static hosting.'],dns:['Discover an address, not HTML','DNS only supplies records. A cached answer removes a lookup but does not make a new TCP or TLS connection already established.'],server:['Deliver a representation','A secure connection can carry several requests. Reuse of an open connection avoids setup; TLS session resumption on a new connection is a different mechanism.'],parser:['A document becomes structure','Parsing builds the DOM and discovers subresources. CSS and scripts introduce more dependencies. Real browsers overlap parsing and fetching instead of always waiting for one entire stage.'],paint:['Pixels require rendering work','CSSOM and DOM contribute to style computation and layout. Painting draws the result. Scripting can invalidate earlier work, so “the HTTP response arrived” and “the page is ready” are different milestones.']},
+  discoveries:[['A waterfall is a dependency picture','This lesson’s pipeline is deliberately sequential to expose layers. A real browser can discover resources early and fetch them while parsing. Connection limits, priorities, parser-blocking scripts, and render-blocking stylesheets shape which work overlaps.'],['Warm is not one boolean','DNS entries, transport connections, TLS resumptions, HTTP responses, and application data all have separate reuse lifetimes and scopes. A warm DNS answer can coexist with a cold connection and an uncached stylesheet. Compare exactly which bars disappear.'],['Rendering may become the bottleneck','After network time shrinks, large DOMs, expensive scripts, layout changes, and paint work can dominate. Measure those stages separately rather than attributing every visible delay to the server. Browser performance tools expose network and rendering evidence for that reason.']],
+  prediction:['A DNS answer is cached, but no connection is open. What work is still required in this model?',['No connection setup','TCP and TLS setup'],1,'An address is enough to choose where to connect, not evidence that a suitable connection already exists.']
+ }
+};
+
+/* Purpose-built scenes share actors and a moving packet, not a generic node grid. */
+const SDScene = {
+ icon(kind){
+  if(kind==='client')return '<rect x="-22" y="-16" width="44" height="29" rx="3"/><path d="M-28 19H28M-9 13V19M9 13V19"/>';
+  if(kind==='database')return '<ellipse cy="-13" rx="23" ry="7"/><path d="M-23-13V14C-23 24 23 24 23 14V-13M-23 0C-23 10 23 10 23 0"/>';
+  if(kind==='router')return '<rect x="-24" y="-12" width="48" height="27" rx="5"/><path d="M-10-12V-24M10-12V-24M-13 2H13M-6-5L-13 2-6 9M6-5L13 2 6 9"/>';
+  if(kind==='dns')return '<circle r="22"/><ellipse rx="10" ry="22"/><path d="M-21-7H21M-21 7H21"/>';
+  if(kind==='resource')return '<path d="M-17-23H8L20-11V23H-17ZM8-23V-11H20M-9 0H12M-9 8H12M-9 16H5"/>';
+  return '<rect x="-25" y="-21" width="50" height="17" rx="3"/><rect x="-25" y="4" width="50" height="17" rx="3"/><path d="M-16-12H-6M-16 12H-6"/><circle cx="16" cy="-12" r="2"/><circle cx="16" cy="12" r="2"/>';
+ },
+ text(x,y,value,cls='scene-label',anchor='middle'){return `<text x="${x}" y="${y}" class="${cls}" text-anchor="${anchor}">${esc(value)}</text>`;},
+ state(frames,i,progress){const s={};for(let n=0;n<=i-(progress<1?1:0);n++)Object.assign(s,frames[n].state);s.failed=frames[i].state.failed||'';return s;},
+ actor(n,p,active,failed,small,badge=''){
+  const w=small?94:138;
+  const words=n.label.split(' '),lines=[];let line='';for(const word of words){if((line+' '+word).trim().length>(small?15:21)&&line){lines.push(line);line=word;}else line=(line+' '+word).trim();}if(line)lines.push(line);
+  return `<g class="scene-actor ${active?'active':''} ${failed?'failed':''}" data-actor="${n.id}" role="button" tabindex="0" aria-label="Inspect ${esc(n.label)}" transform="translate(${p.x} ${p.y})"><rect class="actor-card" x="${-w/2}" y="-54" width="${w}" height="${90+Math.max(0,lines.length-1)*15}" rx="15"/><g class="actor-icon" transform="translate(0 -20)">${this.icon(n.kind)}</g>${lines.map((l,i)=>this.text(0,23+i*15,l)).join('')}${badge?this.text(0,66,badge,'scene-badge'):''}${failed?'<circle class="failure-dot" cx="35" cy="-44" r="12"/><text x="35" y="-39" text-anchor="middle" class="failure-cross">×</text>':''}</g>`;
+ },
+ layout(id,nodes,small){
+  const width=small?420:880,positions={};let height=440;
+  const place=(id,x,y)=>positions[id]={x:small?x[0]:x[1],y:small?y[0]:y[1]};
+  if(id==='dns'){
+   height=small?510:470;
+   place('browser',[66,100],[88,130]);place('os',[66,100],[235,310]);place('resolver',[205,395],[235,220]);
+   place('root',[350,750],[88,90]);place('tld',[350,750],[235,235]);place('auth',[350,750],[385,380]);
+  } else if(id==='internet'){
+   height=small?490:440;
+   const map=small?{client:[60,85],gateway:[200,85],isp:[340,85],transit:[340,235],edge:[200,235],server:[60,235],alternate:[340,395],backup:[200,395]}:{client:[85,130],gateway:[255,130],isp:[425,130],transit:[595,130],edge:[765,130],server:[765,335],alternate:[425,335],backup:[595,335]};
+   Object.entries(map).forEach(([id,[x,y]])=>positions[id]={x,y});
+  } else if(id==='browser-server'){
+   height=small?490:390;nodes.forEach((n,i)=>positions[n.id]={x:small?[80,210,340][i%3]:95+i*172,y:small?115+Math.floor(i/3)*185:150});
+  } else if(id==='ip-ports'){
+   height=small?470:410;place('client',[75,130],[110,195]);place('host',[210,385],[110,195]);place('https',[335,710],[275,100]);place('closed',[120,710],[275,285]);
+  } else if(id==='http-lifecycle'||id==='http-semantics'||id==='tcp-udp'){
+   height=small?490:450;nodes.forEach((n,i)=>positions[n.id]={x:small?[65,210,355][i]:[125,440,755][i],y:small?95:125});
+  } else if(id==='http-versions'){
+   height=small?490:440;place('client',[80,160],[90,100]);place('server',[340,720],[90,100]);
+   ['a','b','c'].forEach((id,i)=>positions[id]={x:small?80+i*130:180+i*260,y:small?260:270});
+  } else {nodes.forEach((n,i)=>positions[n.id]={x:small?(i?340:80):(i?720:160),y:small?110:135});height=small?470:450;}
+  return {width,height,positions};
+ },
+ links(id){return ({dns:[['browser','os'],['os','resolver'],['resolver','root'],['resolver','tld'],['resolver','auth']],internet:[['client','gateway'],['gateway','isp'],['isp','transit'],['transit','edge'],['edge','server'],['isp','alternate'],['alternate','backup'],['backup','edge']],'ip-ports':[['client','host'],['host','https'],['host','closed']],'client-server':[['client','server']],'tcp-udp':[['sender','network'],['network','receiver']],tls:[['browser','server']],'http-lifecycle':[['browser','app'],['app','store']],'http-semantics':[['client','api'],['api','store']],'http-versions':[['client','server'],['server','a'],['server','b'],['server','c']],websockets:[['browser','server']],'browser-server':[['browser','dns'],['browser','server'],['browser','parser'],['parser','paint']]})[id]||[];},
+ render(id,simulation,i,progress=1,options={},small=false){
+  const f=simulation.frames[i],s=this.state(simulation.frames,i,progress);
+  if(id==='tcp-handshake')return this.handshake(simulation,i,progress,small,s);
+  const {width,height,positions}=this.layout(id,simulation.nodes,small);
+  const routePath=(from,to)=>id==='internet'&&small&&from==='isp'&&to==='alternate'?`M340 85H403V395H340`:`M${positions[from].x} ${positions[from].y}L${positions[to].x} ${positions[to].y}`;
+  let scene=this.links(id).map(([a,b])=>`<path class="scene-link ${s.failed===a||s.failed===b?'broken':''}" d="${routePath(a,b)}"/>`).join('');
+  const a=positions[f.from],b=positions[f.to];
+  if(a&&b&&f.from!==f.to)scene+=`<path class="scene-route" d="${routePath(f.from,f.to)}"/>`;
+  const visited=new Set(simulation.frames.slice(0,i+1).flatMap(f=>[f.from,f.to]));
+  for(const n of simulation.nodes){
+   let badge='';
+   if(id==='dns'&&['browser','os','resolver'].includes(n.id)){
+    const level={browser:'browser',os:'OS',resolver:'resolver'}[n.id];
+    badge=options.cache===level?'cache valid':visited.has(n.id)?'checked':'not queried';
+   }
+   if(id==='http-versions'&&['a','b','c'].includes(n.id))badge=String(s.available).includes(n.id.toUpperCase())?'ready':String(s.buffered).includes(n.id.toUpperCase())?'buffered':'waiting';
+   if(id==='websockets')badge=s.channel||'not connected';
+   if(id==='client-server')badge=n.id==='client'?(s.phase==='client received'?'forecast ready':'waiting for forecast'):s.phase==='server received'?'processing':s.phase==='response ready'?'response ready':'ready';
+   scene+=this.actor(n,positions[n.id],n.id===f.from||n.id===f.to,s.failed===n.id,small,badge);
   }
-  return `<svg class="sd-diagram" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(f.packet+'. '+f.note)}"><defs><marker id="${prefix}-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L6,3 z" fill="currentColor"/></marker></defs>${path}${nodes.map(n=>{const p=pos[n.id],active=n.id===f.from||n.id===f.to,failed=f.state.failed===n.id;return `<g transform="translate(${p.x},${p.y})" class="sd-node ${active?'active':''} ${failed?'failed':''}"><rect x="-49" y="-27" width="98" height="54" rx="10"/><text class="sd-kind" text-anchor="middle" y="-5">${esc(n.kind.toUpperCase())}</text><text text-anchor="middle" y="14">${failed?'×':'◆'}</text><text class="sd-node-label" text-anchor="middle" y="49">${esc(n.label)}</text></g>`;}).join('')}</svg>`;
+  scene+=this.internals(id,s,simulation,i,options,small,width,height);
+  const path=this.motionPath(a,b,small);
+  if(path&&id==='internet'&&small&&f.from==='isp'&&f.to==='alternate')Object.assign(path,{x1:387,y1:85,x2:387,y2:395,points:[[387,85],[403,85],[403,395],[387,395]]});
+  if(path)scene+=`<g id="scenePacket" class="scene-packet" transform="translate(${path.x1} ${path.y1})"><circle r="12" class="packet-halo"/><rect x="-9" y="-6" width="18" height="12" rx="3"/><path d="M-8-5L0 1 8-5"/></g>`;
+  if(f.from===f.to)scene+=`<circle id="scenePulse" class="scene-pulse" cx="${a.x}" cy="${a.y}" r="52"/>`;
+  return {html:`<svg viewBox="0 0 ${width} ${height}" class="lab-scene" role="group" aria-label="Interactive ${esc(id)} simulation">${scene}</svg>`,path};
+ },
+ motionPath(a,b,small){
+  if(!a||!b||a===b)return null;
+  const dx=b.x-a.x,dy=b.y-a.y,inset=Math.min(dx?(small?51:75)/Math.abs(dx):Infinity,dy?55/Math.abs(dy):Infinity,.35);
+  return {x1:a.x+dx*inset,y1:a.y+dy*inset,x2:b.x-dx*inset,y2:b.y-dy*inset};
+ },
+ motionAt(path,p){
+  if(!path.points)return {x:path.x1+(path.x2-path.x1)*p,y:path.y1+(path.y2-path.y1)*p};
+  const lengths=path.points.slice(1).map(([x,y],i)=>Math.hypot(x-path.points[i][0],y-path.points[i][1]));let distance=p*lengths.reduce((sum,n)=>sum+n,0);
+  for(let i=0;i<lengths.length;i++){if(distance<=lengths[i]||i===lengths.length-1){const t=lengths[i]?distance/lengths[i]:0,[a,b]=[path.points[i],path.points[i+1]];return {x:a[0]+(b[0]-a[0])*t,y:a[1]+(b[1]-a[1])*t};}distance-=lengths[i];}
+ },
+ internals(id,s,sim,i,o,small,w,h){
+  const text=(x,y,t,cls,anchor)=>this.text(x,y,t,cls,anchor);let out='';
+  const panel=(title,y,body)=>`<g class="scene-internal"><rect x="${small?15:35}" y="${y}" width="${w-(small?30:70)}" height="${small?100:108}" rx="12"/>${text(small?30:55,y+25,title,'scene-small','start')}${body}</g>`;
+  if(id==='tcp-udp'){
+   const delivered=String(s.delivered||''),buffered=String(s.buffered||'');
+   out+=panel('RECEIVER: ARRIVED VS. READABLE',small?255:260,['A','B','C'].map((letter,j)=>{
+    const x=(small?115:270)+j*(small?88:135),ready=delivered.includes(letter),held=buffered.includes(letter);
+    return `<g class="data-cell ${ready?'ready':held?'held':''}"><rect x="${x-25}" y="${small?298:302}" width="50" height="40" rx="6"/>${text(x,small?324:328,letter,'data-letter')}${text(x,small?357:361,ready?'delivered':held?'buffered':'missing','scene-small')}</g>`;
+   }).join(''));
+   out+=text(w/2,h-20,o.transport==='TCP'?'Ordered byte stream: the application cannot jump a gap.':'Independent datagrams: no built-in recovery.','scene-small');
+  } else if(id==='tls'){
+   const phase=sim.frames[i].packet,validated=s.status==='server authenticated'||String(s.protected).includes('application')||s.protected==='HTTP encrypted',rejected=s.status==='validation failed';
+   out+=panel('IDENTITY GATE',small?265:280,`<g class="certificate ${rejected?'rejected':validated?'validated':''}"><rect x="${small?30:60}" y="${small?305:320}" width="${small?200:420}" height="45" rx="6"/>${text(small?45:78,small?332:347,'CN: library.example.com','scene-small','start')}${text(small?300:680,small?331:347,rejected?'× REJECTED':validated?'✓ VERIFIED':'CHECKING','scene-small')}</g>`);
+   out+=text(w/2,small?425:415,rejected?'HTTP stays behind the gate.':validated?'Identity verified → application data allowed.':phase==='ClientHello'?'Negotiating keys; identity is not verified yet.':'Handshake keys protect messages; identity still needs checking.','scene-small');
+  } else if(id==='http-lifecycle'){
+   out+=panel('RESPONSE ENVELOPE',small?255:260,text(small?30:55,small?310:315,s.status==='503'?'503 Service Unavailable':s.status==='200'?'200 OK':'Waiting for response…','scene-label','start')+text(small?30:55,small?337:342,s.body?String(s.body):'Accept: application/json','scene-small','start'));
+  } else if(id==='http-semantics'){
+   out+=panel('PERSISTED RESOURCE STATE',small?255:260,Array.from({length:Math.max(1,Number(s.count??1))},(_,j)=>{const x=(small?70:170)+j*(small?95:165);return `<g class="resource-tile ${s.present===false?'removed':''}"><rect x="${x-27}" y="${small?301:304}" width="55" height="45" rx="7"/>${text(x,small?329:332,s.present===false?'×':String(42+j),'data-letter')}</g>`;}).join(''));
+   out+=text(w/2,h-30,`Records: ${s.count??1} · ${s.status||'initial state'}`,'scene-label');
+  } else if(id==='http-versions'){
+   out+=text(w/2,small?407:382,o.version==='3'?'QUIC: separate stream ordering':'TCP: one ordered connection byte stream','scene-label');
+   out+=text(w/2,h-20,s.buffered==='B,C'?'B and C arrived, but TCP has not exposed them.':`Readable resources: ${s.available||'none'}`,'scene-small');
+  } else if(id==='websockets'){
+   out+=panel('CONVERSATION',small?270:280,text(small?30:55,small?315:325,s.delivered==='client message'||s.delivered==='server push'||s.delivered==='no server push'?'You: hello':'Opening the conversation…','scene-small','start')+text(small?30:55,small?344:352,s.delivered==='server push'?'Server: new comment':s.delivered==='no server push'?'× Update not delivered':'Server update has not arrived','scene-small','start'));
+  } else if(id==='client-server'){
+   const work=Math.max(0,+o.work||80),network=Math.max(0,+o.network||40),total=2*network+work,barw=small?340:700,start=(w-barw)/2,y=small?300:310;
+   out+=text(w/2,y-25,'WHERE THE WAIT GOES','scene-small');
+   const colors=['outbound','processing','inbound'];let offset=0;[network,work,network].forEach((time,j)=>{const width=barw*time/total;out+=`<rect class="latency-${colors[j]}" x="${start+offset}" y="${y}" width="${width}" height="22" rx="3"/>`;offset+=width;});
+   out+=text(w/2,y+52,`${network} ms out + ${work} ms work + ${network} ms back`,'scene-small');
+   out+=text(w/2,y+83,`${total} ms response time`,'scene-label');
+  } else if(id==='dns'){
+   out+=text(small?150:370,small?461:433,s.status==='NXDOMAIN'?'NXDOMAIN: no connection address':s.answer?`Answer: ${s.answer}`:'Searching for library.example.com…','scene-small');
+   out+=text(small?150:370,small?486:457,'The resolver follows each referral itself.','scene-small');
+  } else if(id==='browser-server'){
+   const visible=s.phase==='visible page';
+   const x=small?310:715,y=small?377:298;
+   const preview=`<g class="page-preview ${visible?'painted':''}"><rect x="${x}" y="${y}" width="${small?70:110}" height="65" rx="5"/><path d="M${x+9} ${y+13}H${x+(small?61:101)}M${x+9} ${y+29}H${x+(small?41:78)}M${x+9} ${y+42}H${x+(small?51:89)}M${x+9} ${y+54}H${x+(small?35:66)}"/></g>`;
+   out+=panel('BROWSER OUTPUT',small?345:265,text(small?30:55,small?394:320,visible?'Library page painted':'Page not painted yet','scene-label','start')+text(small?30:55,small?421:348,`Current layer: ${s.phase||'URL parsing'}`,'scene-small','start')+preview);
+  }
+  return out;
+ },
+ handshake(sim,i,progress,small,s){
+  const w=small?420:880,left=small?75:175,right=small?345:705,top=125,gap=small?53:55,rows=sim.frames.length,h=top+rows*gap+25;
+  const text=(x,y,t,cls,anchor)=>this.text(x,y,t,cls,anchor);
+  let out=`<path class="sequence-lifeline" d="M${left} 90V${h-20}M${right} 90V${h-20}"/>`;
+  out+=this.actor(sim.nodes[0],{x:left,y:55},sim.frames[i].from==='client',false,small,s.client||'CLOSED');
+  out+=this.actor(sim.nodes[1],{x:right,y:55},sim.frames[i].from==='server',false,small,s.server||'LISTEN');
+  sim.frames.forEach((f,n)=>{
+   const y=top+n*gap,current=n===i,completed=n<i||current&&progress>=1,from=f.from==='client'?left:right,to=f.to==='client'?left:right;
+   const label=f.packet.replace('seq=','seq ').replace('ack=','ack ');
+   if(from!==to)out+=`<g class="sequence-message ${current?'current':completed?'complete':'future'}"><path d="M${from} ${y}H${to}"/><path d="M${to+(to>from?-8:8)} ${y-5}L${to} ${y}L${to+(to>from?-8:8)} ${y+5}"/>${text(w/2,y-10,label,'sequence-label')}</g>`;
+   else out+=text(w/2,y,current?label:completed?label:'…','scene-small');
+  });
+  const f=sim.frames[i],y=top+i*gap,a={x:f.from==='client'?left:right,y},b={x:f.to==='client'?left:right,y};
+  const path=f.from===f.to?null:{x1:a.x,y1:y,x2:b.x,y2:y};
+  if(path)out+=`<g id="scenePacket" class="scene-packet" transform="translate(${path.x1} ${y})"><circle r="11" class="packet-halo"/><rect x="-8" y="-5" width="16" height="10" rx="3"/></g>`;
+  return {html:`<svg viewBox="0 0 ${w} ${h}" class="lab-scene sequence-scene" role="group" aria-label="TCP handshake sequence diagram">${out}</svg>`,path};
+ }
+};
+
+/* Continuous, pauseable transport between snapshots. Only System Design uses it. */
+class SDTimeline {
+ constructor(ui,onFrame,onProgress,clock={now:()=>performance.now(),request:fn=>requestAnimationFrame(fn),cancel:id=>cancelAnimationFrame(id)}){
+  this.ui=ui;this.onFrame=onFrame;this.onProgress=onProgress;this.clock=clock;this.frames=[];this.i=0;this.fraction=0;this.playing=false;this.raf=null;this.last=0;
+  ui.play.addEventListener('click',()=>this.playing?this.pause():this.play());
+  ui.prev.addEventListener('click',()=>this.go(this.i-1));ui.next.addEventListener('click',()=>this.go(this.i+1));
+  ui.first.addEventListener('click',()=>this.restart());ui.last.addEventListener('click',()=>this.go(this.frames.length-1));
+  ui.scrub.addEventListener('input',()=>this.go(+ui.scrub.value));
+ }
+ load(frames){this.pause();this.frames=frames;this.i=0;this.fraction=0;this.ui.scrub.max=frames.length-1;this.render();}
+ duration(){const f=this.frames[this.i],before=this.frames[this.i-1]?.elapsed||0,dt=f.elapsed-before;return Math.max(1400,Math.min(3000,1400+dt*2))/(+this.ui.speed.value||1);}
+ render(){const u=this.ui;u.scrub.value=this.i;u.count.textContent=`${this.i+1} / ${this.frames.length}`;u.prev.disabled=this.i===0;u.next.disabled=this.i===this.frames.length-1;this.onFrame(this.frames[this.i],this.i,this.fraction);this.onProgress(this.fraction);}
+ go(i){this.pause();this.i=Math.max(0,Math.min(this.frames.length-1,i));this.fraction=1;this.render();}
+ restart(){this.pause();this.i=0;this.fraction=0;this.render();}
+ play(){if(!this.frames.length||this.playing)return;if(this.i===this.frames.length-1&&this.fraction>=1){this.i=0;this.fraction=0;this.render();}else if(this.fraction>=1){this.i++;this.fraction=0;this.render();}this.playing=true;this.last=this.clock.now();this.ui.play.textContent='Pause';this.ui.play.setAttribute('aria-label','Pause animation');this.raf=this.clock.request(t=>this.tick(t));}
+ tick(t){if(!this.playing)return;const dt=Math.max(0,Math.min(100,t-this.last));this.last=t;this.fraction=Math.min(1,this.fraction+dt/this.duration());this.onProgress(this.fraction);if(this.fraction>=1){this.onFrame(this.frames[this.i],this.i,1);this.onProgress(1);if(this.i===this.frames.length-1){this.pause();return;}this.i++;this.fraction=0;this.render();}this.raf=this.clock.request(next=>this.tick(next));}
+ pause(){this.playing=false;if(this.raf!==null)this.clock.cancel(this.raf);this.raf=null;this.ui.play.textContent='Play';this.ui.play.setAttribute('aria-label','Play animation');}
+}
+
+/* Explore first; complete authored explanations are still one click away. */
+const SDStudy = {
+ platform:null, simulation:null, path:null, selected:null, arrival:false, history:[],
+ dns:{now:0,expires:0,cached:null,authority:'192.0.2.10',lookups:0},
+ section(letter,title,body){return `<section class="study-reading"><span class="section-label">${letter}</span><h2>${title}</h2>${body}</section>`;},
+ lesson(t){
+  const l=SD_LESSONS[t.id],lab=SD_LABS[t.id],done=SDProgress.data.completed.includes(t.id),bookmarked=SDProgress.data.bookmarks.includes(t.id);
+  const paras=a=>a.map(p=>`<p>${esc(p)}</p>`).join('');
+  const prereqs=t.prerequisites.map(id=>{const topic=SD_TOPICS.find(t=>t.id===id);return `<a href="#/system-design/${id}">${esc(topic.name)}</a>`;}).join('');
+  const objectives=`<details class="study-objectives"><summary>Learning goals & prerequisites</summary><ul>${l.objectives.map(o=>`<li>${esc(o)}</li>`).join('')}</ul><div class="related-links">${prereqs||'No prerequisite knowledge assumed.'}</div></details>`;
+  return `<div class="study-header"><a class="back-link" href="#/system-design">← All systems</a><button id="sdBookmark" class="ghost-btn" aria-pressed="${bookmarked}">${bookmarked?'★ Saved':'☆ Save lesson'}</button></div><div class="study-eyebrow">INTERNET & NETWORKING / LESSON ${String(SD_STAGES[0].topics.findIndex(x=>x.id===t.id)+1).padStart(2,'0')}</div><h1 class="study-title">${esc(lab.hook)}</h1><p class="study-subtitle"><b>${esc(t.name)}</b> · ${esc(lab.caption)}</p>${objectives}
+   <div class="study-tabs" role="tablist" aria-label="Lesson sections"><button role="tab" id="tab-explore" aria-controls="panel-explore" aria-selected="true" tabindex="0" data-study-tab="explore">01 <span>Explore</span></button><button role="tab" id="tab-understand" aria-controls="panel-understand" aria-selected="false" tabindex="-1" data-study-tab="understand">02 <span>Understand</span></button><button role="tab" id="tab-deeper" aria-controls="panel-deeper" aria-selected="false" tabindex="-1" data-study-tab="deeper">03 <span>Go deeper</span></button><button role="tab" id="tab-reflect" aria-controls="panel-reflect" aria-selected="false" tabindex="-1" data-study-tab="reflect">04 <span>Reflect</span></button></div>
+   <div id="panel-explore" role="tabpanel" aria-labelledby="tab-explore" class="study-panel">${this.explore(t,l,lab)}</div>
+   <div id="panel-understand" role="tabpanel" aria-labelledby="tab-understand" class="study-panel" hidden>${this.section('A','Why this exists',paras(l.intro))}${this.section('B','Build the mental model',paras(l.fundamentals))}${this.section('C','Follow the mechanism',`<ol class="mechanism-cards">${l.working.map((p,i)=>`<li><span>${i+1}</span><p>${esc(p)}</p></li>`).join('')}</ol><button class="ghost-btn" data-return-lab>See this unfold in the lab ↗</button>`)}<h2>Try to explain the experiment</h2><p>${esc(lab.challenge)}</p><button class="study-next" data-go-tab="deeper">Explore the edge cases →</button></div>
+   <div id="panel-deeper" role="tabpanel" aria-labelledby="tab-deeper" class="study-panel" hidden>${this.section('F','Under the hood',paras(l.deep))}<div class="deep-questions">${lab.discoveries.map(([title,body],i)=>`<details ${i===0?'open':''}><summary>${esc(title)}</summary><p>${esc(body)}</p></details>`).join('')}</div>${this.section('G','Place it in a real system',paras(l.usage))}<div class="reference-shelf"><h2>Learn from the specifications</h2><p>These references describe the protocol, including behavior omitted from the conceptual model.</p>${l.sources.map(([name,url])=>`<a href="${esc(url)}" target="_blank" rel="noopener">${esc(name)} <span>↗</span></a>`).join('')}</div><button class="study-next" data-go-tab="reflect">Reflect on what changed →</button></div>
+   <div id="panel-reflect" role="tabpanel" aria-labelledby="tab-reflect" class="study-panel" hidden>${this.section('H','What you can now explain',`<ul class="takeaways">${l.summary.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div class="knowledge-check"><h3>Think it through</h3><p>${esc(l.check[0])}</p><label class="reflection-label">Your explanation<textarea rows="4" placeholder="Use the experiment as evidence…"></textarea></label><details><summary>Compare your reasoning</summary><p>${esc(l.check[1])}</p></details></div><p>Completion records your learning, without a score or a timer. Mark this lesson when you can explain what changes and why.</p><button id="sdComplete" class="learn-action inline" aria-pressed="${done}">${done?'✓ Completed — mark incomplete':'I can explain this concept'}</button>`)}<h2>Your vocabulary</h2><dl class="term-cards">${Object.entries(l.glossary).map(([k,v])=>`<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>${Platform.lessonNavigation(t)}</div>`;
+ },
+ explore(t,l,lab){
+  return `<div class="explore-grid"><section class="visual-lab" aria-label="${esc(t.name)} experiment"><div class="lab-topline"><span class="lab-status"><i></i> INTERACTIVE LAB</span><span id="labPhase">Ready to explore</span></div><div id="sdDiagram" class="lab-viewport"></div><div class="lab-player"><button id="sdFirst" title="Restart" aria-label="Restart simulation">↺</button><button id="sdPrev" aria-label="Previous step">←</button><button id="sdPlay" class="lab-play" aria-label="Play animation">Play</button><button id="sdNext" aria-label="Next step">→</button><button id="sdLast" aria-label="Last step">⇥</button><span id="sdCount"></span><label>Speed<select id="sdSpeed" aria-label="Animation speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></label><input id="sdScrub" type="range" min="0" max="0" value="0" aria-label="Simulation timeline"></div><div class="scene-key"><span><i class="key-packet"></i> packet in transit</span><span><i class="key-ready"></i> available state</span><span>Click an actor to look inside</span></div></section>
+   <aside class="experiment-desk"><div class="section-label">E / CHANGE SOMETHING</div><h2>Make it behave differently.</h2><div class="scenario-presets">${lab.presets.map(([name],i)=>`<button data-preset="${i}">${esc(name)}</button>`).join('')}</div><div id="sdControls" class="lab-controls">${l.controls.map(c=>Platform.control(c)).join('')}${t.id==='dns'?'<label class="experiment-field">DNS TTL (model seconds)<output for="labTTL">30</output><input id="labTTL" type="range" min="5" max="120" value="30" step="5"></label>':''}</div>${t.id==='dns'?`<div class="dns-actions"><button data-dns-action="repeat">Look up again ↗</button><button data-dns-action="advance">Advance 30 seconds</button><button data-dns-action="change">Change authority IP</button><button data-dns-action="clear">Clear caches</button></div><div id="dnsCache" class="cache-ledger" aria-live="polite"></div>`:''}<button id="labRun" class="learn-action">Run this experiment <span>↗</span></button><p class="lab-challenge">${esc(lab.challenge)}</p><p class="model-note">Conceptual model, not real traffic. Animation time is slowed for observation; model milliseconds are illustrative.</p></aside></div>
+   <div class="observation-grid"><section class="live-explanation"><div class="section-label">D / FOLLOW THE ACTION</div><h2 id="sdPacket">Ready</h2><p id="sdNote" aria-live="polite"></p><div class="transfer-progress"><span id="transferFill"></span></div><div id="sdState" class="live-metrics"></div><details class="walkthrough"><summary>Open the event log</summary><ol id="sdTrace"></ol></details></section><section id="actorInspector" class="actor-inspector"><div class="section-label">INSIDE AN ACTOR</div><h2>Follow more than the arrows.</h2><p>Select a browser, server, or protocol participant in the scene to discover its job, its local state, and what it cannot guarantee.</p></section></div><section id="experimentEvidence" class="experiment-evidence" hidden></section>
+   <section class="prediction"><div><div class="section-label">PAUSE & PREDICT</div><h2>${esc(lab.prediction[0])}</h2><p>Make a prediction, then use the experiment to explain your reasoning.</p></div><div class="prediction-options">${lab.prediction[1].map((answer,i)=>`<button data-prediction="${i}" aria-pressed="false">${esc(answer)}</button>`).join('')}<p id="predictionReason" hidden></p></div></section><button class="study-next" data-go-tab="understand">Understand why it happened →</button>`;
+ },
+ init(platform,l){
+  this.platform=platform;this.selected=null;this.history=[];this.arrival=false;this.dns={now:0,expires:0,cached:null,authority:'192.0.2.10',lookups:0};
+  platform.player=new SDTimeline({play:$('#sdPlay'),prev:$('#sdPrev'),next:$('#sdNext'),first:$('#sdFirst'),last:$('#sdLast'),scrub:$('#sdScrub'),count:$('#sdCount'),speed:$('#sdSpeed')},(f,i,p)=>this.paint(f,i,p),p=>this.animate(p));
+  this.small=matchMedia('(max-width: 680px)').matches;
+  const ro=new ResizeObserver(()=>{const small=$('#sdDiagram').clientWidth<540;if(small!==this.small){this.small=small;this.paint(this.platform.player.frames[this.platform.player.i],this.platform.player.i,this.platform.player.fraction);this.animate(this.platform.player.fraction);}});ro.observe($('#sdDiagram'));
+  const player=platform.player,originalPause=player.pause.bind(player);player.pause=()=>{originalPause();$('#sdDiagram')?.classList.remove('is-playing');if(this.simulation&&player.frames===this.simulation.frames)this.animate(player.fraction);};
+  const originalPlay=player.play.bind(player);player.play=()=>{originalPlay();$('#sdDiagram')?.classList.add('is-playing');};
+  player.dispose=()=>{player.pause();ro.disconnect();};
+  $$('.study-tabs [data-study-tab]').forEach(b=>{
+   b.addEventListener('click',()=>this.tab(b.dataset.studyTab));
+   b.addEventListener('keydown',e=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(e.key))return;e.preventDefault();const tabs=$$('.study-tabs [data-study-tab]'),i=tabs.indexOf(b),next=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;this.tab(tabs[next].dataset.studyTab);tabs[next].focus();});
+  });
+  $$('[data-go-tab]').forEach(b=>b.addEventListener('click',()=>{this.tab(b.dataset.goTab);$('.study-tabs').scrollIntoView({block:'start',behavior:'smooth'});}));
+  $$('[data-return-lab]').forEach(b=>b.addEventListener('click',()=>this.tab('explore')));
+  $$('#sdControls [data-option]').forEach(el=>el.addEventListener('input',()=>{const out=el.parentElement.querySelector('output');if(out)out.value=el.value;this.rebuild(true);this.clearPreset();}));
+  $('#labTTL')?.addEventListener('input',e=>{e.target.parentElement.querySelector('output').value=e.target.value;this.updateCache();});
+  $('#labRun').addEventListener('click',()=>this.rebuild(true));
+  $$('[data-preset]').forEach(b=>b.addEventListener('click',()=>this.preset(+b.dataset.preset)));
+  $$('[data-dns-action]').forEach(b=>b.addEventListener('click',()=>this.dnsAction(b.dataset.dnsAction)));
+  $$('[data-prediction]').forEach(b=>b.addEventListener('click',()=>{const prediction=SD_LABS[platform.active.id].prediction;$$('[data-prediction]').forEach(x=>x.setAttribute('aria-pressed',x===b));const reason=$('#predictionReason');reason.hidden=false;reason.textContent=(+b.dataset.prediction===prediction[2]?'That matches the model. ':'Try the scenario and inspect the result. ')+prediction[3];}));
+  this.rebuild(!document.hidden&&!matchMedia('(prefers-reduced-motion: reduce)').matches);
+ },
+ tab(name){
+  if(name!=='explore')this.platform.player.pause();
+  $$('.study-tabs [data-study-tab]').forEach(b=>{const on=b.dataset.studyTab===name;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1;});
+  $$('.study-panel').forEach(p=>p.hidden=p.id!=='panel-'+name);
+ },
+ clearPreset(){$$('[data-preset]').forEach(b=>b.classList.remove('selected'));},
+ preset(i){
+  const o=SD_LABS[this.platform.active.id].presets[i][1];
+  Object.entries(o).forEach(([key,value])=>{const el=$('[data-option="'+key+'"]');if(!el)return;if(el.type==='checkbox')el.checked=value;else el.value=value;const out=el.parentElement.querySelector('output');if(out)out.value=el.value;});
+  if(this.platform.active.id==='dns'){this.dns.cached=o.cache!=='none'?this.dns.authority:null;this.dns.expires=this.dns.now+(+$('#labTTL').value||30);}
+  this.clearPreset();$('[data-preset="'+i+'"]').classList.add('selected');this.rebuild(true);
+ },
+ rebuild(play){
+  this.arrival=false;const p=this.platform; p.options={};$$('#sdControls [data-option]').forEach(el=>p.options[el.dataset.option]=el.type==='checkbox'?el.checked:el.value);
+  if(p.active.id==='dns'){
+   p.options.address=this.dns.authority;
+   if(p.options.cache!=='none'&&!this.dns.cached){this.dns.cached=this.dns.authority;this.dns.expires=this.dns.now+(+$('#labTTL').value||30);}
+   p.options.cacheAddress=this.dns.cached||this.dns.authority;
+  }
+  this.simulation=SD_SIM.build(p.active.id,p.options);p.nodes=this.simulation.nodes;
+  p.player.load(this.simulation.frames);
+  $('#sdTrace').innerHTML=this.simulation.frames.map((f,i)=>`<li><button data-step="${i}"><span>${String(i+1).padStart(2,'0')}</span> ${esc(f.packet)}</button></li>`).join('');
+  $$('#sdTrace [data-step]').forEach(b=>b.addEventListener('click',()=>p.player.go(+b.dataset.step)));
+  this.updateCache();if(play)p.player.play();
+ },
+ paint(f,i,fraction){
+  if(!f)return;
+  const p=this.platform,draw=SDScene.render(p.active.id,this.simulation,i,fraction,p.options,this.small);this.path=draw.path;
+  $('#sdDiagram').innerHTML=draw.html;
+  $$('#sdDiagram [data-actor]').forEach(el=>{const inspect=()=>{p.player.pause();this.inspect(el.dataset.actor);};el.addEventListener('click',inspect);el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inspect();}});});
+  $('#sdPacket').textContent=f.packet;$('#sdNote').textContent=f.note;
+  const before=i?this.simulation.frames[i-1].elapsed:0;
+  $('#sdState').innerHTML=`<div><span>MODEL TIME</span><b id="modelClock">${fraction<1?before:f.elapsed} <small>ms</small></b></div><div><span>EVENT</span><b>${i+1} <small>/ ${this.simulation.frames.length}</small></b></div><div><span>TRANSFER</span><b id="transferState">${fraction>=1?'Arrived':'Ready'}</b></div>`;
+  if(this.selected)this.inspect(this.selected);
+  $$('#sdTrace li').forEach((li,n)=>li.classList.toggle('current',n===i));
+  if(fraction>=1&&i===this.simulation.frames.length-1&&!this.arrival){this.arrival=true;this.recordEvidence(f);if(p.active.id==='dns'){this.dns.lookups++;if(f.state.answer&&f.state.answer!=='no address'&&p.options.cache==='none'){this.dns.cached=f.state.answer;this.dns.expires=this.dns.now+(+$('#labTTL').value||30);}this.updateCache();}}
+ },
+ animate(fraction){
+  if(!this.simulation)return;const p=this.platform,f=this.simulation.frames[p.player.i];
+  const packet=$('#scenePacket');
+  if(packet&&this.path){const motion=matchMedia('(prefers-reduced-motion: reduce)').matches?(fraction>=1?1:0):fraction,{x,y}=SDScene.motionAt(this.path,motion);packet.setAttribute('transform',`translate(${x} ${y})`);packet.style.opacity=(f.packet.includes('lost')||f.packet==='Unit B'&&p.options.loss)&&fraction>.65&&fraction<1?'0':fraction>=1?'0':'1';}
+  const pulse=$('#scenePulse');if(pulse)pulse.setAttribute('r',String((this.small?40:64)+8*fraction));
+  const before=p.player.i?this.simulation.frames[p.player.i-1].elapsed:0;
+  $('#modelClock').innerHTML=`${Math.round(before+(f.elapsed-before)*fraction)} <small>ms</small>`;
+  $('#transferFill').style.width=(fraction*100)+'%';$('#transferState').textContent=fraction>=1?'Arrived':p.player.playing?'In transit':'Paused';
+  $('#labPhase').textContent=p.player.playing?'Watching the process':fraction>=1&&p.player.i===this.simulation.frames.length-1?'Experiment complete':'Pause, inspect, or press Play';
+ },
+ inspect(id){
+  this.selected=id;const lab=SD_LABS[this.platform.active.id],def=lab.nodes[id];if(!def)return;
+  const node=this.simulation.nodes.find(n=>n.id===id),f=this.simulation.frames[this.platform.player.i];
+  $('#actorInspector').innerHTML=`<div class="section-label">INSIDE / ${esc(node.label.toUpperCase())}</div><h2>${esc(def[0])}</h2><p>${esc(def[1])}</p><div class="actor-event"><span>Current involvement</span><b>${f.from===id&&f.to===id?'Local work':f.from===id?'Sending':f.to===id?'Receiving':'Waiting or not on this path'}</b></div>`;
+  $$('#sdDiagram [data-actor]').forEach(el=>el.classList.toggle('inspected',el.dataset.actor===id));
+ },
+ recordEvidence(f){
+  const id=this.platform.active.id,o=this.platform.options;
+  const labels={'client-server':`${o.network} ms link / ${o.work} ms work`,internet:o.failed?'Backup path':'Primary path','ip-ports':`Port ${o.port}`,dns:o.cache==='none'?'Cold lookup':`${o.cache} cache`,'tcp-udp':`${o.transport}${o.loss?' / loss':' / healthy'}`,'tcp-handshake':o.loss?'Lost SYN-ACK':'Normal handshake',tls:o.invalid?'Wrong hostname':'Valid identity','http-lifecycle':o.unavailable?'Unavailable':`${o.work} ms work`,'http-semantics':`${o.method} twice`,'http-versions':`HTTP/${o.version}${o.loss?' / loss':' / healthy'}`,websockets:o.disconnect?'Disconnected':'Healthy channel','browser-server':o.warm};
+  const state=SDScene.state(this.simulation.frames,this.simulation.frames.length-1,1);
+  const outcome=state.answer||state.delivered||state.status||state.available||state.phase||state.outcome||state.server||state.protected||'trace complete';
+  const run={label:labels[id],elapsed:f.elapsed,events:this.simulation.frames.length,outcome:String(outcome)};
+  if(JSON.stringify(this.history.at(-1))!==JSON.stringify(run))this.history.push(run);
+  this.history=this.history.slice(-4);const max=Math.max(1,...this.history.map(x=>x.elapsed)),el=$('#experimentEvidence');el.hidden=false;
+  el.innerHTML=`<div class="section-label">YOUR OBSERVATIONS</div><h2>Compare what changed.</h2><p>Completed runs from this visit. Durations belong to this model; a faster failed operation is not a better outcome.</p><div class="evidence-runs">${this.history.map(x=>`<div class="evidence-run"><div><b>${esc(x.label)}</b><span>${x.events} events · ${esc(x.outcome)}</span></div><div class="evidence-bar"><i style="width:${Math.max(2,100*x.elapsed/max)}%"></i></div><strong>${x.elapsed}<small> ms</small></strong></div>`).join('')}</div>`;
+ },
+ dnsAction(action){
+  this.platform.player.pause();
+  const cache=$('[data-option="cache"]'),missing=$('[data-option="missing"]');
+  if(action==='repeat'){cache.value=this.dns.cached&&this.dns.now<this.dns.expires?'browser':'none';this.rebuild(true);}
+  if(action==='advance'){this.dns.now+=30;if(this.dns.now>=this.dns.expires){cache.value='none';this.dns.cached=null;}this.updateCache();}
+  if(action==='change'){this.dns.authority=this.dns.authority==='192.0.2.10'?'192.0.2.20':'192.0.2.10';this.updateCache();}
+  if(action==='clear'){this.dns.cached=null;this.dns.expires=0;cache.value='none';missing.checked=false;this.updateCache();this.rebuild(false);}
+ },
+ updateCache(){
+  const el=$('#dnsCache');if(!el)return;const d=this.dns,remaining=Math.max(0,d.expires-d.now),valid=d.cached&&remaining>0;
+  el.innerHTML=`<div><span>Authority record</span><b>${d.authority}</b></div><div><span>Cached answer</span><b>${valid?d.cached:'empty / expired'}</b></div><div><span>TTL remaining</span><b>${valid?remaining:0} s</b></div><div><span>Model clock</span><b>${d.now} s</b></div>${valid&&d.cached!==d.authority?'<p>The cache still has the old IP. It is valid until expiry.</p>':''}`;
  }
 };
 
@@ -8692,7 +9085,7 @@ const Platform = {
  },
  pause(){if(this.player)this.player.pause();if(App.player)App.player.pause();if(MyCode.player)MyCode.player.pause();},
  route(){
-  this.pause();this.player=null;
+  this.pause();if(this.player?.dispose)this.player.dispose();this.player=null;
   const parts=location.hash.replace(/^#\/?/,'').split('/');
   const dsa=parts[0]==='dsa';
   document.body.dataset.course=dsa?'dsa':parts[0]==='system-design'?'system-design':'home';
@@ -8731,29 +9124,18 @@ const Platform = {
     <section class="course-card system-card"><div class="course-art network-art" aria-hidden="true"><div>CLIENTS</div><b>↓</b><div>APPLICATION</div><b>↓</b><div class="art-pair"><span>CACHE</span><span>DATABASE</span></div><span class="art-caption">follow the request, layer by layer</span></div><div class="course-card-body"><div class="course-label">02 / SYSTEMS</div><h2>System<br>Design</h2><p>Explore how requests travel, data is stored, and distributed services cooperate. Build understanding from the network upward.</p><div class="course-tags"><span>12-stage roadmap</span><span>Interactive experiments</span></div>${this.progressMarkup(s,'course topics completed')}<a class="learn-action" href="${resume?'#/system-design/'+resume:'#/system-design'}">${resume?'Continue learning':'Start learning'} <span>↗</span></a><small>Available now: all 12 networking lessons</small></div></section>
    </div><footer class="learning-footer"><span>Read. Observe. Experiment. Understand.</span><span>No account needed · Progress stays on this device</span></footer></div>`;
  },
- sidebar(){return `<aside class="sd-sidebar"><details open><summary>System Design roadmap</summary><a class="sd-overview" href="#/system-design">Course overview</a><nav aria-label="System Design topics">${SD_STAGES.map(s=>{const c=SDProgress.counts(s.number);return `<details ${!this.active||this.active.stage===s.number?'open':''}><summary><span>${String(s.number).padStart(2,'0')} ${esc(s.name)}</span><small>${c.done}/${c.total}</small></summary>${s.topics.map(t=>`<a class="sd-topic ${this.active?.id===t.id?'current':''}" ${this.active?.id===t.id?'aria-current="page"':''} href="#/system-design/${t.id}"><span>${SDProgress.data.completed.includes(t.id)?'✓':SD_LESSONS[t.id]?'○':'·'} ${esc(t.name)}</span>${SD_LESSONS[t.id]?'':'<small>Planned</small>'}${SDProgress.data.bookmarks.includes(t.id)?'<span aria-label="Bookmarked">★</span>':''}</a>`).join('')}</details>`;}).join('')}</nav></details></aside>`;},
+ sidebar(){return `<aside class="sd-sidebar"><details class="roadmap-toggle"><summary>&#9776; Browse the learning path <small>12 stages &middot; pick a concept</small></summary><a class="sd-overview" href="#/system-design">Course overview</a><nav aria-label="System Design topics">${SD_STAGES.map(s=>{const c=SDProgress.counts(s.number);return `<details ${!this.active||this.active.stage===s.number?'open':''}><summary><span>${String(s.number).padStart(2,'0')} ${esc(s.name)}</span><small>${c.done}/${c.total}</small></summary>${s.topics.map(t=>`<a class="sd-topic ${this.active?.id===t.id?'current':''}" ${this.active?.id===t.id?'aria-current="page"':''} href="#/system-design/${t.id}"><span>${SDProgress.data.completed.includes(t.id)?'✓':SD_LESSONS[t.id]?'○':'·'} ${esc(t.name)}</span>${SD_LESSONS[t.id]?'':'<small>Planned</small>'}${SDProgress.data.bookmarks.includes(t.id)?'<span aria-label="Bookmarked">★</span>':''}</a>`).join('')}</details>`;}).join('')}</nav></details></aside>`;},
  course(){
   const c=SDProgress.counts(),current=SDProgress.data.current;
-  return `<div class="home-kicker">THE SYSTEM DESIGN COURSE</div><h1>From a single request<br>to a complete system.</h1><p class="sd-lede">A progressive path through the networks, storage, and architectural choices that make software work. Explore at your own pace; prerequisites guide you without locking you out.</p>${this.progressMarkup(c,'course topics completed')}<p><b>12 lessons published</b> · ${SD_TOPICS.length} topics on the complete roadmap. Later stages are planned and cannot be marked complete.</p><a class="learn-action inline" href="#/system-design/${current||'client-server'}">${current?'Continue learning':'Begin with client and server'} →</a>
-   ${SDProgress.data.bookmarks.length?`<section class="sd-section"><h2>Your bookmarks</h2><div class="related-links">${SDProgress.data.bookmarks.map(id=>{const t=SD_TOPICS.find(t=>t.id===id);return `<a href="#/system-design/${id}">${esc(t.name)}</a>`;}).join('')}</div></section>`:''}
-   <div class="stage-grid">${SD_STAGES.map(s=>{const c=SDProgress.counts(s.number),published=s.topics.filter(t=>SD_LESSONS[t.id]).length;return `<section class="stage-card"><div class="course-label">STAGE ${String(s.number).padStart(2,'0')} · ${published?'AVAILABLE':'PLANNED'}</div><h2>${esc(s.name)}</h2><p>${s.prerequisites.length?'Builds on stages '+s.prerequisites.join(', '):'Start here — no networking knowledge assumed.'}</p>${this.progressMarkup(c,'stage topics completed')}<ol>${s.topics.map(t=>`<li><a href="#/system-design/${t.id}">${esc(t.name)}</a>${SDProgress.data.completed.includes(t.id)?' ✓':''}</li>`).join('')}</ol></section>`;}).join('')}</div>`;
+  return `<div class="system-course-hero"><div><div class="home-kicker">THE SYSTEM DESIGN PLAYGROUND</div><h1>Pull a thread.<br>See the whole system move.</h1><p>Packets get lost. Caches remember old answers. Two endpoints disagree about a connection. Explore the mechanism, then explain the result.</p><a class="learn-action inline" href="#/system-design/${current||'client-server'}">${current?'Continue your experiment':'Explore your first request'} ↗</a></div><svg class="course-orbit" viewBox="0 0 240 220" aria-hidden="true"><path d="M45 65L185 65L115 175ZM45 65L115 175"/><circle cx="45" cy="65" r="24"/><circle cx="185" cy="65" r="24"/><circle cx="115" cy="175" r="24"/><text x="45" y="69" text-anchor="middle">CLIENT</text><text x="185" y="69" text-anchor="middle">API</text><text x="115" y="179" text-anchor="middle">DATA</text></svg></div>${this.progressMarkup(c,'course topics completed')}
+   ${SDProgress.data.bookmarks.length?`<section class="study-reading"><h2>Saved for your next exploration</h2><div class="related-links">${SDProgress.data.bookmarks.map(id=>{const t=SD_TOPICS.find(t=>t.id===id);return `<a href="#/system-design/${id}">${esc(t.name)}</a>`;}).join('')}</div></section>`:''}
+   <div class="course-label">STAGE 01 · TWELVE LIVE NETWORKING LABS</div><div class="network-lab-cards">${SD_STAGES[0].topics.map((t,i)=>{const lab=SD_LABS[t.id],done=SDProgress.data.completed.includes(t.id);return `<a class="network-lab-card" href="#/system-design/${t.id}"><div class="lab-card-kicker"><span>${String(i+1).padStart(2,'0')} / ${esc(t.name)}</span><span>${done?'✓':'↗'}</span></div><svg viewBox="-32 -32 64 64" aria-hidden="true">${SDScene.icon(['dns','internet'].includes(t.id)?'dns':t.id==='http-semantics'?'database':'client')}</svg><h3>${esc(lab.hook)}</h3><p>${esc(lab.caption)}</p><span class="open-lab">${done?'Revisit the experiment':'Open the experiment'} →</span></a>`;}).join('')}</div>
+   <section class="future-path"><h2>Where the learning path goes next</h2><p class="sd-lede">The networking labs are available now. Later stages are planned; each will get its own explanations and experiments.</p>${SD_STAGES.slice(1).map(s=>`<details class="future-stage"><summary><span>${String(s.number).padStart(2,'0')}</span><b>${esc(s.name)}</b><small>PLANNED · ${s.topics.length} TOPICS</small></summary><p>Builds on stages ${s.prerequisites.join(', ')}.</p><ul>${s.topics.map(t=>`<li><a href="#/system-design/${t.id}">${esc(t.name)}</a></li>`).join('')}</ul></details>`).join('')}</section>`;
  },
  lesson(t){
-  const l=SD_LESSONS[t.id],done=SDProgress.data.completed.includes(t.id),bookmarked=SDProgress.data.bookmarks.includes(t.id);
-  const prerequisites=[...SD_STAGES[t.stage-1].prerequisites.map(n=>`<a href="#/system-design">Stage ${n}: ${esc(SD_STAGES[n-1].name)}</a>`),...t.prerequisites.map(id=>`<a href="#/system-design/${id}">${esc(SD_TOPICS.find(t=>t.id===id)?.name||id)}</a>`)];
-  const header=`<a class="back-link" href="#/system-design">← Course overview</a><div class="lesson-title"><div><div class="course-label">STAGE ${t.stage} / ${l?'NETWORKING FUNDAMENTALS':'PLANNED TOPIC'}</div><h1>${esc(t.name)}</h1></div><button id="sdBookmark" class="ghost-btn" aria-pressed="${bookmarked}">${bookmarked?'★ Bookmarked':'☆ Bookmark'}</button></div>`;
-  if(!l) return header+`<section class="sd-section"><h2>This lesson has not been published yet.</h2><p>It is part of the course roadmap. Detailed explanations, experiments, and guided walkthroughs will be added stage by stage. There is no lesson to complete here yet.</p>${prerequisites.length?'<h3>Recommended foundations</h3><div class="related-links">'+prerequisites.join('')+'</div>':''}<p><a href="#/system-design/client-server">Explore the available networking lessons →</a></p></section>`;
-  const paras=a=>a.map(p=>`<p>${esc(p)}</p>`).join('');
-  const sec=(letter,title,body)=>`<section class="sd-section"><div class="section-label">${letter}</div><h2>${title}</h2>${body}</section>`;
-  return header+`<div class="lesson-objectives"><h2>What you’ll understand</h2><ul>${l.objectives.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${prerequisites.length?`<h3>Before this lesson</h3><div class="related-links">${prerequisites.join('')}</div>`:'<p>No prerequisites. Start with curiosity.</p>'}</div>`+
-   sec('A','Introduction',paras(l.intro))+sec('B','Fundamentals',paras(l.fundamentals))+
-   sec('C','Inside the process',`<ol class="working-steps">${l.working.map(p=>`<li>${esc(p)}</li>`).join('')}</ol>`)+
-   sec('D','Watch it work',`<p class="model-note">Simplified conceptual model. Timing is illustrative; no real network traffic is generated. Highlighted components and the explanation describe the current step.</p><div class="sd-simulator"><div id="sdDiagram"></div><div class="sd-player"><button id="sdFirst" aria-label="Restart simulation">↺</button><button id="sdPrev" aria-label="Previous step">←</button><button id="sdPlay" aria-label="Play animation">▶</button><button id="sdNext" aria-label="Next step">→</button><button id="sdLast" aria-label="Last step">⇥</button><span id="sdCount"></span><label>Speed <input id="sdSpeed" type="range" min="1" max="5" value="1" aria-label="Animation speed"></label><input id="sdScrub" type="range" min="0" max="0" value="0" aria-label="Simulation timeline"></div><div class="sd-frame-info"><div id="sdPacket"></div><p id="sdNote" aria-live="polite"></p><div id="sdState"></div></div></div><details class="walkthrough"><summary>Inspect the complete step-by-step trace</summary><ol id="sdTrace"></ol></details>`)+
-   sec('E','Try an experiment',`<p>${esc(l.experiment)}</p><div id="sdControls" class="experiment-controls">${l.controls.map(c=>this.control(c)).join('')}</div><p class="muted">Changing a control restarts the trace so every frame reflects the same inputs.</p>`)+
-   sec('F','Technical deep dive',paras(l.deep))+sec('G','In a real application',paras(l.usage))+
-   sec('H','Summary & knowledge check',`<ul>${l.summary.map(p=>`<li>${esc(p)}</li>`).join('')}</ul><div class="knowledge-check"><h3>Think it through</h3><p>${esc(l.check[0])}</p><label class="reflection-label">Your explanation<textarea rows="3" placeholder="Explain it in your own words…"></textarea></label><details><summary>Compare with an explanation</summary><p>${esc(l.check[1])}</p></details></div><p>When you can explain the process and the experiment’s outcome, mark this lesson complete. Completion is your own learning record.</p><button id="sdComplete" class="learn-action inline" aria-pressed="${done}">${done?'✓ Completed — mark incomplete':'Mark lesson complete'}</button>`)+
-   `<section class="sd-section"><h2>Key terms</h2><dl>${Object.entries(l.glossary).map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl><h2>Authoritative references</h2><ul>${l.sources.map(([name,url])=>`<li><a href="${esc(url)}" target="_blank" rel="noopener">${esc(name)} ↗</a></li>`).join('')}</ul><h2>Related concepts</h2><div class="related-links">${SD_TOPICS.filter(x=>SD_LESSONS[x.id]&&x.prerequisites.includes(t.id)).map(x=>`<a href="#/system-design/${x.id}">${esc(x.name)}</a>`).join('')||'<a href="#/system-design">Explore the roadmap</a>'}</div></section>`+
-   this.lessonNavigation(t);
+  if(SD_LESSONS[t.id])return SDStudy.lesson(t);
+  const stage=SD_STAGES[t.stage-1],bookmarked=SDProgress.data.bookmarks.includes(t.id);
+  return `<a class="back-link" href="#/system-design">&larr; All systems</a><div class="lesson-title"><div><div class="course-label">STAGE ${t.stage} / PLANNED TOPIC</div><h1>${esc(t.name)}</h1></div><button id="sdBookmark" class="ghost-btn" aria-pressed="${bookmarked}">${bookmarked?'&#9733; Saved':'&#9734; Save lesson'}</button></div><section class="study-reading"><h2>This lesson has not been published yet.</h2><p>This topic is part of ${esc(stage.name)}. Its explanation and interactive lab will be authored in a later stage. Explore the twelve available networking labs first.</p><a class="learn-action inline" href="#/system-design/client-server">Explore a working lab &rarr;</a></section>`;
  },
  lessonNavigation(t){const list=SD_TOPICS.filter(t=>SD_LESSONS[t.id]),i=list.findIndex(x=>x.id===t.id);return `<nav class="lesson-navigation" aria-label="Previous and next lesson">${i>0?`<a href="#/system-design/${list[i-1].id}">← ${esc(list[i-1].name)}</a>`:'<span></span>'}${i<list.length-1?`<a href="#/system-design/${list[i+1].id}">${esc(list[i+1].name)} →</a>`:'<a href="#/system-design">Return to roadmap →</a>'}</nav>`;},
  control(c){const [key,label,type,a,b,def]=c;const id='sd-input-'+key;
@@ -8766,33 +9148,12 @@ const Platform = {
    SDProgress.toggle('bookmarks',this.active.id);const b=$('#sdBookmark'),on=SDProgress.data.bookmarks.includes(this.active.id);b.setAttribute('aria-pressed',on);b.textContent=on?'★ Bookmarked':'☆ Bookmark';this.refreshSidebar();
   });
   $('#sdComplete')?.addEventListener('click',()=>{
-   SDProgress.toggle('completed',this.active.id);const b=$('#sdComplete'),on=SDProgress.data.completed.includes(this.active.id);b.setAttribute('aria-pressed',on);b.textContent=on?'✓ Completed — mark incomplete':'Mark lesson complete';this.refreshSidebar();
+   SDProgress.toggle('completed',this.active.id);const b=$('#sdComplete'),on=SDProgress.data.completed.includes(this.active.id);b.setAttribute('aria-pressed',on);b.textContent=on?'✓ Completed — mark incomplete':'I can explain this concept';this.refreshSidebar();
   });
  },
  refreshSidebar(){const open=$$('.sd-sidebar nav details').map(d=>d.open);$('.sd-sidebar').outerHTML=this.sidebar();$$('.sd-sidebar nav details').forEach((d,i)=>d.open=open[i]);},
- initSimulation(l){
-  this.player=new Player({play:$('#sdPlay'),prev:$('#sdPrev'),next:$('#sdNext'),first:$('#sdFirst'),last:$('#sdLast'),scrub:$('#sdScrub'),count:$('#sdCount'),speed:$('#sdSpeed')},(f,i)=>this.paint(f,i));
-  const player=this.player,originalPause=player.pause.bind(player),originalPlay=player.play.bind(player);
-  player.pause=()=>{originalPause();$('#sdDiagram')?.classList.remove('sd-running');$('#sdPlay')?.setAttribute('aria-label','Play animation');};
-  player.play=()=>{originalPlay();$('#sdDiagram')?.classList.add('sd-running');$('#sdPlay')?.setAttribute('aria-label','Pause animation');};
-  $$('#sdControls [data-option]').forEach(el=>el.addEventListener('input',()=>{
-   const out=el.parentElement.querySelector('output');if(out)out.value=el.value;this.rebuild();
-  }));this.rebuild();
- },
- rebuild(){
-  this.options={};$$('#sdControls [data-option]').forEach(el=>this.options[el.dataset.option]=el.type==='checkbox'?el.checked:el.value);
-  const simulation=SD_SIM.build(this.active.id,this.options);this.nodes=simulation.nodes;
-  this.player.load(simulation.frames);
-  $('#sdTrace').innerHTML=simulation.frames.map((f,i)=>`<li><button data-step="${i}">${esc(f.packet)}</button><p>${esc(f.note)}</p></li>`).join('');
-  this.player.go(0);
-  $$('#sdTrace [data-step]').forEach(b=>b.addEventListener('click',()=>{this.player.pause();this.player.go(+b.dataset.step);}));
- },
- paint(f,i){
-  $('#sdDiagram').innerHTML=SD_SIM.diagram(this.nodes,f);
-  $('#sdPacket').textContent=`Step ${i+1} · ${f.packet}`;$('#sdNote').textContent=f.note;
-  $('#sdState').innerHTML=`<span><b>Model elapsed:</b> ${f.elapsed} ms</span>`+Object.entries(f.state).filter(([k])=>k!=='failed').map(([k,v])=>`<span><b>${esc(k)}:</b> ${esc(v)}</span>`).join('');
-  $$('#sdTrace li').forEach((li,n)=>{li.classList.toggle('current',i===n);if(i===n)li.setAttribute('aria-current','step');else li.removeAttribute('aria-current');});
- }
+ initSimulation(l){SDStudy.init(this,l);}
+
 };
 document.addEventListener('DOMContentLoaded',()=>Platform.start());
 

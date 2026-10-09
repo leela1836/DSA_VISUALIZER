@@ -1,0 +1,77 @@
+/* Event-wiring checks in a DOM implementation, not browser layout verification.
+   Install linkedom@0.18.12 in a temporary directory; pass its absolute module path.
+   Example: node tests/dom-check.cjs <temp>/node_modules/linkedom */
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const vm=require('node:vm');
+const path=require('node:path');
+if(!process.argv[2])throw new Error('Pass the path to a temporary linkedom installation.');
+const {parseHTML}=require(path.resolve(process.argv[2]));
+const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
+const {document,HTMLElement,HTMLSelectElement,HTMLInputElement,Event}=parseHTML(html);
+for(const method of ['focus','scrollTo','scrollIntoView'])HTMLElement.prototype[method]=function(){};
+/* Linkedom intentionally omits a select value setter; emulate DOM selection only. */
+const optionValue=o=>o.hasAttribute('value')?o.getAttribute('value'):o.textContent;
+Object.defineProperty(HTMLSelectElement.prototype,'value',{configurable:true,get(){const option=Array.from(this.options).find(o=>o.hasAttribute('selected'))||this.options[0];return option?optionValue(option):'';},set(value){Array.from(this.options).forEach(o=>{if(optionValue(o)===String(value))o.setAttribute('selected','');else o.removeAttribute('selected');});}});
+Object.defineProperty(HTMLInputElement.prototype,'checked',{configurable:true,get(){return this.hasAttribute('checked');},set(value){if(value)this.setAttribute('checked','');else this.removeAttribute('checked');}});
+Object.defineProperty(document,'hidden',{value:false});
+let now=0,nextId=0,small=false,reduced=false;
+const pending=new Map(),store=new Map();
+const context=vm.createContext({console,document,navigator:{platform:'Win32'},location:{hash:''},window:{addEventListener(){},scrollTo(){}},
+ performance:{now:()=>now},requestAnimationFrame:fn=>{pending.set(++nextId,fn);return nextId;},cancelAnimationFrame:id=>pending.delete(id),
+ setTimeout:()=>0,clearTimeout(){},matchMedia:q=>({matches:q.includes('reduced-motion')?reduced:q.includes('max-width')?small:false}),
+ ResizeObserver:class{observe(){}disconnect(){}},localStorage:{getItem:k=>store.get(k)||null,setItem:(k,v)=>store.set(k,v),removeItem:k=>store.delete(k)}
+});
+context.assert=assert;
+vm.runInContext(html.match(/<script>([\s\S]*)<\/script>/)[1],context,{filename:'built-platform.js'});
+const run=code=>vm.runInContext(code,context);
+const query=s=>{const el=document.querySelector(s);assert(el,'Missing DOM control '+s);return el;};
+const click=s=>query(s).dispatchEvent(new Event('click',{bubbles:true}));
+const route=hash=>{context.location.hash=hash;run('Platform.route()');};
+const input=(s,value)=>{query(s).value=value;query(s).dispatchEvent(new Event('input',{bubbles:true}));};
+const finish=()=>{for(let n=0;n<800&&pending.size;n++){now+=100;const batch=Array.from(pending.values());pending.clear();for(const fn of batch)fn(now);}assert.equal(pending.size,0,'Animation reaches an end without leaked callbacks');};
+run('App.start();Platform.start();');
+assert.equal(document.body.dataset.course,'home');assert.equal(document.querySelectorAll('.course-card').length,2);
+route('#/system-design/dns');
+assert(!query('#panel-explore').hidden);assert(query('#panel-understand').hidden);
+assert.equal(document.querySelectorAll('#sdDiagram [data-actor]').length,6);
+assert.equal(document.querySelectorAll('.roadmap-toggle[open]').length,0);
+click('#sdPlay');assert.equal(pending.size,0);click('#sdPlay');finish();
+run("assert.equal(SDStudy.dns.cached,'192.0.2.10'); assert.equal(SDStudy.dns.expires,30);");
+click('[data-dns-action="repeat"]');finish();
+run("assert.equal(Platform.options.cache,'browser'); assert.equal(Platform.player.frames.at(-1).state.answer,'192.0.2.10');");
+click('[data-dns-action="change"]');click('[data-dns-action="repeat"]');finish();
+run("assert.equal(SDStudy.dns.authority,'192.0.2.20'); assert.equal(Platform.player.frames.at(-1).state.answer,'192.0.2.10');");
+assert(query('#dnsCache').textContent.includes('old IP'));
+click('[data-dns-action="advance"]');click('[data-dns-action="repeat"]');finish();
+run("assert.equal(Platform.options.cache,'none'); assert.equal(Platform.player.frames.at(-1).state.answer,'192.0.2.20');");
+assert(!query('#experimentEvidence').hidden);assert(document.querySelectorAll('.evidence-run').length>=2);
+click('[data-actor="resolver"]');assert(query('#actorInspector').textContent.includes('does the searching'));
+click('#tab-understand');assert(!query('#panel-understand').hidden);assert(query('#panel-explore').hidden);
+click('#tab-deeper');assert.equal(document.querySelectorAll('.deep-questions details').length,3);
+click('#tab-reflect');click('#sdComplete');click('#sdBookmark');
+run("assert(SDProgress.data.completed.includes('dns')); assert(SDProgress.data.bookmarks.includes('dns'));");
+route('#/system-design');assert.equal(document.querySelectorAll('.network-lab-card').length,12);assert.equal(document.querySelectorAll('.future-stage').length,11);
+route('#/system-design/dns');run("assert(SDProgress.data.completed.includes('dns'));");
+click('[data-preset="2"]');finish();assert(query('#sdNote').textContent.includes('nonexistent'));
+run('assert.equal(SDStudy.dns.cached,null);');
+click('[data-dns-action="clear"]');input('#labTTL','5');click('#labRun');finish();
+run('assert.equal(SDStudy.dns.expires-SDStudy.dns.now,5);');
+for(const id of run('Object.keys(SD_LESSONS)')){
+ route('#/system-design/'+id);
+ click('#sdNext');assert.equal(pending.size,0);click('#sdPlay');finish();
+ for(const preset of Array.from(document.querySelectorAll('[data-preset]'))){preset.click();finish();assert(!query('#sdDiagram').innerHTML.includes('NaN'));}
+ click('#sdPrev');assert.equal(pending.size,0);
+ click('#sdFirst');run('assert.equal(Platform.player.fraction,0);');
+ click('#tab-understand');click('#tab-deeper');click('#tab-reflect');
+ assert(query('#sdComplete'));
+}
+small=true;reduced=true;
+route('#/system-design/tcp-udp');assert.equal(pending.size,0);assert(query('#sdDiagram svg').getAttribute('viewBox').startsWith('0 0 420 '));
+input('[data-option="transport"]','UDP');finish();run("assert.equal(Platform.player.frames.at(-1).state.delivered,'A,C');");
+route('#/dsa');assert(query('#view-visualize').classList.contains('is-active'));assert(query('#platformMain').hidden);
+click('.tab[data-view="mycode"]');assert.equal(context.location.hash,'#/dsa/mycode');assert(query('#view-mycode').classList.contains('is-active'));
+run("const sample=runPython('print(2 + 3)'); assert(!sample.error); assert(sample.stdout.join('').includes('5'));");
+route('#/dsa/roadmap');assert(query('#view-roadmap').classList.contains('is-active'));
+route('#/system-design/tcp-handshake');click('#sdPlay');route('#/');assert.equal(pending.size,0);
+console.log('Passed DOM interactions: complete boot, 12 labs and all presets, tabs, actor inspection, pause/restart, DNS staleness/expiry/TTL/failure, progress, narrow scene, reduced motion, DSA tabs, Python execution, animation cleanup.');

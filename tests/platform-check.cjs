@@ -10,7 +10,7 @@ const context=vm.createContext({console,setTimeout,clearTimeout,
  document:{addEventListener(){}},location:{hash:''}
 });
 const load=file=>vm.runInContext(fs.readFileSync(path.join(root,'src',file),'utf8'),context,{filename:file});
-['js/core.js','js/algos_sorting.js','js/algos_searching.js','js/algos_patterns.js','js/algos_list.js','js/algos_tree.js','js/algos_graph.js','js/algos_dp.js','js/lcproblems.js','js/roadmap.js','js/sd-roadmap.js','js/sd-lessons.js','js/sd-simulations.js','js/platform.js'].forEach(load);
+['js/core.js','js/algos_sorting.js','js/algos_searching.js','js/algos_patterns.js','js/algos_list.js','js/algos_tree.js','js/algos_graph.js','js/algos_dp.js','js/lcproblems.js','js/roadmap.js','js/sd-roadmap.js','js/sd-lessons.js','js/sd-simulations.js','js/sd-lab-content.js','js/sd-scenes.js','js/sd-study.js','js/platform.js'].forEach(load);
 context.assert=assert;
 vm.runInContext(`
 const defaults=id=>Object.fromEntries(SD_LESSONS[id].controls.map(c=>[c[0],c[2]==='checkbox'?c[3]:c[2]==='select'?c[4]:c[4]]));
@@ -32,14 +32,28 @@ for(const [id,l] of Object.entries(SD_LESSONS)){
   const {nodes,frames}=SD_SIM.build(id,o);const ids=new Set(nodes.map(n=>n.id));
   assert(frames.length>=2);let previous=-1;
   for(const f of frames){assert(ids.has(f.from));assert(ids.has(f.to));assert(f.note.trim().length>0);assert(Number.isFinite(f.elapsed));assert(f.elapsed>=previous);previous=f.elapsed;assert(!f.state.failed||ids.has(f.state.failed));}
-  assert(SD_SIM.diagram(nodes,frames.at(-1)).includes('role="img"'));scenarios++;
+  const sim={nodes,frames};
+  for(const narrow of [false,true]){
+   const scene=SDScene.render(id,sim,frames.length-1,1,o,narrow);
+   assert(scene.html.includes('class="lab-scene'));assert(!scene.html.includes('NaN'));assert(!scene.html.includes('undefined'));
+   const initial=SDScene.render(id,sim,0,0,o,narrow);assert(initial.html.includes('data-actor='));
+  }
+  scenarios++;
  }
  const topic=SD_TOPICS.find(t=>t.id===id);const html=Platform.lesson(topic);
- for(const letter of 'ABCDEFGH')assert(html.includes('section-label">'+letter));
+ for(const letter of 'ABCDEFGH')assert(html.includes('section-label">'+letter),id+' section '+letter);
  assert(html.includes('sdControls'));assert(html.includes('sdComplete'));
+ assert(html.indexOf('sdDiagram')<html.indexOf('Why this exists'));
+ for(const [nodeId,def] of Object.entries(SD_LABS[id].nodes))assert(def[1].length>80,nodeId+' inspector explanation');
+ for(const preset of SD_LABS[id].presets)assert(SD_SIM.build(id,{...defaults(id),...preset[1]}).frames.length>0);
 }
 assert.equal(final('client-server',{network:40,work:80}).elapsed,160);
 assert(final('internet',{failed:true}).elapsed>final('internet',{failed:false}).elapsed);
+const reroute=SD_SIM.build('internet',{failed:true,network:20});
+const alternateIndex=reroute.frames.findIndex(f=>f.from==='isp'&&f.to==='alternate');
+const alternateScene=SDScene.render('internet',reroute,alternateIndex,0,{failed:true,network:20},true);
+for(const fraction of [0,.25,.5,.75,1]){const point=SDScene.motionAt(alternateScene.path,fraction);assert(point.x>=0&&point.x<=420);assert(point.y>=0&&point.y<=490);}
+assert(SDScene.motionAt(alternateScene.path,.5).x>390,'Alternate path bypasses the failed primary actor');
 const cold=SD_SIM.build('dns',{...defaults('dns'),cache:'none'});
 assert(cold.frames.some(f=>f.from==='resolver'&&f.to==='root'));
 for(const cache of ['browser','OS','resolver']){
@@ -48,6 +62,9 @@ for(const cache of ['browser','OS','resolver']){
 }
 assert.equal(final('dns',{missing:true,cache:'none'}).state.status,'NXDOMAIN');
 assert.equal(final('dns',{missing:true,cache:'browser'}).state.answer,'192.0.2.10');
+assert.equal(final('dns',{cache:'browser',address:'192.0.2.20',cacheAddress:'192.0.2.10'}).state.answer,'192.0.2.10');
+assert.equal(final('dns',{cache:'resolver',address:'192.0.2.20',cacheAddress:'192.0.2.10'}).state.answer,'192.0.2.10');
+assert.equal(final('dns',{cache:'none',address:'192.0.2.20'}).state.answer,'192.0.2.20');
 assert.equal(final('tcp-udp',{transport:'TCP',loss:true}).state.delivered,'ABC');
 assert.equal(final('tcp-udp',{transport:'UDP',loss:true}).state.delivered,'A,C');
 assert.equal(final('tcp-handshake',{loss:true}).state.server,'ESTABLISHED');
@@ -80,11 +97,20 @@ assert.equal(Platform.routeForDsa('visualize'),'#/dsa');assert.equal(Platform.ro
 Platform.dsaRoute('mycode');assert.equal(location.hash,'#/dsa/mycode');
 let algorithms=0;
 for(const id of DSA.order){const a=DSA.get(id);const inputs=Object.fromEntries((a.inputs||[]).map(i=>[i.key,i.def]));const frames=collect(a.run(inputs));assert(frames.length>0,id+' generates default frames');algorithms++;}
-const make=()=>({value:1,textContent:'',disabled:false,handlers:{},addEventListener(k,fn){this.handlers[k]=fn;}});
+const make=()=>({value:1,textContent:'',disabled:false,handlers:{},addEventListener(k,fn){this.handlers[k]=fn;},setAttribute(){}});
 const ui=Object.fromEntries(['play','prev','next','first','last','scrub','count','speed'].map(k=>[k,make()]));
 let painted=-1;const p=new Player(ui,(f,i)=>painted=i);p.load([{note:'one'},{note:'two'},{note:'three'}]);
 assert.equal(painted,0);assert(ui.first.disabled);ui.next.handlers.click();assert.equal(painted,1);p.go(99);assert.equal(painted,2);assert(ui.next.disabled);
 p.play();assert(p.playing);p.pause();assert(!p.playing);ui.first.handlers.click();assert.equal(painted,0);
+let now=0,callback=null,rafCount=0,arrivals=[];
+const tui=Object.fromEntries(['play','prev','next','first','last','scrub','count','speed'].map(k=>[k,make()]));
+const timeline=new SDTimeline(tui,(f,i,progress)=>arrivals.push({i,progress}),()=>{},{now:()=>now,request:fn=>{callback=fn;return ++rafCount;},cancel:()=>{callback=null;}});
+timeline.load([{elapsed:0},{elapsed:50},{elapsed:100}]);timeline.play();now+=100;callback(now);const paused=timeline.fraction;
+assert(paused>0&&paused<1);timeline.pause();assert.equal(callback,null);assert.equal(timeline.fraction,paused);
+timeline.play();assert.equal(timeline.fraction,paused);for(let n=0;n<100&&callback;n++){now+=100;callback(now);}
+assert.equal(timeline.i,2);assert.equal(timeline.fraction,1);assert.equal(timeline.playing,false);
+timeline.go(0);assert.equal(timeline.fraction,1);timeline.restart();assert.equal(timeline.fraction,0);
+assert(arrivals.some(a=>a.i===1&&a.progress===1));
 console.log('Passed: '+scenarios+' simulation scenarios; 12 lesson contracts; prerequisite ordering; persistence; planned-topic guards; routes; player; '+algorithms+' DSA algorithms.');
 `,context);
 const built=fs.readFileSync(path.join(root,'index.html'),'utf8');
@@ -92,4 +118,3 @@ assert.equal(built,fs.readFileSync(path.join(root,'DSAViz.html'),'utf8'));
 assert(!built.includes('<!--INCLUDE:'));
 new vm.Script(built.match(/<script>([\s\S]*)<\/script>/)[1]);
 console.log('Passed: identical GitHub Pages/offline bundles, resolved includes, merged JavaScript syntax.');
-

@@ -1,4 +1,4 @@
-# Visual learning platform — first release
+# Visual learning platform — interactive networking labs
 
 ## Architecture audit
 
@@ -13,10 +13,17 @@ Styling uses light/dark CSS tokens, system fonts, SVG, and small transitions. Ap
 - `platform.js`: course dashboard, hash router, System Design workspace, lesson renderer, and separate progress storage.
 - `sd-roadmap.js`: all 12 stages, stable topic identifiers, stage and topic prerequisites.
 - `sd-lessons.js`: 12 authored networking lessons, objectives, sections A–H, terminology, references, and experiment definitions.
-- `sd-simulations.js`: deterministic scenario builders and reusable SVG nodes, links, packets, highlighting, and failure markers.
-- `platform.css`: scoped dashboard/workspace styles using the existing theme tokens.
+- `sd-simulations.js`: deterministic protocol scenario builders and arrival snapshots.
+- `sd-lab-content.js`: topic-specific scenarios, actor inspection explanations, predictions, and deeper questions.
+- `sd-scenes.js`: purpose-built SVG scenes and the continuous `SDTimeline` animation state machine.
+- `sd-study.js`: Explore / Understand / Go deeper / Reflect modes, experiment controls, DNS cache state, and completed-run comparisons.
+- `platform.css` and `study.css`: scoped course/workspace styles using the existing theme tokens.
 
-The System Design player reuses the existing `Player` rather than introducing a second animation library. Frames carry endpoints, packet labels, explanation, elapsed model time, and state. Every control change rebuilds a complete deterministic trace and restarts it. Pausing freezes the packet motion and the logical frame. The trace is also inspectable as text, with buttons that jump to individual frames. Timings are explicitly illustrative and no experiment makes network requests.
+DSA retains its original `Player`. System Design uses a dedicated `requestAnimationFrame` timeline that interpolates packet travel between arrival snapshots. Pausing retains the exact transfer fraction; resuming continues from it. Endpoint state remains at the previous snapshot until arrival. Stepping shows a completed event; restarting returns to the beginning. Changing a control starts a new coherent trace. Animations run once on lesson entry unless the document is hidden or reduced motion is requested. Selecting an actor pauses the process for inspection.
+
+Scenes are tailored to the concept: resolver-centered DNS hierarchy, TCP handshake sequence ladder, received/buffered/delivered data, TLS identity gate, HTTP response envelope, persisted resource cards, per-resource readiness, WebSocket conversation, and browser page output. Narrow scenes use their own coordinates rather than a wide desktop SVG that requires horizontal scrolling. The roadmap is collapsed, and full explanations remain available through four accessible learning tabs. Completed runs display model times, event counts, and outcomes side by side; the explanation warns that a faster failed operation is not an improvement.
+
+The DNS lab has a model clock, stored positive answer, expiration, and authoritative record. Repeated lookups can reuse a valid cached answer. Changing the authority does not invalidate that answer; advancing time beyond its TTL forces the next lookup to discover the updated record. Negative cache persistence, independent multi-level cache lifetimes, and real resolver policies are outside this conceptual model. No experiment generates real network traffic. See [research notes](RESEARCH.md) for sources and teaching decisions.
 
 ## Routes and deployment
 
@@ -30,7 +37,7 @@ The System Design player reuses the existing `Player` rather than introducing a 
 | `#/system-design` | System Design overview and full roadmap |
 | `#/system-design/dns` | Example published lesson |
 
-All routes request the same root HTML document. No server rewrite is necessary on GitHub Pages, and the same build still works when opened as a local file. Build with `./build.ps1`. Review locally by opening `index.html` or serving the repository. Publication to the existing GitHub repository was not performed in this implementation.
+All routes request the same root HTML document. No server rewrite is necessary on GitHub Pages, and the same build still works when opened as a local file. Build with `./build.ps1`. Review locally by opening `index.html` or serving the repository. Generated root HTML is committed for the existing branch-based GitHub Pages deployment.
 
 ## Progress
 
@@ -44,6 +51,8 @@ Stages 2–12 are the complete visible roadmap for subsequent phases. Their deta
 
 ## Verification
 
-Run `node tests/platform-check.cjs` after building. This dependency-free check covers all experiment control variants, process endpoints and monotonic timing, specific protocol outcomes, all eight lesson sections, prerequisite ordering, separate persisted progress, malformed storage, unpublished completion guards, route construction, player stepping/pausing, and default generators for all 28 DSA algorithms. It also checks the merged bundle and identical offline/Pages outputs.
+Run `node tests/platform-check.cjs` after building. This dependency-free check covers experiment variants and presets, desktop and narrow scene generation, specific protocol outcomes, cached versus authoritative answers, all eight lesson sections, prerequisite ordering, separate persisted progress, unpublished completion guards, and all 28 default DSA algorithm runs. A deterministic clock checks continuous interpolation, exact pause/resume, arrival, and animation completion. It also checks the merged bundle and identical offline/Pages outputs.
 
-Browser verification could not run because the browser runtime reported no available browser. Responsive styles, focus behavior, reduced motion, and actual rendered SVG appearance therefore still need browser review. The automated checks are not a substitute for visual QA or a full Python-interpreter regression suite.
+`tests/dom-check.cjs` additionally checks the actual built bundle and event wiring in Linkedom: application startup, all 12 labs and presets, tabs, actor inspection, DNS TTL/staleness/failure, progress, reduced-motion startup, a narrow SVG layout, DSA tab navigation, Python execution, and animation cleanup. Install `linkedom@0.18.12` into a temporary directory and pass its module path: `node tests/dom-check.cjs <temporary-directory>/node_modules/linkedom`. It is a test-only tool and does not add an application dependency.
+
+Browser verification could not run because the browser runtime reported no available browser. DOM event tests do not measure CSS geometry, raster appearance, or real browser focus and timing behavior. Those still need browser review. This limitation is reported separately from the passing functional checks.

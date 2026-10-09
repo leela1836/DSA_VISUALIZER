@@ -1,6 +1,6 @@
 # DSAViz
 
-The app now opens on a **visual learning dashboard** with DSA and System Design courses. DSA retains its original visualizations, tracing tools, and progress. System Design has 12 interactive networking labs: continuous packet motion, inspectable actors, TCP sequence and buffer views, TLS validation, repeatable DNS cache/TTL experiments, and comparisons of completed runs. Explanations are organized into Explore, Understand, Go deeper, and Reflect. The complete 12-stage roadmap is tucked into a collapsible learning path; later stages remain planned.
+The app now opens on a **visual learning dashboard** with DSA and System Design courses. DSA retains its original visualizations, tracing tools, and progress. System Design has **23 interactive labs across networking and backend fundamentals**. Explore continuous packet motion, inspectable actors, DNS cache/TTL behavior, API validation, resolver fan-out, replica state, cookie and session expiry, authorization, proxy routing, gateway admission, timeout-versus-commit races, and connection-pool leases. Explanations are organized into Explore, Understand, Go deeper, and Reflect. The complete 12-stage roadmap is collapsible; stages 3 through 12 remain planned.
 
 Open `index.html`, or build with `./build.ps1`. Run `node tests/platform-check.cjs` for the platform checks. See [the platform architecture and release scope](docs/PLATFORM.md) for routes, storage, implementation details, and verification limits.
 

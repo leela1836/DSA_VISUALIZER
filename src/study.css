@@ -1,4 +1,10 @@
 /* A focused experiment workspace, with the roadmap tucked away until requested. */
+.published-stage{margin:36px 0}
+.backend-cell rect,.pool-lease rect{fill:var(--bg);stroke:var(--line)}
+.backend-cell.is-good rect,.pool-lease.occupied rect{fill:var(--accent-bg);stroke:var(--accent)}
+.backend-value{fill:var(--fg);font-size:14px;font-weight:650}
+.backend-track{fill:var(--bg)}.backend-fill{fill:var(--accent)}.backend-fill.expired{fill:#e57373}
+.backend-panel .scene-small{font-size:12px}
 .sd-workspace{display:block;max-width:1220px;margin:auto;padding:0 28px}
 .sd-content{max-width:none;padding:22px 0 54px;min-width:0}
 .sd-sidebar{padding:18px 0 0;position:static;background:none;border:0;max-height:none;overflow:visible}

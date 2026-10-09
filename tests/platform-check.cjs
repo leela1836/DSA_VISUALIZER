@@ -10,13 +10,13 @@ const context=vm.createContext({console,setTimeout,clearTimeout,
  document:{addEventListener(){}},location:{hash:''}
 });
 const load=file=>vm.runInContext(fs.readFileSync(path.join(root,'src',file),'utf8'),context,{filename:file});
-['js/core.js','js/algos_sorting.js','js/algos_searching.js','js/algos_patterns.js','js/algos_list.js','js/algos_tree.js','js/algos_graph.js','js/algos_dp.js','js/lcproblems.js','js/roadmap.js','js/sd-roadmap.js','js/sd-lessons.js','js/sd-simulations.js','js/sd-lab-content.js','js/sd-scenes.js','js/sd-study.js','js/platform.js'].forEach(load);
+['js/core.js','js/algos_sorting.js','js/algos_searching.js','js/algos_patterns.js','js/algos_list.js','js/algos_tree.js','js/algos_graph.js','js/algos_dp.js','js/lcproblems.js','js/roadmap.js','js/sd-roadmap.js','js/sd-lessons.js','js/sd-backend-lessons.js','js/sd-simulations.js','js/sd-backend-simulations.js','js/sd-lab-content.js','js/sd-backend-labs.js','js/sd-scenes.js','js/sd-backend-scenes.js','js/sd-study.js','js/platform.js'].forEach(load);
 context.assert=assert;
 vm.runInContext(`
 const defaults=id=>Object.fromEntries(SD_LESSONS[id].controls.map(c=>[c[0],c[2]==='checkbox'?c[3]:c[2]==='select'?c[4]:c[4]]));
 const final=(id,o)=>SD_SIM.build(id,{...defaults(id),...o}).frames.at(-1);
 assert.equal(SD_STAGES.length,12);
-assert.equal(Object.keys(SD_LESSONS).length,12);
+assert.equal(Object.keys(SD_LESSONS).length,23);
 assert.equal(new Set(SD_TOPICS.map(t=>t.id)).size,SD_TOPICS.length);
 const prior=new Set();
 for(const t of SD_TOPICS){for(const id of t.prerequisites)assert(prior.has(id),'Prerequisite must precede '+t.id);prior.add(t.id);}
@@ -84,11 +84,49 @@ const coldNav=final('browser-server',{warm:'cold'}).elapsed;
 assert(final('browser-server',{warm:'DNS cached'}).elapsed<coldNav);
 assert(final('browser-server',{warm:'connection open'}).elapsed<final('browser-server',{warm:'DNS cached'}).elapsed);
 Progress.set('t-hash',true);
+// Backend semantics: exercise decisions, not just generated markup.
+const backendState=(name,o)=>{const sim=SD_SIM.build('s2-'+name,{...defaults('s2-'+name),...o});return SDScene.state(sim.frames,sim.frames.length-1,1);};
+assert.equal(backendState('web-servers',{path:'/logo.svg',missing:true}).status,'404 Not Found');
+assert.equal(backendState('web-servers',{path:'/api/books',missing:true}).status,'200 OK');
+assert.equal(backendState('application-servers',{quantity:3,stock:1}).stock,1);
+assert.equal(backendState('application-servers',{quantity:2,stock:4}).stock,2);
+assert.equal(backendState('apis',{payload:'null',version:'v1'}).writes,0);
+assert.equal(backendState('apis',{payload:'valid',version:'v2'}).status,'404 Not Found');
+assert.equal(backendState('rest-and-graphql',{style:'GraphQL',orders:true,batch:false}).requests,1);
+assert.equal(backendState('rest-and-graphql',{style:'GraphQL',orders:true,batch:false}).reads,4);
+assert.equal(backendState('rest-and-graphql',{style:'GraphQL',orders:true,batch:true}).reads,2);
+assert.equal(backendState('rest-and-graphql',{style:'Resource API',orders:true,batch:true}).requests,2);
+assert.equal(backendState('stateless-and-stateful-architecture',{storage:'local',sticky:true,fail:true}).cart,'empty');
+assert.equal(backendState('stateless-and-stateful-architecture',{storage:'shared',sticky:false,fail:true}).cart,'Atlas');
+assert.equal(backendState('cookies-and-sessions',{ttl:30,age:30,scheme:'HTTPS',secure:true}).status,'401 Unauthorized');
+assert.equal(backendState('cookies-and-sessions',{ttl:30,age:10,scheme:'HTTP',secure:true}).cookie,'withheld');
+assert.equal(backendState('cookies-and-sessions',{ttl:30,age:10,scheme:'HTTP',secure:false}).status,'200 OK');
+assert.equal(backendState('authentication-and-authorization',{credential:'valid',owner:'Bob'}).reads,0);
+assert.equal(backendState('authentication-and-authorization',{credential:'valid',owner:'Bob'}).status,'403 Forbidden');
+assert.equal(backendState('authentication-and-authorization',{credential:'expired',owner:'Alice'}).status,'401 Unauthorized');
+assert.equal(backendState('reverse-proxies',{fail:true}).status,'502 Bad Gateway');
+assert.equal(backendState('api-gateways',{requests:5,limit:3,auth:true}).rejected,2);
+assert.equal(backendState('api-gateways',{requests:5,limit:3,auth:false}).allowed,0);
+assert.equal(backendState('request-lifecycle',{work:350,timeout:100,invalid:false}).outcome,'timeout, write committed');
+assert.equal(backendState('request-lifecycle',{invalid:true}).writes,0);
+// Independent fixed-wave capacity calculation checks deadline boundaries and conservation.
+for(const size of [1,2,4])for(const requests of [1,5,8])for(const work of [30,100,300])for(const wait of [40,100,500]){
+ const sim=SD_SIM.build('s2-connection-pooling',{size,requests,work,wait});
+ const state=SDScene.state(sim.frames,sim.frames.length-1,1);
+ const expected=Math.min(requests,size*Math.ceil(wait/work));
+ assert.equal(state.done.length,expected,JSON.stringify({size,requests,work,wait,state}));
+ assert.equal(state.timedOut.length,requests-expected,JSON.stringify({size,requests,work,wait,state}));
+ assert.equal(new Set([...state.done,...state.timedOut]).size,requests,JSON.stringify({size,requests,work,wait,state}));
+ assert(state.busy.every(x=>x==='idle'));assert.equal(state.waiting.length,0);
+ for(const f of sim.frames){const busy=f.state.busy.filter(x=>x!=='idle');assert(busy.length<=size);assert.equal(new Set(busy).size,busy.length);}
+}
+assert(Platform.lessonNavigation(SD_TOPICS.find(t=>t.id==='browser-server')).includes('#/system-design/s2-web-servers'));
+assert(Platform.lesson(SD_TOPICS.find(t=>t.id==='s2-web-servers')).includes('APPLICATION AND BACKEND FUNDAMENTALS / LESSON 01'));
 SDProgress.toggle('completed','dns');SDProgress.toggle('bookmarks','dns');SDProgress.data.current='dns';SDProgress.save();
 SDProgress.data={completed:[],bookmarks:[],current:null};SDProgress.load();
 assert(SDProgress.data.completed.includes('dns'));assert(SDProgress.data.bookmarks.includes('dns'));assert.equal(SDProgress.data.current,'dns');
 assert(Progress.has('t-hash'));assert.equal(SDProgress.counts(1).done,1);
-const planned=SD_TOPICS.find(t=>t.stage===2);SDProgress.toggle('completed',planned.id);assert(!SDProgress.data.completed.includes(planned.id));
+const planned=SD_TOPICS.find(t=>t.stage===3);SDProgress.toggle('completed',planned.id);assert(!SDProgress.data.completed.includes(planned.id));
 assert(!Platform.lesson(planned).includes('sdComplete'));assert(Platform.lesson(planned).includes('not been published'));
 localStorage.setItem(SDProgress.key,'{');SDProgress.load();assert.equal(SDProgress.data.current,null);assert.equal(SDProgress.data.completed.length,0);
 localStorage.setItem(SDProgress.key,JSON.stringify({completed:['not-real','dns'],bookmarks:[planned.id],current:'not-real'}));
@@ -111,7 +149,7 @@ timeline.play();assert.equal(timeline.fraction,paused);for(let n=0;n<100&&callba
 assert.equal(timeline.i,2);assert.equal(timeline.fraction,1);assert.equal(timeline.playing,false);
 timeline.go(0);assert.equal(timeline.fraction,1);timeline.restart();assert.equal(timeline.fraction,0);
 assert(arrivals.some(a=>a.i===1&&a.progress===1));
-console.log('Passed: '+scenarios+' simulation scenarios; 12 lesson contracts; prerequisite ordering; persistence; planned-topic guards; routes; player; '+algorithms+' DSA algorithms.');
+console.log('Passed: '+scenarios+' simulation scenarios; 23 lesson contracts; prerequisite ordering; persistence; planned-topic guards; routes; player; '+algorithms+' DSA algorithms.');
 `,context);
 const built=fs.readFileSync(path.join(root,'index.html'),'utf8');
 assert.equal(built,fs.readFileSync(path.join(root,'DSAViz.html'),'utf8'));

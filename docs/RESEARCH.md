@@ -34,6 +34,22 @@ Additional specification references remain attached to the individual lessons.
 - The HTTP version experiment isolates loss affecting A and assumes headers are available. HTTP/1.1 uses one non-pipelined connection in that experiment; real browsers commonly use several.
 - Browser navigation is a dependency illustration, not a promise that all browser work is serial.
 
-## Technology decision
+## Backend lesson references and modeling boundaries
+
+Stage 2 lessons use original explanations and link to these primary references:
+
+- [NGINX request processing](https://nginx.org/en/docs/http/request_processing.html) and [reverse proxy documentation](https://nginx.org/en/docs/http/ngx_http_proxy_module.html) for handler selection and upstream boundaries.
+- [MDN server-side introduction](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Introduction) for static and generated responses.
+- [OpenAPI 3.1.1](https://spec.openapis.org/oas/v3.1.1.html) for interface descriptions, [Fielding's REST constraints](https://ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm), and [GraphQL execution](https://spec.graphql.org/October2021/#sec-Execution) for field resolution. The graph experiment distinguishes HTTP requests from downstream reads; batching is available to either interface.
+- [OWASP session management](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html), [authentication](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html), and [authorization](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html) for separate identity and resource-access boundaries. Fake credentials carry no actual authority.
+- [MDN cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies) for storage and attributes. The experiment advances server-session age, not cookie expiry, and uses same-site traffic without HSTS upgrades.
+- [Azure API gateway architecture](https://learn.microsoft.com/en-us/azure/architecture/microservices/design/gateway) for routing and entry policies. One simulated identity and fixed quota window do not implement a distributed limiter.
+- [Django middleware](https://docs.djangoproject.com/en/5.2/topics/http/middleware/) for an ordered request chain. The timeout experiment deliberately omits propagated cancellation to show that a caller stopping its wait does not prove rollback.
+- [PostgreSQL isolation](https://www.postgresql.org/docs/current/transaction-iso.html) for the reservation discussion. The single-buyer model assumes an atomic conditional update and does not simulate full checkout isolation.
+- [PgBouncer modes](https://www.pgbouncer.org/features.html) for pooling and compatibility. The pool lab uses fixed-duration per-operation leases with simultaneous arrivals, FIFO waiting, and acquisition deadlines. It omits database contention and does not claim larger pools always help.
+
+Operationally interchangeable workers using a shared session store are distinguished from REST's stricter stateless-interaction constraint. Routing affinity never copies worker memory. Later stages remain unpublished until their own content and simulations are authored.
+
+## Keeping the existing rendering stack
 
 The original app already supports inline JavaScript and SVG. A dedicated `requestAnimationFrame` timeline allows smooth transfer interpolation, precise pause/resume, and arrival-driven snapshots. SVG keeps actors inspectable with keyboard-accessible controls and lets narrow layouts use their own coordinates instead of shrinking a wide desktop grid or introducing horizontal scrolling. These requirements do not require a framework migration. DSA keeps its existing player; the new System Design scene engine is independent.

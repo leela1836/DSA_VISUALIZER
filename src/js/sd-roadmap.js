@@ -8,7 +8,19 @@ const SD_STAGES = [
     ['http-semantics','HTTP methods and status codes',['http-lifecycle']], ['http-versions','HTTP versions',['http-semantics','tcp-udp']],
     ['websockets','WebSockets',['http-versions']], ['browser-server','Browser-to-server communication',['dns','tls','http-lifecycle','websockets']]
   ]],
-  ['Application and Backend Fundamentals', [1], ['Web servers','Application servers','APIs','REST and GraphQL','Stateless and stateful architecture','Cookies and sessions','Authentication and authorization','Reverse proxies','API gateways','Request lifecycle','Connection pooling']],
+  ['Application and Backend Fundamentals', [1], [
+    ['s2-web-servers','Web servers',['http-lifecycle','http-semantics']],
+    ['s2-application-servers','Application servers',['s2-web-servers']],
+    ['s2-apis','APIs',['s2-application-servers','http-semantics']],
+    ['s2-rest-and-graphql','REST and GraphQL',['s2-apis']],
+    ['s2-stateless-and-stateful-architecture','Stateless and stateful architecture',['s2-application-servers']],
+    ['s2-cookies-and-sessions','Cookies and sessions',['s2-stateless-and-stateful-architecture','tls']],
+    ['s2-authentication-and-authorization','Authentication and authorization',['s2-cookies-and-sessions','s2-apis']],
+    ['s2-reverse-proxies','Reverse proxies',['s2-web-servers','tls']],
+    ['s2-api-gateways','API gateways',['s2-reverse-proxies','s2-authentication-and-authorization']],
+    ['s2-request-lifecycle','Request lifecycle',['s2-application-servers','s2-authentication-and-authorization']],
+    ['s2-connection-pooling','Connection pooling',['s2-request-lifecycle']]
+  ]],
   ['Databases and Storage', [2], ['Relational databases','NoSQL databases','Data modeling','Indexing','Query execution','Transactions','ACID properties','Transaction isolation','Replication','Partitioning','Sharding','SQL versus NoSQL','Object storage','File storage','Database performance']],
   ['Caching', [3], ['Why caching exists','Browser caching','Application caching','Database caching','Distributed caching','Cache-aside','Read-through and write-through','Write-behind','TTL','Cache eviction strategies','Cache invalidation','Cache consistency','Redis fundamentals','Cache failure scenarios']],
   ['Scalability and Load Balancing', [2,3,4], ['Scalability fundamentals','Vertical scaling','Horizontal scaling','Load balancing','Load balancing algorithms','Health checks','Session affinity','Autoscaling','Traffic spikes','Bottlenecks','Capacity planning','Content delivery networks']],
